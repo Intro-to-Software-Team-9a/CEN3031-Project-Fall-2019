@@ -9,7 +9,7 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import reducer from './reducers';
 
-import App from './App';
+import App from './App.jsx';
 
 // https://github.com/reduxjs/redux/blob/master/examples/async/src/index.js
 const middleware = [thunk];

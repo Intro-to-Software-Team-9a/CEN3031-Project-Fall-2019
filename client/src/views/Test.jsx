@@ -1,6 +1,7 @@
 import React from 'react';
-import Counter from '../components/Counter';
 import { Link } from 'react-router-dom';
+import Counter from '../components/Counter.jsx';
+
 function Test() {
   return (
     <div className="App">
