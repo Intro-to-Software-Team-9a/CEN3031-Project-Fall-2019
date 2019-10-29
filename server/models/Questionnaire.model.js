@@ -1,10 +1,12 @@
-const mongoose, { Schema } = require('mongoose');
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 /**
  * Stores a questionnaire and its corresponding questions.
  */
 
-const QuestionniareSchema = new mongoose.Schema({
+const QuestionniareSchema = new Schema({
   questions: [{
     // questions must be assigned a unique id
     id: { type: String, required: true },
@@ -25,4 +27,4 @@ const QuestionniareSchema = new mongoose.Schema({
   }],
 }, { timestamps: true });
 
-export default mongoose.model('Questionnaire', QuestionniareSchema);
+module.exports = mongoose.model('Questionnaire', QuestionniareSchema);

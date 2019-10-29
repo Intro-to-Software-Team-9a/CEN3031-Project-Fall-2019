@@ -1,10 +1,12 @@
-const mongoose, { Schema } = require('mongoose');
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 /**
  * A template that is used to generate a document.
  */
 
-const TemplateSchema = new mongoose.Schema({
+const TemplateSchema = new Schema({
   // title of the document
   title: { type: String, required: true },
 
@@ -12,4 +14,4 @@ const TemplateSchema = new mongoose.Schema({
   template: { type: String, required: true },
 }, { timestamps: true });
 
-export default mongoose.model('Template', TemplateSchema);
+module.exports = mongoose.model('Template', TemplateSchema);

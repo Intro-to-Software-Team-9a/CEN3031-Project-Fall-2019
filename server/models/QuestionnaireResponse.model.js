@@ -1,10 +1,12 @@
-const mongoose, { Schema } = require('mongoose');
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 /**
  * Stores a response to a questionnaire.
  */
 
-const QuestionniareResponseSchema = new mongoose.Schema({
+const QuestionniareResponseSchema = new Schema({
   // ref of the questionnaire
   questionnaireId: { type: Schema.Types.ObjectId, ref: 'Questionnaire', required: true },
 
@@ -13,11 +15,11 @@ const QuestionniareResponseSchema = new mongoose.Schema({
     // id of the corresponding questionnaire.question
     questionId: { type: String, required: true },
 
-    // a list of responses depending on question type 
+    // a list of responses depending on question type
     responses: [{
       value: { type: String, required: true },
     }],
   }],
 }, { timestamps: true });
 
-export default mongoose.model('QuestionnaireResponse', QuestionniareResponseSchema);
+module.exports = mongoose.model('QuestionnaireResponse', QuestionniareResponseSchema);

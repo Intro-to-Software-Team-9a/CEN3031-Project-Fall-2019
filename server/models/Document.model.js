@@ -1,11 +1,13 @@
-const mongoose, { Schema } = require('mongoose');
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 /**
  * Stores the LITERAL text of a generated document.
- * Immutable -- in order to edit it, a user must create a copy. 
+ * Immutable -- in order to edit it, a user must create a copy.
  */
 
-const DocumentSchema = new mongoose.Schema({
+const DocumentSchema = new Schema({
   // ref of the owner
   profileId: { type: Schema.Types.ObjectId, ref: 'Profile', required: true },
 
@@ -16,4 +18,4 @@ const DocumentSchema = new mongoose.Schema({
   text: { type: String, required: true },
 }, { timestamps: true });
 
-export default mongoose.model('Document', DocumentSchema);
+module.exports = mongoose.model('Document', DocumentSchema);

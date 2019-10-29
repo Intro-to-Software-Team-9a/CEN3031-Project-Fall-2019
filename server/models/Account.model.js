@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 
+const { Schema } = mongoose;
+
 /**
  * Stores login credentials and links to a Profile.
  */
 
-const AccountSchema = new mongoose.Schema({
+const AccountSchema = new Schema({
   email: {
     type: String,
     required: true,
@@ -16,4 +18,4 @@ const AccountSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-export default mongoose.model('Account', AccountSchema);
+module.exports = mongoose.model('Account', AccountSchema);
