@@ -1,3 +1,5 @@
+/* eslint-disable no-undef, no-underscore-dangle */
+
 const mongoose = require('mongoose');
 const assert = require('assert');
 const config = require('../../config/config');
@@ -18,7 +20,6 @@ async function dropCollections() {
 }
 
 describe('Model Integration Tests', () => {
-
   before(async () => {
     await mongoose.connect(config.db.uri, { useNewUrlParser: true });
   });
@@ -26,7 +27,7 @@ describe('Model Integration Tests', () => {
   beforeEach(async () => {
     await dropCollections();
   });
-  
+
   after(async () => {
     await dropCollections();
     await mongoose.connection.close();
@@ -72,10 +73,10 @@ describe('Model Integration Tests', () => {
       await template1.save();
 
       // populate should work
-      const savedAccount1 = await Account.findById(account1._id).exec();
-      const savedProfile1 = await Profile.findById(profile1._id).populate(['accountId']);
-      const savedTemplate1 = await Template.findById(template1._id).exec();
+      await Account.findById(account1._id).exec();
       const savedDocument1 = await Document.findById(document1._id).populate(['profileId', 'templateId']);
+      const savedProfile1 = await Profile.findById(profile1._id).populate(['accountId']);
+      await Template.findById(template1._id).exec();
 
       // check foreign keys are dereferenced
       assert.equal(savedProfile1.accountId.email, mockdata.account1.email, 'could not dereference account');
