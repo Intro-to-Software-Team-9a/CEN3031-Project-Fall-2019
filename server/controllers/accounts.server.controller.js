@@ -19,8 +19,9 @@ function addToSession(account, req) {
  */
 async function createAccount(req, res) {
   // validate
-  if (!req.body.email || !req.body.password) {
-    return res.status(400).send({ message: errors.accounts.MISSING_CREDENTIALS });
+  if (!req.body || !req.body.email || !req.body.password) {
+    res.status(400);
+    res.send({ message: errors.accounts.MISSING_CREDENTIALS });
   }
 
   // hash the plaintext password
@@ -40,10 +41,12 @@ async function createAccount(req, res) {
     return res.send();
   } catch (e) {
     if (mongooseUtils.getErrorType(e) === mongooseUtils.ErrorTypes.DUPLICATE_KEY) {
-      return res.status(400).send({ message: errors.accounts.ACCOUNT_ALREADY_EXISTS });
+      res.status(400);
+      res.send({ message: errors.accounts.ACCOUNT_ALREADY_EXISTS });
     }
 
-    return res.status(500).send({ message: errors.other.UNKNOWN });
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
   }
 }
 
@@ -55,7 +58,8 @@ async function createAccount(req, res) {
 async function login(req, res) {
   // validate request
   if (!req.body.email || !req.body.password) {
-    return res.status(400).send({ message: errors.accounts.MISSING_CREDENTIALS });
+    res.status(400);
+    res.send({ message: errors.accounts.MISSING_CREDENTIALS });
   }
 
   // find account
@@ -63,12 +67,14 @@ async function login(req, res) {
   const account = await Account.findOne({ email }).exec();
 
   if (!account) {
-    return res.status(404).send({ message: errors.accounts.ACCOUNT_DOESNT_EXIST});
+    res.status(404);
+    return res.send({ message: errors.accounts.ACCOUNT_DOESNT_EXIST});
   }
 
   // check password match
   if (!bcrypt.compareSync(password, account.passwordHash)) {
-    return res.status(401).send({ message: errors.accounts.WRONG_CREDENTIALS });
+    res.status(401);
+    return res.send({ message: errors.accounts.WRONG_CREDENTIALS });
   }
 
   // update session
