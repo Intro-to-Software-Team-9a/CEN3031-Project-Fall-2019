@@ -1,14 +1,13 @@
 const express = require('express');
-const passport = require('passport');
 
-const account = require('../controllers/accounts.server.controller.js');
+const accounts = require('../controllers/accounts.server.controller.js');
 
 const router = express.Router();
 
 router.route('/login')
-  .post(account.login);
+  .post(accounts.login);
 
 router.route('/create')
-  .post(account.createAccount);
+  .post(accounts.createAccount);
 
 module.exports = router;
