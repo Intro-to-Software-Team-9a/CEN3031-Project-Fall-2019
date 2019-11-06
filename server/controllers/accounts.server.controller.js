@@ -51,6 +51,7 @@ async function createAccount(req, res) {
     const profile = new Profile({
       accountId: account,
       name,
+      role: { isUser: true, isAdmin: false },
     });
 
     await account.save();

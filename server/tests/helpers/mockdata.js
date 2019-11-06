@@ -8,6 +8,10 @@ module.exports = {
   },
   profile1: {
     name: 'Example User',
+    role: {
+      isUser: true,
+      isAdmin: false,
+    },
   },
   document1: {
     text: 'Hello, my name is Example User',
