@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const assert = require('assert');
-const config = require('../../config/config');
+const DB_CONNECT_STRING = process.env.DB_CONNECT_STRING;
 
 const Account = require('../../models/Account.model');
 const Profile = require('../../models/Profile.model');
@@ -21,7 +21,7 @@ async function dropCollections() {
 
 describe('Model Integration Tests', () => {
   before(async () => {
-    await mongoose.connect(config.db.uri, { useNewUrlParser: true });
+    await mongoose.connect(DB_CONNECT_STRING, { useNewUrlParser: true });
   });
 
   beforeEach(async () => {
