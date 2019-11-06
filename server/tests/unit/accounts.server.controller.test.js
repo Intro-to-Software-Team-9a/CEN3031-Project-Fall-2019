@@ -186,6 +186,13 @@ describe('Accounts Controller', () => {
       assert.ok(!req.session.accountId);
     });
 
+    it('should return 400 and fail if email is invalid', async () => {
+      req.body.email = 'not an email';
+      await accounts.createAccount(req, res);
+      assert.ok(res.status.calledWith(400));
+      assert.ok(!req.session.accountId);
+    });
+
     it('should return 400 and fail if missing password', async () => {
       req.body.password = undefined;
       await accounts.createAccount(req, res);

@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
-const config = require('../config/config');
+const emailValidator = require('email-validator');
 
+const config = require('../config/config');
 const mongooseUtils = require('../utils/mongoose');
 const errors = require('../utils/errors');
 const Account = require('../models/Account.model');
@@ -30,9 +31,14 @@ async function createAccount(req, res) {
     return res.send({ message: errors.accounts.MISSING_CREDENTIALS });
   }
 
-  // hash the plaintext password
+  if (!emailValidator.validate(req.body.email)) {
+    res.status(400);
+    return res.send({ message: errors.accounts.INVALID_EMAIL });
+  }
+
   const { name, email, password } = req.body;
 
+  // hash the plaintext password
   // this will handle salts automatically
   const hash = await bcrypt.hash(password, saltRounds);
 
