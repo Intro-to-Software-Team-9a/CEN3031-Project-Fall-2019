@@ -34,7 +34,7 @@ async function createAccount(req, res) {
   const { name, email, password } = req.body;
 
   // this will handle salts automatically
-  const hash = bcrypt.hashSync(password, saltRounds);
+  const hash = await bcrypt.hash(password, saltRounds);
 
   try {
     // create account and profile
@@ -90,7 +90,8 @@ async function login(req, res) {
     }
 
     // check password match
-    if (!bcrypt.compareSync(password, account.passwordHash)) {
+    const doesMatch = await bcrypt.compare(password, account.passwordHash);
+    if (!doesMatch) {
       res.status(401);
       return res.send({ message: errors.accounts.WRONG_CREDENTIALS });
     }

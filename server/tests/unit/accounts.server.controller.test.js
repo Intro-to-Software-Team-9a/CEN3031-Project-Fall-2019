@@ -62,7 +62,7 @@ describe('Accounts Controller', () => {
       res = mockResponse();
 
       // stub bcrypt
-      bcrypt.compareSync = sinon.stub().returns(true);
+      bcrypt.compare = sinon.stub().resolves(true);
     });
 
     it('should return 200 and success if all args provided and mongoose resolves', async () => {
@@ -81,7 +81,7 @@ describe('Accounts Controller', () => {
 
     it('should return 401 and fail if no password is incorrect', async () => {
       // incorrect password
-      bcrypt.compareSync = sinon.stub().returns(false);
+      bcrypt.compare = sinon.stub().returns(false);
 
       await accounts.login(req, res);
       assert.ok(res.status.calledWith(401));
@@ -163,7 +163,7 @@ describe('Accounts Controller', () => {
       res = mockResponse();
 
       // stub bcrypt
-      bcrypt.hashSync = sinon.stub().returns('myHash');
+      bcrypt.hash = sinon.stub().resolves('myHash');
     });
 
     it('should return 200 and success if all args provided and save resolves', async () => {
