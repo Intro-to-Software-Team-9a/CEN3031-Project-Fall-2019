@@ -3,6 +3,9 @@
 const mongoose = require('mongoose');
 const assert = require('assert');
 const DB_CONNECT_STRING = process.env.DB_CONNECT_STRING;
+const TEST_ENV = process.env.TEST_ENV;
+
+console.log(TEST_ENV);
 
 const Account = require('../../models/Account.model');
 const Profile = require('../../models/Profile.model');
