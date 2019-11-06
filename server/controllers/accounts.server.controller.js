@@ -1,14 +1,13 @@
 const bcrypt = require('bcrypt');
 const emailValidator = require('email-validator');
 
-const config = require('../config/config');
+const publicConfig = require('../config/config.public');
 const mongooseUtils = require('../utils/mongoose');
 const errors = require('../utils/errors');
 const Account = require('../models/Account.model');
 const Profile = require('../models/Profile.model');
 
-
-const { saltRounds } = config.password;
+const { saltRounds } = publicConfig.password;
 
 /**
  * Adds account information to session.
