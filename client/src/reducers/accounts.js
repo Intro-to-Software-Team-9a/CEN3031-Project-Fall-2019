@@ -10,7 +10,11 @@ import {
   CREATE_FAIL,
   CREATE_START,
   CREATE_SUCCESS,
+  FORGET_CREATE_FORM,
+  FORGET_LOGIN_FORM,
 } from '../actions/account';
+
+import { stateStart, stateSuccess, stateFailure } from '../utils/asyncStates';
 
 const defaultState = {
   loginForm: {
@@ -23,46 +27,10 @@ const defaultState = {
     password: '',
     confirmpassword: '',
   },
-  loginState: {
-    isWaiting: false,
-    isError: false,
-    error: '',
-  },
-  logoutState: {
-    isWaiting: false,
-    isError: false,
-    error: '',
-  },
-  createState: {
-    isWaiting: false,
-    isError: false,
-    error: '',
-  },
+  loginState: stateSuccess(),
+  logoutState: stateSuccess(),
+  createState: stateSuccess(),
 };
-
-function stateStart() {
-  return {
-    isWaiting: true,
-    isError: false,
-    error: '',
-  };
-}
-
-function stateSuccess() {
-  return {
-    isWaiting: false,
-    isError: false,
-    error: '',
-  };
-}
-
-function stateFailure(action) {
-  return {
-    isWaiting: false,
-    isError: true,
-    error: action.data.message,
-  };
-}
 
 export default function accountReducer(state = defaultState, action) {
   switch (action.type) {
@@ -82,6 +50,10 @@ export default function accountReducer(state = defaultState, action) {
           [action.data.fieldName]: action.data.newValue,
         },
       };
+    case FORGET_CREATE_FORM:
+      return { ...state, createForm: { ...defaultState.createForm } };
+    case FORGET_LOGIN_FORM:
+      return { ...state, loginForm: { ...defaultState.loginForm } };
     case LOGIN_START:
       return {
         ...state,

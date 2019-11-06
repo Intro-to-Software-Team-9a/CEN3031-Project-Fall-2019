@@ -5,13 +5,11 @@ import {
   FORGET_PROFILE,
 } from '../actions/profile';
 
+import { stateStart, stateSuccess, stateFailure } from '../utils/asyncStates';
+
 const defaultState = {
   profile: undefined,
-  profileState: {
-    isWaiting: false,
-    isError: false,
-    error: '',
-  },
+  profileState: stateSuccess(),
 };
 
 export default function profileReducer(state = defaultState, action) {
@@ -19,18 +17,18 @@ export default function profileReducer(state = defaultState, action) {
     case GET_PROFILE_START:
       return {
         ...state,
-        profileState: { isWaiting: true, isError: false, error: '' },
+        profileState: stateStart(),
       };
     case GET_PROFILE_SUCCESS:
       return {
         ...state,
-        profileState: { isWaiting: false, isError: false, error: '' },
+        profileState: stateSuccess(),
         profile: action.data.profile,
       };
     case GET_PROFILE_FAIL:
       return {
         ...state,
-        profileState: { isWaiting: false, isError: true, error: action.data.message },
+        profileState: stateFailure(action),
         profile: undefined,
       };
     case FORGET_PROFILE:

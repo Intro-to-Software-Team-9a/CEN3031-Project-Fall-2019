@@ -13,6 +13,8 @@ export const LOGOUT_FAIL = 'LOGOUT_FAIL';
 export const CREATE_START = 'CREATE_START';
 export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAIL = 'CREATE_FAIL';
+export const FORGET_LOGIN_FORM = 'FORGET_LOGIN_FORM';
+export const FORGET_CREATE_FORM = 'FORGET_CREATE_FORM';
 
 
 export function changeLoginField(fieldName, newValue) {
@@ -40,6 +42,7 @@ export function doLogin() {
     try {
       await axios.post('/api/accounts/login', { email, password });
       dispatch({ type: LOGIN_SUCCESS });
+      dispatch({ type: FORGET_LOGIN_FORM });
       dispatch(getProfile());
     } catch (error) {
       const message = error.response.data.message || error.message;
@@ -80,6 +83,7 @@ export function doCreateAccount() {
     try {
       await axios.post('/api/accounts/create', { email, password, name });
       dispatch({ type: CREATE_SUCCESS });
+      dispatch({ type: FORGET_CREATE_FORM });
       dispatch(getProfile());
     } catch (error) {
       const message = error.response.data.message || error.message;
