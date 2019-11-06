@@ -1,20 +1,24 @@
 import { connect } from 'react-redux';
 import { doLogin, changeLoginField } from '../actions/account';
 
-import SimpleForm from './SimpleForm.jsx';
+// this component wraps AbstractForm
+import AbstractForm from './AbstractForm.jsx';
 
+ // define fields for AbstractForm
 const fields = [
   { type: 'email', name: 'email', label: 'Email' },
   { type: 'password', name: 'password', label: 'Password' },
 ];
 
 
+// create necessary props for AbstractForm
 const mapStateToProps = (state) => ({
   data: state.accounts.loginForm,
   state: state.accounts.loginState,
   fields,
 });
 
+// create action-dispatchers for AbstractForm
 const mapDispatchToProps = (dispatch) => ({
   onSubmit: (e) => {
     e.preventDefault();
@@ -27,4 +31,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SimpleForm);
+)(AbstractForm);

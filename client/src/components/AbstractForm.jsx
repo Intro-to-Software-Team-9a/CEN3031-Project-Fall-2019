@@ -3,14 +3,17 @@ import { Form, Button, Alert } from 'react-bootstrap';
 
 /**
  * A generic form component for text-only forms.
+ * Designed to be used with Redux. Can display errors.
+ *
  * @param fields A list `[{ name, label, type }]` describing form fields.
  * @param data A mapping such that `data[field[i].name]` is the current
  * state of the field
  * @param onSubmit a callback for form submission of the form `(event) => { ... }`
  * @param changeField a function called on field change `(fieldName, newValue)`.
+ * Intended to dispatch a redux event.
  * @param state an `asyncState` as defined in "utils/asyncStates"
  */
-export default function SimpleForm({
+export default function AbstractForm({
   fields, data, onSubmit, changeField, state,
 }) {
   // create each field in the form from the `fields` prop
