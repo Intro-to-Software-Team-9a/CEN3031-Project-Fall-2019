@@ -13,7 +13,7 @@ const accounts = require('../../controllers/accounts.server.controller');
 
 function mockRequest() {
   return {
-    body: { email: 'test@gmail.com', password: 'test', name: 'Test User' },
+    body: { email: 'test@gmail.com', password: 'i-am-a-complex-password', name: 'Test User' },
     session: {},
   };
 }
@@ -199,6 +199,14 @@ describe('Accounts Controller', () => {
       assert.ok(res.status.calledWith(400));
       assert.ok(!req.session.accountId);
     });
+
+    it('should return 400 and fail if password is not long enougt', async () => {
+      req.body.password = 'short';
+      await accounts.createAccount(req, res);
+      assert.ok(res.status.calledWith(400));
+      assert.ok(!req.session.accountId);
+    });
+
 
     it('should return 400 and fail if missing name', async () => {
       req.body.name = undefined;

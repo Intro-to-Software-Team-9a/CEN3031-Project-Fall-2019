@@ -5,6 +5,7 @@ module.exports = {
     MISSING_CREDENTIALS: 'Missing Email or Password.',
     WRONG_CREDENTIALS: 'Invalid Email or Password.',
     INVALID_EMAIL: 'Invalid Email address.',
+    PASSWORD_NOT_OK: 'Passwords must be a minimum of 8 characters',
   },
   profile: {
     NOT_FOUND: 'No Profile is associated with the specified Account.',

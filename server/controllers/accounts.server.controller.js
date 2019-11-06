@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const emailValidator = require('email-validator');
+const validator = require('validator');
 
 const publicConfig = require('../config/config.public');
 const mongooseUtils = require('../utils/mongoose');
@@ -18,6 +18,20 @@ function addToSession(account, req) {
   req.session.accountId = account._id;
 }
 
+/**
+ * Returns if a password is acceptable for use.
+ * Including:
+ * - long enough
+ * @param {} password Candiate password
+ */
+function isPasswordOk(password) {
+  if (!password) return false;
+  if (typeof password !== 'string') return false;
+  if (password.length < 8) return false;
+
+  return true;
+}
+
 
 /**
  * @param email {String}
@@ -30,12 +44,17 @@ async function createAccount(req, res) {
     return res.send({ message: errors.accounts.MISSING_CREDENTIALS });
   }
 
-  if (!emailValidator.validate(req.body.email)) {
+  if (!validator.isEmail(req.body.email)) {
     res.status(400);
     return res.send({ message: errors.accounts.INVALID_EMAIL });
   }
 
   const { name, email, password } = req.body;
+
+  if (!isPasswordOk(password)) {
+    res.status(400);
+    return res.send({ message: errors.accounts.PASSWORD_NOT_OK });
+  }
 
   // hash the plaintext password
   // this will handle salts automatically
