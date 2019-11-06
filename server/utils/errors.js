@@ -11,4 +11,4 @@ module.exports = {
   other: {
     UNKNOWN: 'An unknown error occurred.',
   },
-}
+};

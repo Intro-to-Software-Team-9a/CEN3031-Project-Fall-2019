@@ -4,6 +4,7 @@ import { changeCreateField, doCreateAccount } from '../actions/account';
 import SimpleForm from './SimpleForm.jsx';
 
 const fields = [
+  { type: 'text', name: 'name', label: 'Your Name' },
   { type: 'email', name: 'email', label: 'Email' },
   { type: 'password', name: 'password', label: 'Password' },
   { type: 'password', name: 'confirmpassword', label: 'Confirm Password' },

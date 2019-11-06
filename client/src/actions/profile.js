@@ -3,7 +3,7 @@ import axios from 'axios';
 export const GET_PROFILE_START = 'GET_PROFILE_START';
 export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
 export const GET_PROFILE_FAIL = 'GET_PROFILE_FAIL';
-
+export const FORGET_PROFILE = 'FORGET_PROFILE';
 
 function getProfileSuccess(profile) {
   return {
@@ -11,6 +11,12 @@ function getProfileSuccess(profile) {
     data: {
       profile,
     },
+  };
+}
+
+export function forgetProfile() {
+  return {
+    type: FORGET_PROFILE,
   };
 }
 

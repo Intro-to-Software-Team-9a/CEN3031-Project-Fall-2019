@@ -7,11 +7,17 @@ const Account = require('../models/Account.model');
 const Profile = require('../models/Profile.model');
 
 
-const saltRounds = config.password.saltRounds;
+const { saltRounds } = config.password;
 
+/**
+ * Adds account information to session.
+ * @param {Object} account Account object
+ * @param {Object} req Express Request object
+ */
 function addToSession(account, req) {
   req.session.accountId = account._id;
 }
+
 
 /**
  * @param email {String}
@@ -19,19 +25,29 @@ function addToSession(account, req) {
  */
 async function createAccount(req, res) {
   // validate
-  if (!req.body || !req.body.email || !req.body.password) {
+  if (!req.body || !req.body.email || !req.body.password || !req.body.name) {
     res.status(400);
-    res.send({ message: errors.accounts.MISSING_CREDENTIALS });
+    return res.send({ message: errors.accounts.MISSING_CREDENTIALS });
   }
 
   // hash the plaintext password
-  const { email, password } = req.body;
+  const { name, email, password } = req.body;
+
+  // this will handle salts automatically
   const hash = bcrypt.hashSync(password, saltRounds);
 
   try {
-    // create account
-    const account = new Account({ email, passwordHash: hash });
-    const profile = new Profile({ accountId: account });
+    // create account and profile
+    const account = new Account({
+      email,
+      passwordHash: hash,
+    });
+
+    const profile = new Profile({
+      accountId: account,
+      name,
+    });
+
     await account.save();
     await profile.save();
 
@@ -57,33 +73,51 @@ async function createAccount(req, res) {
  */
 async function login(req, res) {
   // validate request
-  if (!req.body.email || !req.body.password) {
+  if (!req.body || !req.body.email || !req.body.password) {
     res.status(400);
-    res.send({ message: errors.accounts.MISSING_CREDENTIALS });
+    return res.send({ message: errors.accounts.MISSING_CREDENTIALS });
   }
 
-  // find account
-  const { email, password } = req.body;
-  const account = await Account.findOne({ email }).exec();
 
-  if (!account) {
-    res.status(404);
-    return res.send({ message: errors.accounts.ACCOUNT_DOESNT_EXIST});
+  try {
+    // find account
+    const { email, password } = req.body;
+    const account = await Account.findOne({ email }).exec();
+
+    if (!account) {
+      res.status(404);
+      return res.send({ message: errors.accounts.ACCOUNT_DOESNT_EXIST });
+    }
+
+    // check password match
+    if (!bcrypt.compareSync(password, account.passwordHash)) {
+      res.status(401);
+      return res.send({ message: errors.accounts.WRONG_CREDENTIALS });
+    }
+
+    // update session
+    addToSession(account, req);
+
+    return res.send();
+  } catch (e) {
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
   }
+}
 
-  // check password match
-  if (!bcrypt.compareSync(password, account.passwordHash)) {
-    res.status(401);
-    return res.send({ message: errors.accounts.WRONG_CREDENTIALS });
-  }
+async function logout(req, res) {
+  req.session.destroy((error) => {
+    if (error) {
+      res.status(500);
+      return res.send({ message: errors.other.UNKNOWN });
+    }
 
-  // update session
-  addToSession(account, req);
-
-  return res.send();
+    return res.send();
+  });
 }
 
 module.exports = {
   login,
+  logout,
   createAccount,
 };

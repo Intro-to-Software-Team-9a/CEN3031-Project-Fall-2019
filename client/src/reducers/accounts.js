@@ -4,6 +4,9 @@ import {
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT_START,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAIL,
   CREATE_FAIL,
   CREATE_START,
   CREATE_SUCCESS,
@@ -15,11 +18,17 @@ const defaultState = {
     password: '',
   },
   createForm: {
+    name: '',
     email: '',
     password: '',
     confirmpassword: '',
   },
   loginState: {
+    isWaiting: false,
+    isError: false,
+    error: '',
+  },
+  logoutState: {
     isWaiting: false,
     isError: false,
     error: '',
@@ -30,6 +39,30 @@ const defaultState = {
     error: '',
   },
 };
+
+function stateStart() {
+  return {
+    isWaiting: true,
+    isError: false,
+    error: '',
+  };
+}
+
+function stateSuccess() {
+  return {
+    isWaiting: false,
+    isError: false,
+    error: '',
+  };
+}
+
+function stateFailure(action) {
+  return {
+    isWaiting: false,
+    isError: true,
+    error: action.data.message,
+  };
+}
 
 export default function accountReducer(state = defaultState, action) {
   switch (action.type) {
@@ -52,56 +85,47 @@ export default function accountReducer(state = defaultState, action) {
     case LOGIN_START:
       return {
         ...state,
-        loginState: {
-          isWaiting: true,
-          isError: false,
-          error: '',
-        },
+        loginState: stateStart(),
       };
     case LOGIN_SUCCESS:
       return {
         ...state,
-        loginState: {
-          isWaiting: false,
-          isError: false,
-          error: '',
-        },
+        loginState: stateSuccess(),
       };
     case LOGIN_FAIL:
       return {
         ...state,
-        loginState: {
-          isWaiting: false,
-          isError: true,
-          error: action.data.message,
-        },
+        loginState: stateFailure(action),
+      };
+    case LOGOUT_START:
+      return {
+        ...state,
+        logoutState: stateStart(),
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        logoutState: stateSuccess(),
+      };
+    case LOGOUT_FAIL:
+      return {
+        ...state,
+        logoutState: stateFailure(action),
       };
     case CREATE_START:
       return {
         ...state,
-        createState: {
-          isWaiting: true,
-          isError: false,
-          error: '',
-        },
+        createState: stateStart(),
       };
     case CREATE_SUCCESS:
       return {
         ...state,
-        createState: {
-          isWaiting: false,
-          isError: false,
-          error: '',
-        },
+        createState: stateSuccess(),
       };
     case CREATE_FAIL:
       return {
         ...state,
-        createState: {
-          isWaiting: false,
-          isError: true,
-          error: action.data.message,
-        },
+        createState: stateFailure(action),
       };
     default:
       return state;

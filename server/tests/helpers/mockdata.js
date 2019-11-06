@@ -1,3 +1,6 @@
+
+// mock data for testing purposes
+
 module.exports = {
   account1: {
     email: 'test@gmail.com',

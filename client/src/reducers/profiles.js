@@ -2,6 +2,7 @@ import {
   GET_PROFILE_START,
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAIL,
+  FORGET_PROFILE,
 } from '../actions/profile';
 
 const defaultState = {
@@ -32,6 +33,8 @@ export default function profileReducer(state = defaultState, action) {
         profileState: { isWaiting: false, isError: true, error: action.data.message },
         profile: undefined,
       };
+    case FORGET_PROFILE:
+      return { ...state, profile: undefined };
     default:
       return state;
   }

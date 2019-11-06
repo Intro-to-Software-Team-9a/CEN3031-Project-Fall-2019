@@ -5,9 +5,10 @@ import CreateAccontForm from '../components/CreateAccountForm.jsx';
 
 export default function CreateAccount() {
   return (
-    <Container>
+    <Container className="pt-4">
+      <h1>Create Account</h1>
       <Row>
-        <Col>
+        <Col className="col-4 pt-4">
           <CreateAccontForm />
         </Col>
       </Row>

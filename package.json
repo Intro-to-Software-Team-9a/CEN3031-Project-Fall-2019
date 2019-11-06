@@ -19,7 +19,10 @@
     "url": "https://github.com/UFWebApps/React_Template_Repo.git"
   },
   "eslintConfig": {
-    "extends": "airbnb-base"
+    "extends": "airbnb-base",
+    "rules": {
+      "no-underscore-dangle": "off"
+    }
   },
   "keywords": [],
   "author": "Dakota Rennemann",
@@ -41,6 +44,7 @@
   "devDependencies": {
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2"
+    "eslint-plugin-import": "^2.18.2",
+    "sinon": "^7.5.0"
   }
 }

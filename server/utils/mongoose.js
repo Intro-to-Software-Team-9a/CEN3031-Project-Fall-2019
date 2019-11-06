@@ -12,9 +12,9 @@ function getErrorType(error) {
   }
 
   return ErrorTypes.UNKNOWN;
-};
+}
 
 module.exports = {
   ErrorTypes,
   getErrorType,
-}
+};

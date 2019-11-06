@@ -5,7 +5,7 @@ const mockdata = require('../tests/helpers/mockdata');
 const Account = require('../models/Account.model');
 const Profile = require('../models/Profile.model');
 const Document = require('../models/Document.model');
-const Template = require('../models/Template.model')
+const Template = require('../models/Template.model');
 
 mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
