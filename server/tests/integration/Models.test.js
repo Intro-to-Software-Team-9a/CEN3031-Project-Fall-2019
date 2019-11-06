@@ -2,13 +2,13 @@
 
 const mongoose = require('mongoose');
 const assert = require('assert');
-const config = require('../../config/config');
 
 const Account = require('../../models/Account.model');
 const Profile = require('../../models/Profile.model');
 const Document = require('../../models/Document.model');
 const Template = require('../../models/Template.model');
 const mockdata = require('../helpers/mockdata');
+const config = require('../helpers/config');
 
 async function dropCollections() {
   await Promise.all([
