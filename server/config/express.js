@@ -3,9 +3,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const exampleRouter = require('../routes/examples.server.routes');
-
+const session = require('express-session');
+const accountsRouter = require('../routes/accounts.server.routes');
+const profilesRouter = require('../routes/profiles.server.routes');
 const config = require('./config');
+
 
 module.exports.init = () => {
   /*
@@ -21,17 +23,27 @@ module.exports.init = () => {
   // initialize app
   const app = express();
 
+  app.set('trust proxy', 1);
+
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+
+  app.use(session({
+    secret: config.session.secret,
+    resave: true,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  }));
+
   // enable request logging for development debugging
   app.use(morgan('dev'));
 
-  // body parsing middleware
-  app.use(bodyParser.json());
-
   // add a router
-  app.use('/api/example', exampleRouter);
+  app.use('/api/accounts', accountsRouter);
+  app.use('/api/profiles', profilesRouter);
 
   if (process.env.NODE_ENV === 'production') {
-    // Serve any static files
+  // Serve any static files
     app.use(express.static(path.join(__dirname, '../../client/build')));
 
     // Handle React routing, return all requests to React app

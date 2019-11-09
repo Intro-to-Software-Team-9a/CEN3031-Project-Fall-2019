@@ -13,6 +13,12 @@ const ProfileSchema = new Schema({
 
   // user information
   name: String,
+
+  // permissions for the user
+  role: {
+    isUser: Boolean,
+    isAdmin: Boolean,
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Profile', ProfileSchema);

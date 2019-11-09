@@ -1,3 +1,6 @@
+
+// mock data for testing purposes
+
 module.exports = {
   account1: {
     email: 'test@gmail.com',
@@ -5,6 +8,10 @@ module.exports = {
   },
   profile1: {
     name: 'Example User',
+    role: {
+      isUser: true,
+      isAdmin: false,
+    },
   },
   document1: {
     text: 'Hello, my name is Example User',
