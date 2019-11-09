@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const accountsRouter = require('../routes/accounts.server.routes');
 const profilesRouter = require('../routes/profiles.server.routes');
+const documentsRouter = require('../routes/documents.server.routes');
 const config = require('./config');
 
 
@@ -41,8 +42,9 @@ module.exports.init = () => {
   // add a router
   app.use('/api/accounts', accountsRouter);
   app.use('/api/profiles', profilesRouter);
+  app.use('/api/documents', documentsRouter);
 
-  // if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     // Serve any static files
     app.use(express.static(path.join(__dirname, '../../client/build')));
 
@@ -50,7 +52,7 @@ module.exports.init = () => {
     app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
     });
-  // }
+  }
 
   return app;
 };

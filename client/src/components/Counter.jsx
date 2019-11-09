@@ -6,10 +6,7 @@ function Counter({ count, incrementCount }) {
   return (
     <div>
       <p>
-Current Count is:
-        {count}
-        {' '}
-        (<button onClick={incrementCount}>Increment</button>)
+        Current Count is: {count} (<button onClick={incrementCount}>Increment</button>)
       </p>
     </div>
   );

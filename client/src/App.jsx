@@ -8,7 +8,7 @@ import Login from './views/Login';
 import CreateAccount from './views/CreateAccount';
 import NotFound from "./views/NotFound";
 import NavBar from './components/NavBar';
-
+import ViewDocuments from './views/ViewDocuments';
 
 const App = () => {
   return (
@@ -18,6 +18,8 @@ const App = () => {
         <Route exact path="/home" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/create-account" component={CreateAccount} />
+        <Route exact path="/view-documents" component={ViewDocuments} />
+        
         <Route exact path="/">
           <Redirect to="/home" />
         </Route>

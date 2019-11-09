@@ -37,7 +37,7 @@ export function doLogin() {
     try {
       await axios.post('/api/accounts/login', { email, password });
       dispatch({ type: LOGIN_SUCCESS });
-      dispatch(getProfile());
+      await dispatch(getProfile());
     } catch (error) {
       console.log(error.response);
       const message = error.response.data.message || error.message;
@@ -61,7 +61,7 @@ export function doCreateAccount() {
     try {
       await axios.post('/api/accounts/create', { email, password });
       dispatch({ type: CREATE_SUCCESS });
-      dispatch(getProfile());
+      await dispatch(getProfile());
     } catch (error) {
       console.log(error.response);
       const message = error.response.data.message || error.message;

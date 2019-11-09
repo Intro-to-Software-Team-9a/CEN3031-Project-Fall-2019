@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { doLogin, changeLoginField } from '../actions/account';
+import { getDocuments } from '../actions/document';
 
 import SimpleForm from './SimpleForm.jsx';
 
@@ -16,9 +17,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (e) => {
+  onSubmit: async (e) => {
     e.preventDefault();
-    dispatch(doLogin());
+    await dispatch(doLogin());
+    await dispatch(getDocuments());
   },
   changeField: (fieldName, newValue) => dispatch(changeLoginField(fieldName, newValue)),
 });
