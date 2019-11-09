@@ -33,7 +33,7 @@ module.exports.init = () => {
     secret: config.session.secret,
     resave: true,
     saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: { secure: false },
   }));
 
   // enable request logging for development debugging

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -9,6 +10,8 @@ import CreateAccount from './views/CreateAccount';
 import NotFound from "./views/NotFound";
 import NavBar from './components/NavBar';
 import ViewDocuments from './views/ViewDocuments';
+
+import { getProfile } from './actions/profile';
 
 const App = () => {
   return (
@@ -29,4 +32,15 @@ const App = () => {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getProfile: () => dispatch(getProfile()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

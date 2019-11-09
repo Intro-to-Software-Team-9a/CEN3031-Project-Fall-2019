@@ -5,9 +5,10 @@ import LoginForm from '../components/LoginForm.jsx';
 
 export default function Login() {
   return (
-    <Container>
+    <Container className="pt-4">
+      <h1>Log In</h1>
       <Row>
-        <Col>
+        <Col className="col-4 pt-4">
           <LoginForm />
         </Col>
       </Row>

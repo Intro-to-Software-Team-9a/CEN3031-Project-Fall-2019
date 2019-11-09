@@ -22,7 +22,8 @@
       "airbnb-base"
     ],
     "rules": {
-      "no-shadow": "off"
+      "no-shadow": "off",
+      "no-underscore-dangle": "off"
     }
   },
   "scripts": {
