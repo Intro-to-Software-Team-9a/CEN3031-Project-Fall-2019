@@ -1,59 +1,84 @@
+import { connect } from 'react-redux';
 import React from 'react';
 import './ViewDocuments.css'
 import Search from '../components/Search';
 import CurrentDoc from '../components/CurrentDoc';
 import DocumentList from '../components/DocumentList';
-import DocumentHistory from '../components/DocumentHistory'
 
-class ViewDocuments extends React.Component{
-
-    constructor(props){
-        super(props)
-        this.state= {
-            filterText: '',
-            selectedDocument: '',
-        }
+import { Row, Col, Container } from 'react-bootstrap';
+import { getDocuments } from '../actions/document';
+import { strictEqual } from 'should';
+class ViewDocuments extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      filterText: '',
+      selectedDocument: '',
     }
+  }
 
-    setDocument(document){
-        this.setState({
-            selectedDocument: document
-        })
-    }
+  componentDidMount() {
+    this.props.getDocuments();
+  }
 
-    filterText(value){
-      this.setState({
-        filterText: value
-      })
-    }
+  setDocument(document) {
+    this.setState({
+      selectedDocument: document
+    })
+  }
 
-    render(){
+  filterText(value) {
+    this.setState({
+      filterText: value
+    })
+  }
 
-        return (
-    
-            <div className="row">
-            <div className="title col-6 border-right text-center">
-                 <Search 
-                 filterText = {this.filterText.bind(this)}/>
+  render() {
+
+    return (
+      <Container fluid>
+        <Row className="mt-4">
+
+          <Col className="border-right">
+            <div className="px-4">
+
+              <h2>&larr; Your Documents</h2>
+              <br />
+              <div className="ml-4">
+                <Search filterText={this.filterText.bind(this)} />
+              </div>
+              <br />
+              <div className="ml-4">
+                <DocumentList
+                  documentClicked={this.setDocument.bind(this)}
+                  filterText={this.state.filterText} />
+              </div>
             </div>
-            <div className="currentDoc col-6 ">
-              <CurrentDoc 
-              currentDoc = {this.state.selectedDocument}/>
-            </div>
-            <table className="docList col-6 border-right">
-              <DocumentList 
-              documentClicked = {this.setDocument.bind(this)}
-              filterText = {this.state.filterText}/>
-            </table>
-            <div className="docHistory col-6">
-              <DocumentHistory />
-            </div>
-            
-            
-          </div>
-          
-          );
-    }
-  
+          </Col>
+          {
+            this.props.activeTemplate ?
+              <Col md={7}>
+                <div className="px-4">
+                  <CurrentDoc />
+                </div>
+              </Col>
+              : ''
+          }
+        </Row>
+      </Container>
+    );
+  }
+
 }
-export default ViewDocuments;
+const mapStateToProps = (state) => ({
+  activeTemplate: state.documents.activeTemplate
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getDocuments: () => dispatch(getDocuments()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ViewDocuments);

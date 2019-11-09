@@ -3,12 +3,19 @@ import axios from 'axios';
 export const GET_DOCUMENTS_START = 'GET_DOCUMENTS_START';
 export const GET_DOCUMENTS_SUCCESS = 'GET_DOCUMENTS_SUCCESS';
 export const GET_DOCUMENTS_FAIL = 'GET_DOCUMENTS_FAIL';
-
+export const CHANGE_ACTIVE_DOCUMENT = 'CHANGE_ACTIVE_DOCUMENT';
 
 function getDocumentsSuccess(documents) {
   return {
     type: GET_DOCUMENTS_SUCCESS,
     data: { documents },
+  };
+}
+
+export function changeActiveTemplate(activeTemplate) {
+  return {
+    type: CHANGE_ACTIVE_DOCUMENT,
+    data: { activeTemplate },
   };
 }
 

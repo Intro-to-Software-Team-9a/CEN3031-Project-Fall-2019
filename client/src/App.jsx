@@ -13,23 +13,29 @@ import ViewDocuments from './views/ViewDocuments';
 
 import { getProfile } from './actions/profile';
 
-const App = () => {
-  return (
-    <div>
-      <NavBar />
-      <Switch>
-        <Route exact path="/home" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/create-account" component={CreateAccount} />
-        <Route exact path="/view-documents" component={ViewDocuments} />
-        
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-        <Route component={NotFound} />
-      </Switch>
-    </div>
-  );
+class App extends React.Component {
+  componentDidMount() {
+    this.props.getProfile();
+  }
+
+  render() {
+    return (
+      <div>
+        <NavBar />
+        <Switch>
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/create-account" component={CreateAccount} />
+          <Route exact path="/view-documents" component={ViewDocuments} />
+
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({

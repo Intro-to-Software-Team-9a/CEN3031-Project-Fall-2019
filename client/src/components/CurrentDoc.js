@@ -1,41 +1,40 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import DocumentHistory from './DocumentHistory';
+import { Button, ButtonToolbar} from 'react-bootstrap';
+import { connect } from 'react-redux';
+
+function CurrentDoc ({activeTemplate}){
+    if (!activeTemplate) {
+      return (
+        <div>
+          <p className="text-center text-muted">Select a document</p>
+        </div>
+      )
+      }
+    return (
+      <div>
+        <h2>{activeTemplate.title}</h2>
+
+        <br />
+
+        <h5>Actions</h5>
+        <ButtonToolbar>
+          <Button variant="outline-dark" className="mr-1">Download</Button>
+          <Button variant="outline-dark" className="mr-1">Print</Button>
+          <Button variant="outline-dark" className="mr-1">Edit</Button>
+        </ButtonToolbar>
+
+        <br />
+
+        <h5>Document History</h5>
+        <DocumentHistory />
+      </div>
+    );
+
+  }
 
 
-class CurrentDoc extends React.Component{
-
-    
-    render(){
-       if(this.props.currentDoc){
-        return(
-            <div>
-                <h1>{this.props.currentDoc}</h1>
-            
-                <h3>Actions:</h3>
-                <button className="btn-lg">Download</button>
-                <button className="btn-lg">Print</button>
-                <button className="btn-lg">Edit</button>
-
-            </div>
-       
-      
-        )
-       }
-       else{
-           return(
-               <div>
-                   <p>No Document Selected</p>
-                   <h3>Actions:</h3>
-                <button className="btn-lg">Download</button>
-                <button className="btn-lg">Print</button>
-                <button className="btn-lg">Edit</button>
-               </div>
-           )
-       }
-        
-
-    }
-    
-}
-
-export default CurrentDoc;
+const mapStateToProps = (state) => ({
+  activeTemplate: state.documents.activeTemplate
+})
+export default connect(mapStateToProps)(CurrentDoc);

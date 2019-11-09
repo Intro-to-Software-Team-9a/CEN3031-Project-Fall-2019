@@ -1,22 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Card } from 'react-bootstrap';
+import { changeActiveTemplate } from '../actions/document';
 
+function DocumentList({ templates, documentClicked, filterText, changeActiveTemplate }) {
 
-function DocumentList({ documents, documentClicked, filterText }) {
+  if (templates) {
 
-  if (documents) {
-
-    const documentList = documents.filter((document) => {
-      return document.templateId.title.toLowerCase().indexOf(filterText.toLowerCase()) >= 0;
+    const documentList = templates.filter((template) => {
+      return template.title.toLowerCase().indexOf(filterText.toLowerCase()) >= 0;
     })
-      .map((document) => (
-        <div>
-          <a href="#" key={document._id} onClick={() => documentClicked(JSON.stringify(document.templateId.title))}>
-            <div className="card border-secondary mb-3" style={{ width: '10rem' }}>
-              <div className="card-header">{JSON.stringify(document.templateId.title)}</div>
-              <div className="card-body text-secondary">
-              </div>
-            </div>
+      .map((template) => (
+        <div key={template._id} style={{ width: '8rem' }}>
+          <a href="#" key={template._id} onClick={() => changeActiveTemplate(template)}>
+            <Card >
+              <Card.Img variant="top" src="https://www.pinclipart.com/picdir/middle/23-237671_document-clipart-stack-papers-file-stack-icon-png.png" />
+            </Card>
+            <center className="pt-2">
+              <p>{template.title}</p>
+            </center>
           </a>
         </div>
       ))
@@ -31,7 +33,11 @@ function DocumentList({ documents, documentClicked, filterText }) {
 
 }
 const mapStateToProps = (state) => ({
-  documents: state.documents.documents
-})
+  templates: state.documents.templates,
+});
 
-export default connect(mapStateToProps)(DocumentList);
+const mapDispatchToProps = (dispatch) => ({
+  changeActiveTemplate: (document) => dispatch(changeActiveTemplate(document)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DocumentList);
