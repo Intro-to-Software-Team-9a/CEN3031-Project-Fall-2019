@@ -4,7 +4,7 @@
  */
 function authenticate() {
   return (req, res, next) => {
-    if (!req.session.accountId) {
+    if (!req.session.accountId || !req.session.profileId) {
       return res.status(401).send();
     }
 
