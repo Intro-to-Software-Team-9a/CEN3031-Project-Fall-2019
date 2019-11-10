@@ -10,6 +10,7 @@ const templatesRouter = require('../routes/templates.server.routes');
 const documentsRouter = require('../routes/documents.server.routes');
 const questionnaireRouter = require('../routes/questionnaire.server.routes');
 const questionnaireResponseRouter = require('../routes/questionnaireResponse.server.routes');
+const pdfRouter = require('../routes/pdf.server.routes');
 const config = require('./config');
 
 
@@ -49,6 +50,7 @@ module.exports.init = () => {
   app.use('/api/documents', documentsRouter);
   app.use('/api/questionnaire', questionnaireRouter);
   app.use('/api/questionnaireResponse', questionnaireResponseRouter);
+  app.use('/api/pdf', pdfRouter);
 
   if (process.env.NODE_ENV === 'production') {
   // Serve any static files
