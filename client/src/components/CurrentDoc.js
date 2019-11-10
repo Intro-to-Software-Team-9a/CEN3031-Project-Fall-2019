@@ -2,8 +2,12 @@ import React from 'react';
 import DocumentHistory from './DocumentHistory';
 import { Button, ButtonToolbar} from 'react-bootstrap';
 import { connect } from 'react-redux';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import PrintIcon from '@material-ui/icons/Print';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 function CurrentDoc ({activeTemplate}){
+  
     if (!activeTemplate) {
       return (
         <div>
@@ -19,9 +23,10 @@ function CurrentDoc ({activeTemplate}){
 
         <h5>Actions</h5>
         <ButtonToolbar>
-          <Button variant="outline-dark" className="mr-1">Download</Button>
-          <Button variant="outline-dark" className="mr-1">Print</Button>
-          <Button variant="outline-dark" className="mr-1">Edit</Button>
+        
+          <Button variant="outline-dark" className="mr-3" style={{minWidth: '175px'}}><span className="mr-1"><GetAppIcon /></span>Download</Button>
+          <Button variant="outline-dark" className="mr-3" style={{minWidth: '175px'}}><span className="mr-2"><PrintIcon /></span>Print</Button>
+          <Button variant="outline-dark" className="mr-3" style={{minWidth: '175px'}}><span className="mr-2"><EditOutlinedIcon /></span>Edit</Button>
         </ButtonToolbar>
 
         <br />
