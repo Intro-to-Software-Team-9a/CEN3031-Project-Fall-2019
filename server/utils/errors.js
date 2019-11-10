@@ -12,5 +12,6 @@ module.exports = {
   },
   other: {
     UNKNOWN: 'An unknown error occurred.',
+    INVALID_INPUT: 'The input parameter is not valid.'
   },
 };
