@@ -7,9 +7,22 @@ const Profile = require('../models/Profile.model');
 const Document = require('../models/Document.model');
 const Template = require('../models/Template.model');
 
+const Questionniare = require('../models/Questionnaire.model');
+const QuestionniareResponse = require('../models/QuestionnaireResponse.model');
+
+async function dropDb() {
+  await Account.remove({}).exec();
+  await Profile.remove({}).exec();
+  await Document.remove({}).exec();
+  await Template.remove({}).exec();
+  await Questionniare.remove({}).exec();
+}
+
 mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function run() {
+  await dropDb();
+
   const account1 = new Account(mockdata.account1);
   const document1 = new Document(mockdata.document1);
   const profile1 = new Profile(mockdata.profile1);
@@ -25,6 +38,10 @@ async function run() {
   await account1.save();
   await document1.save();
   await template1.save();
+
+  const questionnaire1 = new Questionniare(mockdata.questionnaire1);
+
+  await questionnaire1.save();
 }
 
 run().then(() => {
