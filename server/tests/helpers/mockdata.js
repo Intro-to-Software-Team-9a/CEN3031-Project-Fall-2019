@@ -4,7 +4,7 @@
 module.exports = {
   account1: {
     email: 'test@gmail.com',
-    passwordHash: 'test',
+    passwordHash: '$2b$10$tOKa531X/IaHZncPznfUYu3es/D9MeK.JqbFZ3UJ0TS/5OEX6mUXa',
   },
   profile1: {
     name: 'Example User',

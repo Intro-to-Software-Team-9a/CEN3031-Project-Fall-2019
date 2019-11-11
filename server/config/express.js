@@ -6,11 +6,8 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const accountsRouter = require('../routes/accounts.server.routes');
 const profilesRouter = require('../routes/profiles.server.routes');
-<<<<<<< HEAD
 const pdfRouter = require('../routes/pdf.server.routes');
-=======
 const documentsRouter = require('../routes/documents.server.routes');
->>>>>>> feature/template-documents
 const config = require('./config');
 
 
