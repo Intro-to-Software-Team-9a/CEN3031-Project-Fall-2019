@@ -6,7 +6,7 @@ const Plans = require('../../utils/plans');
 module.exports = {
   account1: {
     email: 'test@gmail.com',
-    passwordHash: '$2b$10$h.HlAnw2uILiT0eOmrx0q.qEahmLCTcRmsbAHIKFS/9/gD1xX7dfW',
+    passwordHash: '$2b$10$tOKa531X/IaHZncPznfUYu3es/D9MeK.JqbFZ3UJ0TS/5OEX6mUXa',
   },
   profile1: {
     name: 'Example User',
@@ -53,5 +53,13 @@ module.exports = {
         ],
       },
     ],
+  },
+  questionnaireResponse1: {
+    serializedResult: JSON.stringify({
+      name: 'Brian',
+      quest: 'I seek the grail.',
+      cats: true,
+      dogs: false,
+    }),
   },
 };
