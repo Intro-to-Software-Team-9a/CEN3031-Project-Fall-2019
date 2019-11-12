@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { changeCreateField, doCreateAccount } from '../actions/account';
+import { submitForm } from '../actions/questionnaire';
 
 // this component wraps AbstractForm
 import AbstractForm from './AbstractForm.jsx';
@@ -26,6 +27,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   onSubmit: async (e) => {
     e.preventDefault();
     await dispatch(doCreateAccount({ onSuccess: ownProps.onFinish }));
+    await dispatch(submitForm());
   },
   changeField: (fieldName, newValue) => dispatch(changeCreateField(fieldName, newValue)),
 });

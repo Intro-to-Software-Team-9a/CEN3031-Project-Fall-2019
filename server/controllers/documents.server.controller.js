@@ -4,6 +4,7 @@ const errors = require('../utils/errors');
 const mongooseUtils = require('../utils/mongoose');
 const Template = require('../models/Template.model');
 const Document = require('../models/Document.model');
+const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
 const TemplateRenderer = require('../render/templateRenderer');
 
 async function get(req, res) {
@@ -30,13 +31,20 @@ async function generate(req, res) {
   try {
     const { templateId } = req.params;
     const template = await Template.findById(templateId).exec();
+    const questionnaireResponse = await QuestionnaireResponse
+      .findOne({ profileId: req.session.profileId })
+      .sort({ createdAt: -1 })
+      .exec();
 
-    // TODO: pull data from questionnaire
-    const data = {
-      name: 'Gary',
-    };
+    if (!template || !questionnaireResponse) {
+      res.status(404);
+      return res.send({ message: errors.other.INVALID_INPUT });
+    }
 
-    const renderedDocument = TemplateRenderer.render(template.template, data);
+    const renderedDocument = TemplateRenderer.render(
+      template.template,
+      JSON.parse(questionnaireResponse.serializedResult),
+    );
 
     const document = new Document({
       title: template.title,
