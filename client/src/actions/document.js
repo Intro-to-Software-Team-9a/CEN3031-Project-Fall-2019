@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 export const GET_DOCUMENTS_START = 'GET_DOCUMENTS_START';
 export const GET_DOCUMENTS_SUCCESS = 'GET_DOCUMENTS_SUCCESS';
 export const GET_DOCUMENTS_FAIL = 'GET_DOCUMENTS_FAIL';
@@ -31,4 +32,16 @@ export function getDocuments() {
       dispatch({ type: GET_DOCUMENTS_FAIL, data: { message } });
     }
   };
+export const GENERATE_DOCUMENT_START = 'GENERATE_DOCUMENT_START';
+export const GENERATE_DOCUMENT_SUCCESS = 'GENERATE_DOCUMENT_SUCCESS';
+export const GENERATE_DOCUMENT_FAIL = 'GENERATE_DOCUMENT_FAIL';
+
+export function generateDocument(id) {
+  return async (dispatch) => {
+    dispatch({ type: GENERATE_DOCUMENT_START });
+
+    try {
+      
+    }
+  }
 }

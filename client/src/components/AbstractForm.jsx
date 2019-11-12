@@ -20,6 +20,7 @@ export default function AbstractForm({
   const formFields = fields.map(({ type, name, label }) => (
     <Form.Group key={name} controlId={name}>
       <Form.Label>{label}</Form.Label>
+      <Form.Label style={{color:'#F5FFFA'}}>{label}</Form.Label>
       <Form.Control
         value={data[name]}
         onChange={(e) => changeField(name, e.target.value)}
@@ -37,6 +38,7 @@ export default function AbstractForm({
           </Alert>
           : ''}
         <Button variant="primary" type="submit">Submit</Button>
+        <Button variant="outline-light" type="submit">Submit</Button>
       </Form>
     </div>
   );
