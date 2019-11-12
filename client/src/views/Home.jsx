@@ -9,14 +9,14 @@ function Home() {
   return (
     <Container className="pt-4">
       <div className="spacing"></div>
-      <h1>Welcome to ESTATEPLANR</h1>
-      <h5>An online tool for all your estate planning needs.</h5>
+      <h1>Welcome to EstatePlanR</h1>
+      <h5>An online tool for all your Estate Planning needs.</h5>
       <br/>
       <ul>
-        <li>Document Important Information and Final Arrangements.</li>
-        <li>Create Estate Plans</li>
-        <li>Qualified Attorneys are available</li>
-        <li>Print and Store Estate Plans</li>
+        <li>Document important information and make final arrangements</li>
+        <li>Create estate plans</li>
+        <li>Qualified attorneys are available</li>
+        <li>Print and store your documents</li>
       </ul>
       <br />
       <Link to="/get-started"><Button variant="outline-dark">Get Started</Button></Link>

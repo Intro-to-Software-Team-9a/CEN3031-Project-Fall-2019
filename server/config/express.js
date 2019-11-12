@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const accountsRouter = require('../routes/accounts.server.routes');
 const profilesRouter = require('../routes/profiles.server.routes');
 const templatesRouter = require('../routes/templates.server.routes');
@@ -30,12 +31,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 
-module.exports.init = () => {
+module.exports.init = async () => {
   /*
         connect to database
         - reference README for db uri
     */
-  mongoose.connect(dbUri, {
+  await mongoose.connect(dbUri, {
     useNewUrlParser: true,
   });
   mongoose.set('useCreateIndex', true);
@@ -54,6 +55,7 @@ module.exports.init = () => {
     resave: true,
     saveUninitialized: true,
     cookie: { secure: false },
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
   }));
 
   // enable request logging for development debugging
