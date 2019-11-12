@@ -22,7 +22,7 @@ function DocumentHistory({ activeTemplate, documents }) {
             </Col>
             <Col>
               <ButtonToolbar>
-                <Button variant="outline-dark" className="mr-2" onClick={() => window.open('http://localhost:5000/api/pdf/'+document._id, 'Your Document')}><span className="mr-1"><GetAppIcon /></span>Download</Button>
+                <Button variant="outline-dark" className="mr-2" onClick={() => window.open('/api/pdf/'+document._id, 'Your Document')}><span className="mr-1"><GetAppIcon /></span>Download</Button>
                 {/*<Button variant="outline-dark" className="mr-2"><span className="mr-1"><PrintIcon />ˇ</span>Print</Button>*/}
               </ButtonToolbar>
             </Col>
