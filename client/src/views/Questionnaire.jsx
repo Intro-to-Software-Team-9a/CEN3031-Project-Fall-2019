@@ -7,7 +7,11 @@ import Questionnaire from '../components/Questionnaire';
 export default function QuestionnaireView() {
   return (
     <Container className="pt-4">
-      <h1>Questionnaire</h1>
+      <tr>
+        <td><h1>Questionnaire&nbsp;</h1></td>
+        <td valign="middle"><img src={require("../assets/safeLock.png")}alt="Checkmark" width="15" height="15"></img></td>
+      </tr>
+      <p><i>Personal information is required for estate plans.</i></p>
       <Row>
         <Col className="col-4 pt-4">
           <QuestionList />
