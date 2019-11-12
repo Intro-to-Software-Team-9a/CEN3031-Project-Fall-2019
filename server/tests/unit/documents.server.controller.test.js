@@ -5,6 +5,7 @@ const assert = require('assert');
 
 const Template = require('../../models/Template.model');
 const Document = require('../../models/Document.model');
+const QuestionnaireResponse = require('../../models/QuestionnaireResponse.model');
 const { stubExec } = require('../helpers/utils');
 const mockData = require('../helpers/mockdata');
 const mongooseUtils = require('../../utils/mongoose');
@@ -44,6 +45,9 @@ describe('Documents Controller', () => {
       // stub models to stop database access
       Template.findById = stubExec(async () => ({ ...mockData.template1, _id: templateId }));
       Document.prototype.save = sinon.stub().resolves();
+      QuestionnaireResponse.findOne = () => ({
+        sort: stubExec(async () => ({ ...mockData.questionnaireResponse1 })),
+      });
 
       // reset globals
       req = mockRequest();

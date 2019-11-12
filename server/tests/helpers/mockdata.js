@@ -54,4 +54,12 @@ module.exports = {
       },
     ],
   },
+  questionnaireResponse1: {
+    serializedResult: JSON.stringify({
+      name: 'Brian',
+      quest: 'I seek the grail.',
+      cats: true,
+      dogs: false,
+    }),
+  },
 };
