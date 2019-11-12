@@ -9,7 +9,7 @@ function Cart({ templates, removeTemplate }) {
     <React.Fragment>
       <TemplateList onClick={removeTemplate} templates={templates} />
     </React.Fragment>
-  )
+  );
 }
 
 // create necessary props for AbstractForm

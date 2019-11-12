@@ -1,12 +1,12 @@
 import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import {
+  Container, Row, Col, Button,
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import Cart from '../components/Cart';
 import AddToCart from '../components/AddToCart';
-import { read } from 'fs';
 import './style.css';
-
 
 
 function Catalog() {

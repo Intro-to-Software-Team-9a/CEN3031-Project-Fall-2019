@@ -8,7 +8,6 @@ const Document = require('../models/Document.model');
 const Template = require('../models/Template.model');
 
 const Questionniare = require('../models/Questionnaire.model');
-const QuestionniareResponse = require('../models/QuestionnaireResponse.model');
 
 async function dropDb() {
   await Account.remove({}).exec();

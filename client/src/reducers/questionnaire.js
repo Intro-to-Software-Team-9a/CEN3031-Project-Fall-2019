@@ -33,11 +33,14 @@ export default function questionnaireReducer(state = defaultState, action) {
         questionnaire: undefined,
       };
     case CHANGE_FORM:
-      const newResponse = Object.assign({}, state.questionnaireResponse, { [action.data.fieldName]: action.data.newValue });
+      const newResponse = {
+        ...state.questionnaireResponse,
+        [action.data.fieldName]: action.data.newValue,
+      };
       return {
         ...state,
         questionnaireResponse: newResponse,
-      }
+      };
     default:
       return state;
   }

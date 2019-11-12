@@ -19,7 +19,7 @@ export default function AbstractForm({
   // create each field in the form from the `fields` prop
   const formFields = fields.map(({ type, name, label }) => (
     <Form.Group key={name} controlId={name}>
-      <Form.Label style={{color:'#F5FFFA'}}>{label}</Form.Label>
+      <Form.Label style={{ color: '#F5FFFA' }}>{label}</Form.Label>
       <Form.Control
         value={data[name]}
         onChange={(e) => changeField(name, e.target.value)}

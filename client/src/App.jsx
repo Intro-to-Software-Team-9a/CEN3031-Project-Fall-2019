@@ -3,15 +3,14 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Home from "./views/Home";
+import Home from './views/Home';
 import Login from './views/Login';
 import CreateAccount from './views/CreateAccount';
 import Catalog from './views/Catalog';
 import CreateDocument from './views/CreateDocument';
-import NotFound from "./views/NotFound";
+import NotFound from './views/NotFound';
 import NavBar from './components/NavBar';
 import Questionnaire from './views/Questionnaire';
 import { getProfile } from './actions/profile';
@@ -27,7 +26,6 @@ class App extends React.Component {
     this.props.getProfile();
     this.props.getQuestionnaire();
     await this.props.getTemplates();
-    console.log(this.props.templates);
   }
 
   render() {
@@ -66,5 +64,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(App);

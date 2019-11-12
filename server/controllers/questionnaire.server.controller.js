@@ -11,7 +11,6 @@ async function getById(req, res) {
     const questionnaire = await Questionnaire.findById(req.params.questionniareId).exec();
     return res.send({ questionnaire });
   } catch (error) {
-    console.error(error);
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }
@@ -19,10 +18,9 @@ async function getById(req, res) {
 
 async function getMostRecent(req, res) {
   try {
-    const questionnaire = await Questionnaire.findOne().sort({ createdAt : -1 }).exec();
+    const questionnaire = await Questionnaire.findOne().sort({ createdAt: -1 }).exec();
     return res.send({ questionnaire });
   } catch (error) {
-    console.error(error);
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }
@@ -30,5 +28,5 @@ async function getMostRecent(req, res) {
 
 module.exports = {
   getById,
-  getMostRecent
+  getMostRecent,
 };

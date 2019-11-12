@@ -5,21 +5,19 @@ import { connect } from 'react-redux';
 import { changeForm } from '../actions/questionnaire';
 
 /**
- * 
+ *
  * @param possibleResponses From Questionnaire.question object in DB
  * @param title From Questionnaire.question object in DB
  * @param onClick Callback for onclick
  */
 function MultipleChoiceQuestion({ question, onChange, currentResponse }) {
-  console.log(currentResponse, question);
-
   const { possibleResponses, title } = question;
 
   function updateValue(label) {
-    possibleResponses.filter(r => r.label !== label)
-      .forEach(response => onChange(response.label, false));
-    
-      onChange(label, true);
+    possibleResponses.filter((r) => r.label !== label)
+      .forEach((response) => onChange(response.label, false));
+
+    onChange(label, true);
   }
 
   return (
@@ -36,7 +34,7 @@ function MultipleChoiceQuestion({ question, onChange, currentResponse }) {
         />
       ))}
     </Form.Group>
-  )
+  );
 }
 
 const mapStateToProps = (state) => ({

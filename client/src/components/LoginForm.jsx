@@ -4,7 +4,7 @@ import { doLogin, changeLoginField } from '../actions/account';
 // this component wraps AbstractForm
 import AbstractForm from './AbstractForm.jsx';
 
- // define fields for AbstractForm
+// define fields for AbstractForm
 const fields = [
   { type: 'email', name: 'email', label: 'Email' },
   { type: 'password', name: 'password', label: 'Password' },

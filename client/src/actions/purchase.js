@@ -10,14 +10,14 @@ export const DO_PURCHASE_FAIL = 'DO_PURCHASE_FAIL';
 export function addTemplate(template) {
   return {
     type: ADD_TEMPLATE,
-    data: { template }
+    data: { template },
   };
 }
 
 export function removeTemplate(template) {
   return {
     type: REMOVE_TEMPLATE,
-    data: { template }
+    data: { template },
   };
 }
 
@@ -28,7 +28,7 @@ export function doPurchase() {
     dispatch({ type: DO_PURCHASE_START });
 
     try {
-      await axios.post('/api/templates/purchase', { templateIds: purchase.cart.templates.map(template => template._id) });
+      await axios.post('/api/templates/purchase', { templateIds: purchase.cart.templates.map((template) => template._id) });
       dispatch({ type: DO_PURCHASE_SUCCESS });
       dispatch(getProfile());
     } catch (error) {

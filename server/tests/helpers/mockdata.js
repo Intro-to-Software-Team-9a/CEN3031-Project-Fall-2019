@@ -45,6 +45,6 @@ module.exports = {
           { responseType: QuestionTypes.MUTLIPLE_CHOICE, value: 'Dogs', label: 'dogs' },
         ],
       },
-    ]
-  }
+    ],
+  },
 };

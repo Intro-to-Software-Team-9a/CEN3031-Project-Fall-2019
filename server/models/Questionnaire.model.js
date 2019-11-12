@@ -1,17 +1,29 @@
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const QuestionTypes = require('../utils/questionTypes');
 
 /**
  * Stores a questionnaire and its corresponding questions.
  */
 
- /**
-  * Question types:
-  * MUTLIPLE_CHOICE: [{ responseType: QuestionTypes.MULTIPLE_CHOICE, value: 'display-text', label: 'label-for-templating' }]
-  * SHORT_ANSWER: [{ responseType: QuestionTypes.SHORT_ANSWER, value: undefined, label: 'label-for-templating' }]
-  */
+/**
+ * Question types:
+ * MUTLIPLE_CHOICE: [
+ *   {
+ *     responseType: QuestionTypes.MULTIPLE_CHOICE,
+ *     value: 'display-text',
+ *     label: 'label-for-templating'
+ *   }
+ * ]
+ * SHORT_ANSWER: [
+ *   {
+ *     responseType: QuestionTypes.SHORT_ANSWER,
+ *     value: undefined,
+ *     label: 'label-for-templating'
+ *   }
+ * ]
+ *
+ */
 
 const QuestionniareSchema = new Schema({
   questions: [{

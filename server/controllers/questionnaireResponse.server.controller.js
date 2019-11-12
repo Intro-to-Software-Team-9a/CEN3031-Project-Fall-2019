@@ -13,17 +13,20 @@ function validateResponse(response, questionnaire) {
             missingResponseLabels.push(label);
           }
         });
+        break;
       case QuestionTypes.SHORT_ANSWER:
         possibleResponses.forEach(({ label }) => {
           if (response[label] === undefined) {
             missingResponseLabels.push(label);
           }
         });
+        break;
+      default:
     }
   });
 
   if (missingResponseLabels.length > 0) {
-    return ({ isOk: false, missingResponseLabels, });
+    return ({ isOk: false, missingResponseLabels });
   }
   return ({ isOk: true, missingResponseLabels: [] });
 }
@@ -40,7 +43,9 @@ async function create(req, res) {
   }
 
   const questionnaire = await Questionniare.findById(req.params.questionnaireId).exec();
-  const { isOk, missingResponseLabels } = validateResponse(req.body.questionnaireResponse, questionnaire);
+  const { isOk, missingResponseLabels } = validateResponse(
+    req.body.questionnaireResponse, questionnaire,
+  );
 
   if (!isOk) {
     res.status(400);

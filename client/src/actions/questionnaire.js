@@ -25,12 +25,11 @@ export function submitForm() {
     try {
       await axios.post(
         `/api/questionnaireResponse/${questionnaireId}`,
-        { questionnaireResponse: questionnaire.questionnaireResponse }
+        { questionnaireResponse: questionnaire.questionnaireResponse },
       );
 
       dispatch({ type: SUBMIT_FORM_SUCCESS });
     } catch (error) {
-      console.warn(error);
       const message = error.response.data.message || error.message;
       dispatch({ type: SUBMIT_FORM_FAIL, data: { message } });
     }
@@ -43,11 +42,10 @@ export function getQuestionnaire() {
 
     try {
       const response = await axios.get('/api/questionnaire');
-      const questionnaire = response.data.questionnaire;
+      const { questionnaire } = response.data;
 
       dispatch({ type: GET_QUESTIONNAIRE_SUCCESS, data: { questionnaire } });
     } catch (error) {
-      console.warn(error);
       const message = error.response.data.message || error.message;
       dispatch({ type: GET_QUESTIONNAIRE_FAIL, data: { message } });
     }

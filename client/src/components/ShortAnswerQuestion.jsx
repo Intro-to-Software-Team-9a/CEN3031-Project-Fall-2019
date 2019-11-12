@@ -1,17 +1,16 @@
 import React from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 import { changeForm } from '../actions/questionnaire';
 
 /**
- * 
+ *
  * @param possibleResponses From Questionnaire.question object in DB
  * @param title From Questionnaire.question object in DB
  * @param onClick Callback for onclick
  */
 function ShortAnswerQuestion({ question, onChange, currentResponse }) {
-  console.log(currentResponse, question);
   const { possibleResponses, title } = question;
   return (
 
@@ -24,11 +23,11 @@ function ShortAnswerQuestion({ question, onChange, currentResponse }) {
           label={response.label}
           name={response._id}
           value={currentResponse[response.label] || ''}
-          onChange={event => onChange(response.label, event.target.value)}
+          onChange={(event) => onChange(response.label, event.target.value)}
         />
       ))}
       </Form.Group>
-  )
+  );
 }
 
 const mapStateToProps = (state) => ({
