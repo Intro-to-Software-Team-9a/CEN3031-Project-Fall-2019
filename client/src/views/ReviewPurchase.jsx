@@ -52,7 +52,7 @@ function ReviewPurchase({ templates, doPurchase, onBack }) {
       <Row>
         <Col md={1}></Col>
         <Col>
-          <Button onClick={doPurchase} variant="outline-light">Finish Purchase</Button>
+          <Button onClick={doPurchase} variant="outline-dark">Finish Purchase</Button>
         </Col>
       </Row>
     </Container>

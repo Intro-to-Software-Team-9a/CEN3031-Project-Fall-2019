@@ -28,7 +28,7 @@ function Catalog({ onFinish, onBack }) {
             <Cart />
           </div>
           <div className="text-right">
-            <Button variant="outline-light" onClick={onFinish}>Review and Finish Purchase</Button>
+            <Button variant="outline-dark" onClick={onFinish}>Review and Finish Purchase</Button>
           </div>
         </Col>
         <Col md>

@@ -29,7 +29,7 @@ function Questionnaire({ questionnaire, onFinish }) {
           }
         })}
       </Form>
-      <Button variant="outline-light" onClick={onFinish}>Continue</Button>
+      <Button variant="outline-dark" onClick={onFinish}>Continue</Button>
     </React.Fragment>
   );
 }

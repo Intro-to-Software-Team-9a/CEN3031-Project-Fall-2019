@@ -36,35 +36,34 @@ class ViewDocuments extends React.Component {
   render() {
     return (
       <Container fluid>
-        <Row className="mt-4">
-
+        <Row>
+          <Col md={1}>
+            <h2 onClick={() => this.props.history.push('/profile-home')} className="cursor-pointer hover-white float-right">&larr;</h2>
+          </Col>
           <Col className="border-right">
-            <div className="px-4">
-
-              <h2>&larr; Your Documents</h2>
-              <br />
-              <div className="ml-4">
-                <Search filterText={this.filterText.bind(this)} />
-              </div>
-              <br />
-              <div className="ml-4">
-                <DocumentList
-                  documentClicked={this.setDocument.bind(this)}
-                  filterText={this.state.filterText} />
-              </div>
+            <h2>Your Documents</h2>
+            <br />
+            <div>
+              <Search filterText={this.filterText.bind(this)} />
+            </div>
+            <br />
+            <div>
+              <DocumentList
+                documentClicked={this.setDocument.bind(this)}
+                filterText={this.state.filterText} />
             </div>
           </Col>
-          {
-            this.props.activeTemplate
-              ? <Col md={7}>
-                <div className="px-4">
-                  <CurrentDoc />
-                </div>
-              </Col>
-              : ''
-          }
+        {
+          this.props.activeTemplate
+            ? <Col md={7}>
+              <div className="px-4">
+                <CurrentDoc />
+              </div>
+            </Col>
+            : ''
+        }
         </Row>
-      </Container>
+      </Container >
     );
   }
 }

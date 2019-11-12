@@ -1,14 +1,30 @@
 import React from 'react';
-import { Container, Button } from 'react-bootstrap';
+import { Container, Button, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-function ProfileHome() {
+function ProfileHome({ profile }) {
+  if (!profile) return '';
   return (
     <Container className="pt-4">
-      <Link to="/view-documents"><Button variant="outline-light">View Your Documents</Button></Link>
+      <Row>
+        <Col md={6}>
+          <div className="spacing"></div>
+          <h1>Welcome, {profile.name}</h1>
+          <h5>Here are the tasks you can accomplish.</h5>
+          <div className="spacing"></div>
+          <Link to="/view-documents"><Button variant="outline-dark">View Your Documents</Button></Link>
+        </Col>
+        <Col md={6}>
+          <div className="spacing"></div>
+        </Col>
+      </Row>
     </Container>
   );
 }
 
-export default ProfileHome;
+const mapStateToProps = (state) => ({
+  profile: state.profiles.profile,
+});
+
+export default connect(mapStateToProps)(ProfileHome);
