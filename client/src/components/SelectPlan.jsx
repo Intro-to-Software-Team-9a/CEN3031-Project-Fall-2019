@@ -30,7 +30,7 @@ function SelectPlan({ plan, onPlanSelect, onFinish}) {
               </div>
               <div class="card-footer d-flex justify-content-between">
                 <span className="planPrice">$50</span>
-                <a href="#" class="btn btn-primary"
+                <a href="#" class="btn btn-outline-dark"
                   onClick={(event) => onClick('BASIC_PLAN')}>
                   Buy now
                 </a>
@@ -51,7 +51,7 @@ function SelectPlan({ plan, onPlanSelect, onFinish}) {
               </div>
               <div class="card-footer d-flex justify-content-between">
                 <span className="planPrice">$50</span>
-                <a href="#" class="btn btn-primary"
+                <a href="#" class="btn btn-outline-dark"
                   onClick={(event) => onClick('ADVANCED_PLAN')}>
                   Buy now
                 </a>
@@ -72,7 +72,7 @@ function SelectPlan({ plan, onPlanSelect, onFinish}) {
               </div>
               <div class="card-footer d-flex justify-content-between">
                 <span className="planPrice">$50</span>
-                <a href="#" class="btn btn-primary"
+                <a href="#" class="btn btn-outline-dark"
                   onClick={(event) => onClick('COMPREHENSIVE_PLAN')}>
                   Buy now
                 </a>
