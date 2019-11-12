@@ -58,7 +58,7 @@ class Onboarding extends React.Component {
         currentpage = <CreateAccount onBack={this.decrementPage} onFinish={this.incrementPage} />;
         break;
       case SELECT_PLAN_PAGE:
-        currentpage = <SelectPlan onBack={this.decrementPage} onFinish={this.incrementPage} />
+        currentpage = <SelectPlan onFinish={this.incrementPage} />
         break;
       case CART_PAGE:
         currentpage = <Catalog onBack={this.decrementPage} onFinish={this.incrementPage} />;
