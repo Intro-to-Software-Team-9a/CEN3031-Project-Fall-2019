@@ -4,19 +4,30 @@ import { connect } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Home from "./views/Home";
+import Home from './views/Home';
 import Login from './views/Login';
 import CreateAccount from './views/CreateAccount';
+import Catalog from './views/Catalog';
+import CreateDocument from './views/CreateDocument';
 import SelectPlan from './views/SelectPlan';
-import NotFound from "./views/NotFound";
+import NotFound from './views/NotFound';
+import ViewDocuments from './views/ViewDocuments';
+import Questionnaire from './views/Questionnaire';
+import ReviewPurchase from './views/ReviewPurchase';
 import NavBar from './components/NavBar';
-import { getProfile } from './actions/profile';
 
+import { getTemplates } from './actions/template';
+import { getQuestionnaire } from './actions/questionnaire';
+import { getProfile } from './actions/profile';
+import { addTemplate, doPurchase } from './actions/purchase';
 
 class App extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
     this.props.getProfile();
+    this.props.getQuestionnaire();
+    await this.props.getTemplates();
   }
+
   render() {
     return (
       <div>
@@ -26,6 +37,11 @@ class App extends React.Component {
           <Route exact path="/login" component={Login} />
           <Route exact path="/create-account" component={CreateAccount} />
           <Route exact path="/select-plan" component={SelectPlan} />
+          <Route exact path="/view-documents" component={ViewDocuments} />
+          <Route exact path='/review-purchase' component = {ReviewPurchase} />
+          <Route exact path="/catalog" component={Catalog} />
+          <Route exact path="/create-template" component={CreateDocument} />
+          <Route exact path="/questionnaire" component={Questionnaire} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
@@ -37,14 +53,18 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-
+  templates: state.templates.templates,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getProfile: () => dispatch(getProfile()),
+  getQuestionnaire: () => dispatch(getQuestionnaire()),
+  getTemplates: () => dispatch(getTemplates()),
+  doPurchase: () => dispatch(doPurchase()),
+  addTemplate: (template) => dispatch(addTemplate(template)),
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(App);

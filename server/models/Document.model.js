@@ -8,14 +8,17 @@ const { Schema } = mongoose;
  */
 
 const DocumentSchema = new Schema({
+  // title of the document (from template)
+  title: String,
+
+  // literal text of the document
+  text: { type: String, required: true },
+
   // ref of the owner
   profileId: { type: Schema.Types.ObjectId, ref: 'Profile', required: true },
 
   // ref of the template
   templateId: { type: Schema.Types.ObjectId, ref: 'Template', required: true },
-
-  // literal text of the document
-  text: { type: String, required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Document', DocumentSchema);

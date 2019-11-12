@@ -19,6 +19,9 @@ const ProfileSchema = new Schema({
     isUser: Boolean,
     isAdmin: Boolean,
   },
+
+  // all templates owned by the user
+  ownedTemplates: [{ type: Schema.Types.ObjectId, ref: 'Template' }],
 }, { timestamps: true });
 
 module.exports = mongoose.model('Profile', ProfileSchema);
