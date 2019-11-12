@@ -9,11 +9,11 @@ const Profile = require('../models/Profile.model');
 
 const { saltRounds } = publicConfig.password;
 
-function addToSession(account, req) {
+/**
  * @param {Object} account The user's Account
  * @param {Object} profile The user's Profile
  * @param {Object} req Express Request object
- */
+ **/
 async function addToSession(account, profile, req) {
   req.session.accountId = account._id;
   req.session.profileId = profile._id;

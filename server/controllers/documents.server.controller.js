@@ -1,8 +1,10 @@
 
-const Document = require('../models/Document.model');
 const Profile = require('../models/Profile.model');
 const errors = require('../utils/errors');
-const Template = require('../models/Template.model')
+const mongooseUtils = require('../utils/mongoose');
+const Template = require('../models/Template.model');
+const Document = require('../models/Document.model');
+const TemplateRenderer = require('../render/templateRenderer');
 
 async function get(req, res) {
   const profile = await Profile.findOne({ accountId: req.session.accountId }).exec();
@@ -15,14 +17,6 @@ async function get(req, res) {
   return res.send({ documents });
 }
 
-module.exports = {
-  get,
-=======
-const mongooseUtils = require('../utils/mongoose');
-const Template = require('../models/Template.model');
-const Document = require('../models/Document.model');
-const TemplateRenderer = require('../render/templateRenderer');
-const errors = require('../utils/errors');
 
 /**
  * Generates a Document from a Template using the most recent QuestionnaireResponse for the user.
@@ -66,4 +60,5 @@ async function generate(req, res) {
 
 module.exports = {
   generate,
+  get,
 };
