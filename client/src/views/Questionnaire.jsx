@@ -12,7 +12,11 @@ export default function QuestionnaireView({ onFinish, onBack }) {
         <h1 onClick={onBack} className="cursor-pointer hover-white float-right">&larr;</h1>
         </Col>
         <Col>
-          <h1>Questionnaire</h1>
+          <tr>
+            <h1>Questionnaire&nbsp;</h1>
+            <td valign="middle"><img src={require("../assets/safeLock.png")}alt="Checkmark" width="15" height="15"></img></td>
+          </tr>
+          <p><i>Personal information is required for state plans.</i></p>
         </Col>
       </Row>
       <Row>
