@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getProfile } from './profile';
+import { generateDocuments } from './document';
 
 export const ADD_TEMPLATE = 'ADD_TEMPLATE';
 export const REMOVE_TEMPLATE = 'REMOVE_TEMPLATE';
@@ -21,18 +22,35 @@ export function removeTemplate(template) {
   };
 }
 
-export function doPurchase() {
+export function doPurchase({ onSuccess }) {
   return async (dispatch, getState) => {
-    const { purchase } = getState();
+    let state = getState();
 
     dispatch({ type: DO_PURCHASE_START });
 
     try {
-      await axios.post('/api/templates/purchase', { templateIds: purchase.cart.templates.map((template) => template._id) });
+      const templateIds = state.purchase.cart.templates.map((template) => template._id);
+      await axios.post('/api/templates/purchase', { templateIds });
       dispatch({ type: DO_PURCHASE_SUCCESS });
-      dispatch(getProfile());
+
+      // refresh profile
+      await dispatch(getProfile());
+
+      // generate all documents
+      await dispatch(generateDocuments(templateIds));
+
+      // call onSuccess if no error occurred
+      state = getState();
+      if (state.purchase.purchaseState.isError || state.profiles.profileState.isError) {
+        return;
+      }
+      await onSuccess();
     } catch (error) {
-      const message = error.response.data.message || error.message;
+      // parse HTTP message
+      let message = error.message;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
       dispatch({ type: DO_PURCHASE_FAIL, data: { message } });
     }
   };

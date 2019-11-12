@@ -10,8 +10,8 @@ export default function Template({ template, onClick }) {
         </Card>
 
         <center className="pt-2">
-          <p>{template.title}</p>
-          <p>$10.00</p>
+          <p className="mb-0">{template.title}</p>
+          <p className="mt-1">$10.00</p>
         </center>
     </div>
   );

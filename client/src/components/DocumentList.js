@@ -15,7 +15,7 @@ function DocumentList({
           <a href="#" key={template._id} onClick={() => changeActiveTemplate(template)}>
             <Card >
               <Card.Img variant="top"
-              src="https://www.pinclipart.com/picdir/middle/23-237671_document-clipart-stack-papers-file-stack-icon-png.png" />
+                src="https://www.pinclipart.com/picdir/middle/23-237671_document-clipart-stack-papers-file-stack-icon-png.png" />
             </Card>
             <center className="pt-2">
               <p>{template.title}</p>
@@ -28,12 +28,23 @@ function DocumentList({
 
 
   return (
-      <div><p>No Documents</p></div>
+    <div><p>No Documents</p></div>
   );
 }
-const mapStateToProps = (state) => ({
-  templates: state.documents.templates,
-});
+const mapStateToProps = (state) => {
+  const allTemplates = state.templates.templates;
+  const profile = state.profiles.profile;
+  if (!profile) {
+    return {
+      templates: [],
+    };
+  }
+
+  const ownedTemplates = allTemplates.filter(t => profile.ownedTemplates.includes(t._id));
+  return {
+    templates: ownedTemplates,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   changeActiveTemplate: (document) => dispatch(changeActiveTemplate(document)),

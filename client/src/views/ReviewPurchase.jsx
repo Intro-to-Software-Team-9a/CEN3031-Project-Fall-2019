@@ -6,18 +6,22 @@ import { connect } from 'react-redux';
 import TemplateList from '../components/TemplateList';
 import { doPurchase } from '../actions/purchase';
 
-function ReviewPurchase({ templates, doPurchase }) {
+function ReviewPurchase({ templates, doPurchase, onBack }) {
   return (
-    <Container>
-      <h1>Review Your Purchase</h1>
+    <Container fluid className="pt-4">
       <Row>
+        <Col md={1}>
+          <h1 onClick={onBack} className="float-right">&larr;</h1>
+        </Col>
         <Col>
-          <h5>Your Cart</h5>
-          <TemplateList templates={templates} />
+          <h1>Review Your Purchase</h1>
         </Col>
       </Row>
       <Row>
+        <Col md={1}></Col>
         <Col>
+          <h5>Your Cart</h5>
+          <TemplateList templates={templates} />
           <Button onClick={doPurchase} variant="outline-light">Purchase</Button>
         </Col>
       </Row>
@@ -33,8 +37,10 @@ const mapStateToProps = (state) => ({
 
 
 // create action-dispatchers for AbstractForm
-const mapDispatchToProps = (dispatch) => ({
-  doPurchase: () => dispatch(doPurchase()),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  doPurchase: () => {
+    dispatch(doPurchase({ onSuccess: ownProps.onFinish }))
+  },
 });
 
 

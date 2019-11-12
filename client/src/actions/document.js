@@ -30,14 +30,32 @@ export function getDocuments() {
       const response = await axios.get('/api/documents');
       dispatch(getDocumentsSuccess(response.data.documents));
     } catch (error) {
-      const message = error.response.data.message || error.message;
+      // parse HTTP message
+      let message = error.message;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
       dispatch({ type: GET_DOCUMENTS_FAIL, data: { message } });
     }
   };
 }
 
-export function generateDocument() {
+export function generateDocuments(templateIds) {
   return async (dispatch) => {
     dispatch({ type: GENERATE_DOCUMENT_START });
+
+    try {
+      await Promise.all(templateIds.map((templateId) => {
+        axios.get(`/api/documents/generate/${templateId}`);
+      }));
+
+      dispatch({ type: GENERATE_DOCUMENT_SUCCESS });
+    } catch (error) {
+      let message = error.message;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
+      dispatch({ type: GENERATE_DOCUMENT_FAIL, data: { message } });
+    }
   };
 }
