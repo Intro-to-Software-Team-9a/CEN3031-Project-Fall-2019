@@ -6,16 +6,19 @@ import Catalog from './Catalog';
 import CreateAccount from './CreateAccount';
 import Questionnaire from './Questionnaire';
 import ReviewPurchase from './ReviewPurchase';
+import SelectPlan from './SelectPlan';
 
 
 const QUESTIONNAIRE_PAGE = 'questionnaire-page';
 const CREATE_ACCOUNT_PAGE = 'create-account-page';
+const SELECT_PLAN_PAGE = 'select-plan-page';
 const CART_PAGE = 'cart-page';
 const REVIEW_PAGE = 'review-page';
 
 const Pages = [
   QUESTIONNAIRE_PAGE,
   CREATE_ACCOUNT_PAGE,
+  SELECT_PLAN_PAGE,
   CART_PAGE,
   REVIEW_PAGE
 ];
@@ -53,6 +56,9 @@ class Onboarding extends React.Component {
         break;
       case CREATE_ACCOUNT_PAGE:
         currentpage = <CreateAccount onBack={this.decrementPage} onFinish={this.incrementPage} />;
+        break;
+      case SELECT_PLAN_PAGE:
+        currentpage = <SelectPlan onFinish={this.incrementPage} />
         break;
       case CART_PAGE:
         currentpage = <Catalog onBack={this.decrementPage} onFinish={this.incrementPage} />;
