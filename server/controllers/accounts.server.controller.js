@@ -11,11 +11,13 @@ const { saltRounds } = publicConfig.password;
 
 /**
  * Adds account information to session.
- * @param {Object} account Account object
+ * @param {Object} account The user's Account
+ * @param {Object} profile The user's Profile
  * @param {Object} req Express Request object
  */
-function addToSession(account, req) {
+async function addToSession(account, profile, req) {
   req.session.accountId = account._id;
+  req.session.profileId = profile._id;
 }
 
 /**
@@ -31,7 +33,6 @@ function isPasswordOk(password) {
 
   return true;
 }
-
 
 /**
  * @param email {String}
@@ -77,13 +78,13 @@ async function createAccount(req, res) {
     await profile.save();
 
     // update session
-    addToSession(account, req);
+    addToSession(account, profile, req);
 
     return res.send();
   } catch (e) {
     if (mongooseUtils.getErrorType(e) === mongooseUtils.ErrorTypes.DUPLICATE_KEY) {
       res.status(400);
-      res.send({ message: errors.accounts.ACCOUNT_ALREADY_EXISTS });
+      return res.send({ message: errors.accounts.ACCOUNT_ALREADY_EXISTS });
     }
 
     res.status(500);
@@ -121,8 +122,10 @@ async function login(req, res) {
       return res.send({ message: errors.accounts.WRONG_CREDENTIALS });
     }
 
+    const profile = await Profile.findOne({ accountId: account }).exec();
+
     // update session
-    addToSession(account, req);
+    addToSession(account, profile, req);
 
     return res.send();
   } catch (e) {

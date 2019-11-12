@@ -7,6 +7,8 @@ function Home() {
   return (
     <Container className="pt-4">
       <p style={{color:'#F5FFFA'}}>This is the app home page.</p>
+      <p><Link to="/create-account">Create an account</Link></p>
+      <p><Link to="/create-template">Create a Document</Link></p>
     </Container>
   );
 }

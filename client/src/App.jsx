@@ -10,6 +10,7 @@ import Home from "./views/Home";
 import Login from './views/Login';
 import CreateAccount from './views/CreateAccount';
 import Catalog from './views/Catalog';
+import CreateDocument from './views/CreateDocument';
 import NotFound from "./views/NotFound";
 import NavBar from './components/NavBar';
 import { getProfile } from './actions/profile';
@@ -35,6 +36,7 @@ class App extends React.Component {
           <Route exact path="/create-account" component={CreateAccount} />
           <Route exact path='/review-purchase' component = {ReviewPurchase} />
           <Route exact path="/catalog" component={Catalog} />
+          <Route exact path="/create-template" component={CreateDocument} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
