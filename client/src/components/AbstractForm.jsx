@@ -36,7 +36,6 @@ export default function AbstractForm({
             {state.error}
           </Alert>
           : ''}
-        <Button variant="primary" type="submit">Submit</Button>
         <Button variant="outline-light" type="submit">Submit</Button>
       </Form>
     </div>

@@ -10,23 +10,18 @@ import CreateAccount from './views/CreateAccount';
 import Catalog from './views/Catalog';
 import CreateDocument from './views/CreateDocument';
 import NotFound from './views/NotFound';
-import NavBar from './components/NavBar';
 import ViewDocuments from './views/ViewDocuments';
 import Questionnaire from './views/Questionnaire';
-import { getProfile } from './actions/profile';
-import { getQuestionnaire } from './actions/questionnaire';
 import ReviewPurchase from './views/ReviewPurchase';
-import { getTemplates } from './actions/template';
 
+import NavBar from './components/NavBar';
+
+import { getTemplates } from './actions/template';
+import { getQuestionnaire } from './actions/questionnaire';
+import { getProfile } from './actions/profile';
 import { addTemplate, doPurchase } from './actions/purchase';
 
-import { getProfile } from './actions/profile';
-
 class App extends React.Component {
-  componentDidMount() {
-    this.props.getProfile();
-  }
-
   async componentDidMount() {
     this.props.getProfile();
     this.props.getQuestionnaire();
