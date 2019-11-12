@@ -41,7 +41,7 @@ describe('Accounts Controller', () => {
       );
 
       Profile.findOne = stubExec(
-        async () => ({ ...mockData.profile1, _id: '1' })
+        async () => ({ ...mockData.profile1, _id: '1' }),
       );
 
       // reset globals

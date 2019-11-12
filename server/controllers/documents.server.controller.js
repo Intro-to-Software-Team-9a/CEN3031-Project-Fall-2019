@@ -10,11 +10,11 @@ const errors = require('../utils/errors');
 async function generate(req, res) {
   if (!req.params.templateId) {
     res.status(400);
-    return res.send({ message: errors.other.INVALID_INPUT })
+    return res.send({ message: errors.other.INVALID_INPUT });
   }
 
   try {
-    const templateId = req.params.templateId;
+    const { templateId } = req.params;
     const template = await Template.findById(templateId).exec();
 
     // TODO: pull data from questionnaire
