@@ -32,7 +32,7 @@ export function changeCreateField(fieldName, newValue) {
 }
 
 
-export function doLogin() {
+export function doLogin({ onSuccess }) {
   return async (dispatch, getState) => {
     const { accounts } = getState();
 
@@ -42,10 +42,25 @@ export function doLogin() {
     try {
       await axios.post('/api/accounts/login', { email, password });
       dispatch({ type: LOGIN_SUCCESS });
+      await dispatch(getProfile());
       dispatch({ type: FORGET_LOGIN_FORM });
-      dispatch(getProfile());
+      await dispatch(getProfile());
+
+      const { accounts, profiles } = getState();
+      if (accounts.createState.isError || profiles.profileState.isError) {
+        return;
+      }
+      if (!onSuccess) {
+        return;
+      }
+      await onSuccess();
     } catch (error) {
-      const message = error.response.data.message || error.message;
+      console.error(error);
+      // parse HTTP message
+      let message = error.message;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
       dispatch({ type: LOGIN_FAIL, data: { message } });
     }
   };
@@ -60,13 +75,17 @@ export function doLogout() {
       dispatch({ type: LOGOUT_SUCCESS });
       dispatch(forgetProfile());
     } catch (error) {
-      const message = error.response.data.message || error.message;
+      // parse HTTP message
+      let message = error.message;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
       dispatch({ type: LOGOUT_FAIL, data: { message } });
     }
   };
 }
 
-export function doCreateAccount() {
+export function doCreateAccount({ onSuccess }) {
   return async (dispatch, getState) => {
     const { accounts } = getState();
 
@@ -84,9 +103,22 @@ export function doCreateAccount() {
       await axios.post('/api/accounts/create', { email, password, name });
       dispatch({ type: CREATE_SUCCESS });
       dispatch({ type: FORGET_CREATE_FORM });
-      dispatch(getProfile());
+      await dispatch(getProfile());      
+
+      const { accounts, profiles } = getState();
+      if (accounts.createState.isError || profiles.profileState.isError) {
+        return;
+      }
+      if (!onSuccess) {
+        return;
+      }
+      await onSuccess();
     } catch (error) {
-      const message = error.response.data.message || error.message;
+      // parse HTTP message
+      let message = error.message;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
       dispatch({ type: CREATE_FAIL, data: { message } });
     }
   };

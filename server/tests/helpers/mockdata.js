@@ -1,11 +1,12 @@
 const QuestionTypes = require('../../utils/questionTypes');
+const Plans = require('../../utils/plans');
 
 // mock data for testing purposes
 
 module.exports = {
   account1: {
     email: 'test@gmail.com',
-    passwordHash: '$2b$10$h.HlAnw2uILiT0eOmrx0q.qEahmLCTcRmsbAHIKFS/9/gD1xX7dfW',
+    passwordHash: '$2b$10$tOKa531X/IaHZncPznfUYu3es/D9MeK.JqbFZ3UJ0TS/5OEX6mUXa',
   },
   profile1: {
     name: 'Example User',
@@ -13,13 +14,19 @@ module.exports = {
       isUser: true,
       isAdmin: false,
     },
+    plan: Plans.NO_PLAN,
+    ownedTemplates: [],
   },
   document1: {
     text: 'Hello, my name is Example User',
   },
+  document2: {
+    text: 'This is another version of template1',
+  },
   template1: {
     title: 'Introduction',
     template: 'Hello, my name is {{ name }}',
+    priceInCents: 1000,
   },
   questionnaire1: {
     questions: [
@@ -46,5 +53,13 @@ module.exports = {
         ],
       },
     ],
+  },
+  questionnaireResponse1: {
+    serializedResult: JSON.stringify({
+      name: 'Brian',
+      quest: 'I seek the grail.',
+      cats: true,
+      dogs: false,
+    }),
   },
 };

@@ -28,7 +28,11 @@ export function getProfile() {
       const response = await axios.get('/api/profiles');
       dispatch(getProfileSuccess(response.data.profile));
     } catch (error) {
-      const message = error.response.data.message || error.message;
+      // parse HTTP message
+      let message = error.message;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
       dispatch({ type: GET_PROFILE_FAIL, data: { message } });
     }
   };

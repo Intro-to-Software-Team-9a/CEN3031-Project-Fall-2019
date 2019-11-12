@@ -26,7 +26,6 @@ function mockResponse() {
   };
 }
 
-
 describe('Accounts Controller', () => {
   describe('login', () => {
     // "globals" for login tests

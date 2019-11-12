@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { doLogin, changeLoginField } from '../actions/account';
+import { getDocuments } from '../actions/document';
 
 // this component wraps AbstractForm
 import AbstractForm from './AbstractForm.jsx';
@@ -19,10 +20,11 @@ const mapStateToProps = (state) => ({
 });
 
 // create action-dispatchers for AbstractForm
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (e) => {
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onSubmit: async (e) => {
     e.preventDefault();
-    dispatch(doLogin());
+    await dispatch(doLogin({ onSuccess: ownProps.onFinish }));
+    await dispatch(getDocuments());
   },
   changeField: (fieldName, newValue) => dispatch(changeLoginField(fieldName, newValue)),
 });
