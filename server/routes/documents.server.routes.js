@@ -5,7 +5,7 @@ const { authenticate } = require('../middleware/authenticate');
 
 const router = express.Router();
 
-router.route('/')
-  .get(authenticate(), documents.get);
+router.route('/generate/:templateId')
+  .get(authenticate(), documents.generate);
 
 module.exports = router;

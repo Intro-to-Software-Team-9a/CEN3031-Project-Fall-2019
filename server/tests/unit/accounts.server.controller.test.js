@@ -7,6 +7,7 @@ const bcrypt = require('bcrypt');
 const Account = require('../../models/Account.model');
 const Profile = require('../../models/Profile.model');
 const mongooseUtils = require('../../utils/mongoose');
+const { stubExec } = require('../helpers/utils');
 const mockData = require('../helpers/mockdata');
 
 const accounts = require('../../controllers/accounts.server.controller');
@@ -20,7 +21,7 @@ function mockRequest() {
 
 function mockResponse() {
   return {
-    status: sinon.spy(),
+    status: sinon.stub(),
     send: sinon.stub().returns(),
   };
 }
@@ -43,7 +44,6 @@ function stubExec(execFn) {
   });
 }
 
-
 describe('Accounts Controller', () => {
   describe('login', () => {
     // "globals" for login tests
@@ -55,6 +55,10 @@ describe('Accounts Controller', () => {
       // should return an account with an _id
       Account.findOne = stubExec(
         async () => ({ ...mockData.account1, _id: '1' }),
+      );
+
+      Profile.findOne = stubExec(
+        async () => ({ ...mockData.profile1, _id: '1' }),
       );
 
       // reset globals

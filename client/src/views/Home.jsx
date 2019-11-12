@@ -6,11 +6,11 @@ import './Home.css';
 function Home() {
   return (
     <Container className="pt-4">
-       <p>This is the app home page.</p>
-      <p><Link to="/Test">Go to test page</Link></p>
+      <p style={{ color: '#F5FFFA' }}>This is the app home page.</p>
+      <p><Link to="/create-account">Create an account</Link></p>
+      <p><Link to="/create-template">Create a Document</Link></p>
+      <p><Link to="/questionnaire">View Questionnaire</Link></p>
     </Container>
-
-
   );
 }
 

@@ -43,6 +43,8 @@ export function doLogin() {
       await axios.post('/api/accounts/login', { email, password });
       dispatch({ type: LOGIN_SUCCESS });
       await dispatch(getProfile());
+      dispatch({ type: FORGET_LOGIN_FORM });
+      dispatch(getProfile());
     } catch (error) {
       const message = error.response.data.message || error.message;
       dispatch({ type: LOGIN_FAIL, data: { message } });
@@ -83,6 +85,8 @@ export function doCreateAccount() {
       await axios.post('/api/accounts/create', { email, password, name });
       dispatch({ type: CREATE_SUCCESS });
       await dispatch(getProfile());
+      dispatch({ type: FORGET_CREATE_FORM });
+      dispatch(getProfile());
     } catch (error) {
       const message = error.response.data.message || error.message;
       dispatch({ type: CREATE_FAIL, data: { message } });
