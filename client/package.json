@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/icons": "^4.5.1",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "react": "^16.10.1",
@@ -14,7 +15,8 @@
     "react-scripts": "3.1.2",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "should": "^13.2.3"
   },
   "eslintConfig": {
     "extends": [

@@ -1,20 +1,20 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import './ViewDocuments.css'
+import './ViewDocuments.css';
+import { Row, Col, Container } from 'react-bootstrap';
 import Search from '../components/Search';
 import CurrentDoc from '../components/CurrentDoc';
 import DocumentList from '../components/DocumentList';
 
-import { Row, Col, Container } from 'react-bootstrap';
 import { getDocuments } from '../actions/document';
-import { strictEqual } from 'should';
+
 class ViewDocuments extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       filterText: '',
       selectedDocument: '',
-    }
+    };
   }
 
   componentDidMount() {
@@ -23,18 +23,17 @@ class ViewDocuments extends React.Component {
 
   setDocument(document) {
     this.setState({
-      selectedDocument: document
-    })
+      selectedDocument: document,
+    });
   }
 
   filterText(value) {
     this.setState({
-      filterText: value
-    })
+      filterText: value,
+    });
   }
 
   render() {
-
     return (
       <Container fluid>
         <Row className="mt-4">
@@ -56,8 +55,8 @@ class ViewDocuments extends React.Component {
             </div>
           </Col>
           {
-            this.props.activeTemplate ?
-              <Col md={7}>
+            this.props.activeTemplate
+              ? <Col md={7}>
                 <div className="px-4">
                   <CurrentDoc />
                 </div>
@@ -68,10 +67,9 @@ class ViewDocuments extends React.Component {
       </Container>
     );
   }
-
 }
 const mapStateToProps = (state) => ({
-  activeTemplate: state.documents.activeTemplate
+  activeTemplate: state.documents.activeTemplate,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -80,5 +78,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(ViewDocuments);
