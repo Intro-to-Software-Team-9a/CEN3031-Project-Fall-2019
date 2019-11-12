@@ -4,7 +4,7 @@ import { formatCurrency } from '../utils/format';
 
 export default function Template({ template, onClick }) {
   return (
-    <div className="btn btn-link" key={template._id} onClick={onClick} style={{ width: '8rem', color: '#F5FFFA' }}>
+    <div className="hover-outline" key={template._id} onClick={onClick} style={{ width: '8rem' }}>
 
         <Card>
           <Card.Img variant="top" src="https://www.pinclipart.com/picdir/middle/23-237671_document-clipart-stack-papers-file-stack-icon-png.png" />

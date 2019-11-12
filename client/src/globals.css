@@ -1,18 +1,22 @@
 body,
 html {
-    background-color: #222;
+    background-color: #efefef;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: rgb(238, 218, 164);
+    /* color: rgb(238, 218, 164); */
 }
 
-button, p, span, label {
-    color: white;
+button, p, span, label, li {
+    /* color: white; */
+}
+
+.hover-outline:hover {
+    outline: 1px solid black;
 }
 
 .hover-white:hover {
-    color: white;
+    color: black;
 }
 
 .cursor-pointer {

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Card } from 'react-bootstrap';
 import { changeActiveTemplate } from '../actions/document';
+import Template from './Template';
 
 function DocumentList({
   templates, filterText, changeActiveTemplate,
@@ -10,19 +11,7 @@ function DocumentList({
     const documentList = templates.filter(
       (template) => template.title.toLowerCase().indexOf(filterText.toLowerCase()) >= 0,
     )
-      .map((template) => (
-        <div key={template._id} style={{ width: '8rem' }}>
-          <a href="#" key={template._id} onClick={() => changeActiveTemplate(template)}>
-            <Card >
-              <Card.Img variant="top"
-                src="https://www.pinclipart.com/picdir/middle/23-237671_document-clipart-stack-papers-file-stack-icon-png.png" />
-            </Card>
-            <center className="pt-2">
-              <p>{template.title}</p>
-            </center>
-          </a>
-        </div>
-      ));
+      .map((template) => <Template onClick={() => changeActiveTemplate(template)} template={template} />);
     return <div>{documentList}</div>;
   }
 

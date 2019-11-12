@@ -9,9 +9,9 @@ import { doLogout } from '../actions/account';
 
 function NavBar({ isLoggedIn, name, doLogout }) {
   return (
-    <Navbar bg="#343a40" expand="lg">
+    <Navbar expand="lg">
       <LinkContainer to="/home">
-        <Navbar.Brand className="text-light">
+        <Navbar.Brand>
           EstatePlanR
         </Navbar.Brand>
       </LinkContainer>
@@ -29,12 +29,13 @@ function NavBar({ isLoggedIn, name, doLogout }) {
         <Nav className="mr-sm-2">
           {isLoggedIn
             ? <React.Fragment>
-              <LinkContainer to="/home" style={{ color: '#F5FFFA' }}><Nav.Link>{name}</Nav.Link></LinkContainer>
-              <Button onClick={doLogout} variant="outline-light">Log Off</Button>
+              <LinkContainer to="/profile-home"><Nav.Link>{name}</Nav.Link></LinkContainer>
+              &nbsp;&nbsp;
+              <Button onClick={doLogout} variant="outline-dark">Logout</Button>
             </React.Fragment>
             : <React.Fragment>
-              <Link to='/login'><Button variant="outline-light" style={{ marginRight: '10px' }}>Log In</Button></Link>
-              <Link to='/create-account'><Button variant="outline-light">Get Started</Button></Link>
+              <Link to='/login'><Button variant="outline-dark">Log In</Button></Link>
+              <Link to='/get-started'><Button className="mr-0" variant="outline-dark">Get Started</Button></Link>
             </React.Fragment>
           }
         </Nav>
