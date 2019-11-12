@@ -9,4 +9,4 @@ function render(rawTemplate, data) {
 
 module.exports = {
   render,
-}
+};
