@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Cart from '../components/Cart';
 import AddToCart from '../components/AddToCart';
 import { read } from 'fs';
-//import './style.css';
+import './style.css';
 
 
 
