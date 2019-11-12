@@ -15,7 +15,11 @@ export function getTemplates() {
 
       dispatch({ type: GET_TEMPLATES_SUCCESS, data: { templates } });
     } catch (error) {
-      const message = error.response.data.message || error.message;
+      // parse HTTP message
+      let message = error.message;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
       dispatch({ type: GET_TEMPLATES_FAIL, data: { message } });
     }
   };

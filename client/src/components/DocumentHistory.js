@@ -10,29 +10,29 @@ function DocumentHistory({ activeTemplate, documents }) {
   const activeDocuments = documents.filter(
     (document) => document.templateId._id === activeTemplate._id,
   );
-  return (
-<div>
-  <ListGroup variant="flush">
-    <ListGroup.Item>
-      <Container>
-        {activeDocuments.map((document) => (
 
-          <Row className="mb-4">
-            <Col xl={4}>
-                <p>{document.createdAt}</p>
-            </Col>
-            <Col>
-              <ButtonToolbar>
-                <Button variant="outline-dark" className="mr-2"><span className="mr-1"><GetAppIcon /></span>Download</Button>
-                <Button variant="outline-dark" className="mr-2"><span className="mr-1"><PrintIcon />ˇ</span>Print</Button>
-              </ButtonToolbar>
-            </Col>
-          </Row>
-        ))}
-        </Container>
-      </ListGroup.Item>
-  </ListGroup>
-  </div>
+  return (
+    <div>
+      <ListGroup variant="flush">
+        <ListGroup.Item>
+          <Container>
+            {activeDocuments.map((document) => (
+              <Row key={`history-entry-${document._id}`} className="mb-4">
+                <Col xl={4}>
+                  <p>{document.createdAt}</p>
+                </Col>
+                <Col>
+                  <ButtonToolbar>
+                    <Button variant="outline-dark" className="mr-2"><span className="mr-1"><GetAppIcon /></span>Download</Button>
+                    <Button variant="outline-dark" className="mr-2"><span className="mr-1"><PrintIcon />ˇ</span>Print</Button>
+                  </ButtonToolbar>
+                </Col>
+              </Row>
+            ))}
+          </Container>
+        </ListGroup.Item>
+      </ListGroup>
+    </div>
   );
 }
 const mapStateToProps = (state) => ({

@@ -14,6 +14,7 @@ async function get(req, res) {
   }
 }
 
+
 /** Adds templates to the user's account. */
 async function purchase(req, res) {
   if (!req.body || !req.body.templateIds) {

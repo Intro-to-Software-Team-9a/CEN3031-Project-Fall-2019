@@ -22,10 +22,10 @@ const mapStateToProps = (state) => ({
 
 
 // create action-dispatchers for AbstractForm
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit: (e) => {
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onSubmit: async (e) => {
     e.preventDefault();
-    dispatch(doCreateAccount());
+    await dispatch(doCreateAccount({ onSuccess: ownProps.onFinish }));
   },
   changeField: (fieldName, newValue) => dispatch(changeCreateField(fieldName, newValue)),
 });
