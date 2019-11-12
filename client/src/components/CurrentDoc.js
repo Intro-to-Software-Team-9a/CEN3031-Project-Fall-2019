@@ -25,8 +25,8 @@ function CurrentDoc({ activeTemplate, documents }) {
 
         <h5>Actions</h5>
         <ButtonToolbar>
-          <Button variant="outline-dark" className="mr-2" style={{ minWidth: '175px' }} onClick={() => window.open('http://localhost:5000/api/pdf/'+activeDocuments[activeDocuments.length-1]._id, '_blank')}><span className="mr-1"><GetAppIcon /></span>Download</Button>
-          <Button variant="outline-dark" className="mr-2" style={{ minWidth: '175px' }} onClick={() => window.open('http://localhost:5000/api/pdf/'+activeDocuments[activeDocuments.length-1]._id, '_blank')}><span className="mr-2"><PrintIcon /></span>Print</Button>
+          <Button variant="outline-dark" className="mr-2" style={{ minWidth: '175px' }} onClick={() => window.open('/api/pdf/'+activeDocuments[activeDocuments.length-1]._id, '_blank')}><span className="mr-1"><GetAppIcon /></span>Download</Button>
+          <Button variant="outline-dark" className="mr-2" style={{ minWidth: '175px' }} onClick={() => window.open('/api/pdf/'+activeDocuments[activeDocuments.length-1]._id, '_blank')}><span className="mr-2"><PrintIcon /></span>Print</Button>
           {/* <Button variant="outline-dark" className="mr-3" style={{ minWidth: '175px' }}><span className="mr-2"><EditOutlinedIcon /></span>Edit</Button> */}
         </ButtonToolbar>
 
