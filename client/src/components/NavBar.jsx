@@ -14,8 +14,10 @@ function NavBar({ isLoggedIn, name, doLogout }) {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <LinkContainer to="/home" style={{ color: '#F5FFFA' }}><Nav.Link>Home</Nav.Link></LinkContainer>
-          <LinkContainer to="/catalog" style={{ color: '#F5FFFA' }}><Nav.Link>Catalog</Nav.Link></LinkContainer>
+          <LinkContainer to="/home" style={{color:'#F5FFFA'}}><Nav.Link>Home</Nav.Link></LinkContainer>
+          <LinkContainer to="/catalog" style={{color:'#F5FFFA'}}><Nav.Link>Catalog</Nav.Link></LinkContainer>
+          <LinkContainer to="/view-documents"><Nav.Link>Documents</Nav.Link></LinkContainer>
+
         </Nav>
         <Nav className="mr-sm-2">
           {isLoggedIn

@@ -10,11 +10,10 @@ const Profile = require('../models/Profile.model');
 const { saltRounds } = publicConfig.password;
 
 /**
- * Adds account information to session.
  * @param {Object} account The user's Account
  * @param {Object} profile The user's Profile
  * @param {Object} req Express Request object
- */
+ **/
 async function addToSession(account, profile, req) {
   req.session.accountId = account._id;
   req.session.profileId = profile._id;
@@ -33,6 +32,21 @@ function isPasswordOk(password) {
 
   return true;
 }
+
+/**
+ * Returns if a password is acceptable for use.
+ * Including:
+ * - long enough
+ * @param {} password Candiate password
+ */
+function isPasswordOk(password) {
+  if (!password) return false;
+  if (typeof password !== 'string') return false;
+  if (password.length < 8) return false;
+
+  return true;
+}
+
 
 /**
  * @param email {String}
@@ -121,6 +135,7 @@ async function login(req, res) {
       res.status(401);
       return res.send({ message: errors.accounts.WRONG_CREDENTIALS });
     }
+
 
     const profile = await Profile.findOne({ accountId: account }).exec();
 

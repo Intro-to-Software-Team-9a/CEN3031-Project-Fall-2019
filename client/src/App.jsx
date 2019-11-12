@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Home from './views/Home';
@@ -12,6 +11,7 @@ import Catalog from './views/Catalog';
 import CreateDocument from './views/CreateDocument';
 import NotFound from './views/NotFound';
 import NavBar from './components/NavBar';
+import ViewDocuments from './views/ViewDocuments';
 import Questionnaire from './views/Questionnaire';
 import { getProfile } from './actions/profile';
 import { getQuestionnaire } from './actions/questionnaire';
@@ -20,8 +20,13 @@ import { getTemplates } from './actions/template';
 
 import { addTemplate, doPurchase } from './actions/purchase';
 
+import { getProfile } from './actions/profile';
 
 class App extends React.Component {
+  componentDidMount() {
+    this.props.getProfile();
+  }
+
   async componentDidMount() {
     this.props.getProfile();
     this.props.getQuestionnaire();
@@ -36,6 +41,7 @@ class App extends React.Component {
           <Route exact path="/home" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/create-account" component={CreateAccount} />
+          <Route exact path="/view-documents" component={ViewDocuments} />
           <Route exact path='/review-purchase' component = {ReviewPurchase} />
           <Route exact path="/catalog" component={Catalog} />
           <Route exact path="/create-template" component={CreateDocument} />

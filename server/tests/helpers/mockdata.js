@@ -17,6 +17,9 @@ module.exports = {
   document1: {
     text: 'Hello, my name is Example User',
   },
+  document2: {
+    text: 'This is another version of template1',
+  },
   template1: {
     title: 'Introduction',
     template: 'Hello, my name is {{ name }}',

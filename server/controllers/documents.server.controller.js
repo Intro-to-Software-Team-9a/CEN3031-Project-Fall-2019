@@ -1,8 +1,22 @@
+
+const Profile = require('../models/Profile.model');
+const errors = require('../utils/errors');
 const mongooseUtils = require('../utils/mongoose');
 const Template = require('../models/Template.model');
 const Document = require('../models/Document.model');
 const TemplateRenderer = require('../render/templateRenderer');
-const errors = require('../utils/errors');
+
+async function get(req, res) {
+  const profile = await Profile.findOne({ accountId: req.session.accountId }).exec();
+  
+  if (!profile) {
+    return res.status(404).send({ message: errors.profile.NOT_FOUND });
+  }
+
+  const documents = await Document.find({ profileId: profile._id }).populate(['templateId']);
+  return res.send({ documents });
+}
+
 
 /**
  * Generates a Document from a Template using the most recent QuestionnaireResponse for the user.
@@ -46,4 +60,5 @@ async function generate(req, res) {
 
 module.exports = {
   generate,
+  get,
 };

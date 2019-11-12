@@ -15,6 +15,8 @@ module.exports = {
     MISSING_PARAMETER: 'Missing required parameter in request.',
     INVALID_INPUT: 'The input parameter is not valid.',
   },
+
   templates: {
   },
+
 };
