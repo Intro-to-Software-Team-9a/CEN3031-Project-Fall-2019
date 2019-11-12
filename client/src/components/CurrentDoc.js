@@ -6,7 +6,10 @@ import PrintIcon from '@material-ui/icons/Print';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DocumentHistory from './DocumentHistory';
 
-function CurrentDoc({ activeTemplate }) {
+function CurrentDoc({ activeTemplate, documents }) {
+  const activeDocuments = documents.filter(
+    (document) => document.templateId._id === activeTemplate._id,
+  );
   if (!activeTemplate) {
     return (
         <div>
@@ -22,8 +25,8 @@ function CurrentDoc({ activeTemplate }) {
 
         <h5>Actions</h5>
         <ButtonToolbar>
-          <Button variant="outline-light" className="mr-3" style={{ minWidth: '175px' }}><span className="mr-1"><GetAppIcon /></span>Download</Button>
-          <Button variant="outline-light" className="mr-3" style={{ minWidth: '175px' }}><span className="mr-2"><PrintIcon /></span>Print</Button>
+          <Button variant="outline-light" className="mr-3" style={{ minWidth: '175px' }} onClick={() => window.open('http://localhost:5000/api/pdf/'+activeDocuments[activeDocuments.length-1]._id, '_blank')}><span className="mr-1"><GetAppIcon /></span>Download</Button>
+          <Button variant="outline-light" className="mr-3" style={{ minWidth: '175px' }} onClick={() => window.open('http://localhost:5000/api/pdf/'+activeDocuments[activeDocuments.length-1]._id, '_blank')}><span className="mr-2"><PrintIcon /></span>Print</Button>
           <Button variant="outline-light" className="mr-3" style={{ minWidth: '175px' }}><span className="mr-2"><EditOutlinedIcon /></span>Edit</Button>
         </ButtonToolbar>
 
@@ -37,5 +40,6 @@ function CurrentDoc({ activeTemplate }) {
 
 const mapStateToProps = (state) => ({
   activeTemplate: state.documents.activeTemplate,
+  documents: state.documents.documents,
 });
 export default connect(mapStateToProps)(CurrentDoc);

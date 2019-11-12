@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const config = require('../config/config');
 const errors = require('../utils/errors');
 const Document = require('../models/Document.model.js')
+//import '../pdf_css/pdf.css'
 
 mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -23,11 +24,8 @@ async function genPDF(req, res) {
     reader = new streams.ReadableStream();
     reader.append(document.text)
     try{
-        res.setHeader('content-type', 'application/pdf; charset=ISO 646');
-        //res.setHeader('responseType', 'arraybuffer');
-        //res.setHeader('charset', 'utf-16');
-        //res.setHeader('rawr', 'kill me');
-        return reader.pipe(markdownpdf()).pipe(res);
+        res.setHeader('content-type', 'application/pdf');
+        return reader.pipe(markdownpdf({cssPath:'../pdf_css/pdf.css'})).pipe(res);
 
     } catch (e) {
         res.status(500);
