@@ -46,12 +46,13 @@ async function generate(req, res) {
 
     function formatDay(day) {
       if (day % 10 === 1) return `${day}st`;
+      if (day < 20 && day > 10) return `${day}th`;
       if (day % 10 === 2) return `${day}nd`;
       return `${day}rd`;
     }
 
     Object.assign(data, {
-      currentDay: formatDay(new Date().getDay()),
+      currentDay: formatDay(new Date().getDate()),
       currentMonth: monthNames[new Date().getMonth()],
       currentYear: new Date().getFullYear(),
     });

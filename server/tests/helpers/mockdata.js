@@ -37,6 +37,34 @@ module.exports = {
   questionnaire1: {
     questions: [
       {
+        title: 'What is your name?',
+        questionType: QuestionTypes.SHORT_ANSWER,
+        possibleResponses: [
+          { responseType: QuestionTypes.SHORT_ANSWER, label: 'name' },
+        ],     
+      },
+      {
+        title: 'What is your address?',
+        questionType: QuestionTypes.SHORT_ANSWER,
+        possibleResponses: [
+          { responseType: QuestionTypes.SHORT_ANSWER, label: 'address' },
+        ],     
+      },
+      {
+        title: 'What is the name of your surrogate?',
+        questionType: QuestionTypes.SHORT_ANSWER,
+        possibleResponses: [
+          { responseType: QuestionTypes.SHORT_ANSWER, label: 'surrogateName' },
+        ],     
+      },
+      {
+        title: 'What is the address of your surrogate?',
+        questionType: QuestionTypes.SHORT_ANSWER,
+        possibleResponses: [
+          { responseType: QuestionTypes.SHORT_ANSWER, label: 'surrogateAddress' },
+        ],     
+      },
+      {
         title: 'Do you wish to continue care if you have a terminal condition?',
         questionType: QuestionTypes.MUTLIPLE_CHOICE,
         possibleResponses: [
@@ -59,20 +87,6 @@ module.exports = {
           { responseType: QuestionTypes.MUTLIPLE_CHOICE, value: 'Yes', label: 'vegetativeState' },
           { responseType: QuestionTypes.MUTLIPLE_CHOICE, value: 'No', label: 'noVegetativeState' },
         ],
-      },
-      {
-        title: 'What is the name of your surrogate?',
-        questionType: QuestionTypes.SHORT_ANSWER,
-        possibleResponses: [
-          { responseType: QuestionTypes.SHORT_ANSWER, label: 'surrogateName' },
-        ],     
-      },
-      {
-        title: 'What is the address of your surrogate?',
-        questionType: QuestionTypes.SHORT_ANSWER,
-        possibleResponses: [
-          { responseType: QuestionTypes.SHORT_ANSWER, label: 'surrogateAddress' },
-        ],     
       },
       {
         title: 'Do you have any additional instructions if you are incapacitated?',
