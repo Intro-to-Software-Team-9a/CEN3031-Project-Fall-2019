@@ -9,7 +9,10 @@ const Document = require('../models/Document.model.js');
  */
 async function genPDF(req, res) {
   const document = await Document.findById(req.params.templateId).exec();
-  if (!(document.profileId === req.session.profileId)) {
+
+  // need to compare by value rather than by reference
+  /* eslint-disable-next-line eqeqeq */
+  if (!(document.profileId == req.session.profileId)) {
     res.status(403);
     return res.send({ message: errors.other.PERMISSION_DENIED });
   }
