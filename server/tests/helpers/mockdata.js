@@ -23,6 +23,7 @@ module.exports = {
   template1: {
     title: 'Introduction',
     template: 'Hello, my name is {{ name }}',
+    priceInCents: 1000,
   },
   questionnaire1: {
     questions: [

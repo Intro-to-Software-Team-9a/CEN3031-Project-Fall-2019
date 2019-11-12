@@ -12,7 +12,7 @@ import { submitForm } from '../actions/questionnaire';
  * @param title From Questionnaire.question object in DB
  * @param onClick Callback for onclick
  */
-function Questionnaire({ questionnaire, onFinish, onBack }) {
+function Questionnaire({ questionnaire, onFinish }) {
   if (!questionnaire) return <div></div>;
 
   return (
@@ -29,7 +29,6 @@ function Questionnaire({ questionnaire, onFinish, onBack }) {
           }
         })}
       </Form>
-      <Button variant="outline-light" onClick={onBack}>Go Back</Button>
       <Button variant="outline-light" onClick={onFinish}>Continue</Button>
     </React.Fragment>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import { formatCurrency } from '../utils/format';
 
 export default function Template({ template, onClick }) {
   return (
@@ -11,7 +12,7 @@ export default function Template({ template, onClick }) {
 
         <center className="pt-2">
           <p className="mb-0">{template.title}</p>
-          <p className="mt-1">$10.00</p>
+          <p className="mt-1">{formatCurrency(template.priceInCents)}</p>
         </center>
     </div>
   );

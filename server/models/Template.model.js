@@ -13,7 +13,7 @@ const TemplateSchema = new Schema({
   // string for use in template rendering
   template: { type: String, required: true },
 
-  price: Number,
+  priceInCents: Number,
 }, { timestamps: true });
 
 module.exports = mongoose.model('Template', TemplateSchema);

@@ -9,7 +9,7 @@ export default function QuestionnaireView({ onFinish, onBack }) {
     <Container className="pt-4" fluid>
       <Row>
         <Col md={1}>
-          <h1 onClick={onBack} className="float-right">&larr;</h1>
+        <h1 onClick={onBack} className="cursor-pointer hover-white float-right">&larr;</h1>
         </Col>
         <Col>
           <h1>Questionnaire</h1>
@@ -21,7 +21,7 @@ export default function QuestionnaireView({ onFinish, onBack }) {
           <QuestionList />
         </Col>
         <Col className="pt-4" md={5}>
-          <Questionnaire onFinish={onFinish} onBack={onBack} />
+          <Questionnaire onFinish={onFinish} />
         </Col>
       </Row>
     </Container>

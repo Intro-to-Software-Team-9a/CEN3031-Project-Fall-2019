@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import './Home.css';
+import { connect } from 'react-redux';
 
-function Home() {
+function ProfileHome() {
   return (
     <Container className="pt-4">
       <Link to="/view-documents"><Button variant="outline-light">View Your Documents</Button></Link>
@@ -11,4 +11,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default ProfileHome;

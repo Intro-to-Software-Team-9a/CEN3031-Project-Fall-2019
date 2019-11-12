@@ -17,7 +17,7 @@ class CreateAccount extends React.Component {
       <Container className="pt-4" fluid>
         <Row>
           <Col md={1}>
-            <h1 onClick={onBack} className="float-right">&larr;</h1>
+            <h1 onClick={onBack} className="cursor-pointer hover-white float-right">&larr;</h1>
           </Col>
           <Col>
             <h1>Create Account</h1>
@@ -26,9 +26,6 @@ class CreateAccount extends React.Component {
         <Row>
           <Col md={1}></Col>
           <Col md={3} className="col-4 pt-4">
-            <div className="pb-4">
-              <Button variant="outline-light" onClick={onBack}>Go Back</Button>
-            </div>
             <CreateAccontForm onFinish={onFinish} />
           </Col>
         </Row>
