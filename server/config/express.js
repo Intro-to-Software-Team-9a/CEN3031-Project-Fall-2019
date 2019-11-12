@@ -11,7 +11,6 @@ const pdfRouter = require('../routes/pdf.server.routes');
 const documentsRouter = require('../routes/documents.server.routes');
 const questionnaireRouter = require('../routes/questionnaire.server.routes');
 const questionnaireResponseRouter = require('../routes/questionnaireResponse.server.routes');
-const pdfRouter = require('../routes/pdf.server.routes');
 const config = require('./config');
 
 
