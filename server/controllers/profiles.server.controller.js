@@ -16,9 +16,23 @@ async function get(req, res) {
   }
 }
 
+/** Helper to change plan */
+async function changePlanCall(profileId, newPlan) {
+  const profile = await Profile.findById(profileId).exec();
+
+  if (!profile) {
+    throw new Error(errors.profile.NOT_FOUND);
+  }
+
+  profile.plan = newPlan;
+  await profile.save();
+
+  return profile;
+}
+
 /** Change plan of the user */
 async function changePlan(req, res) {
-  const profileId = req.session.profileId;
+  const { profileId } = req.session;
   const newPlan = req.body.plan;
 
   try {
@@ -33,20 +47,6 @@ async function changePlan(req, res) {
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }
-}
-
-/** Helper to change plan */
-async function changePlanCall(profileId, newPlan) {
-  const profile = await Profile.findById(profileId).exec();
-
-  if (!profile) {
-    throw new Error(errors.profile.NOT_FOUND);
-  }
-
-  profile.plan = newPlan;
-  await profile.save();
-
-  return profile;
 }
 
 module.exports = {

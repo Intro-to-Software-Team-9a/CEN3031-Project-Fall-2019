@@ -20,7 +20,6 @@ async function dropDb() {
 mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 async function run() {
-
   await dropDb();
 
   const account1 = new Account(mockdata.account1);
