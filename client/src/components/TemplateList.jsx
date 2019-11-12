@@ -9,9 +9,9 @@ import Template from './Template';
 export default function TemplateList({ templates, onClick }) {
   return (
     <div>
-      {templates.map(template => (
+      {templates.map((template) => (
         <Template onClick={onClick ? () => onClick(template) : () => {}} template={template} />
       ))}
     </div>
-  )
+  );
 }

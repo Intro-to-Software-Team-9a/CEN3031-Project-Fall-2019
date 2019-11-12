@@ -35,7 +35,7 @@ export default function profileReducer(state = defaultState, action) {
         ...state,
         cart: {
           ...state.cart,
-          templates: state.cart.templates.filter(template => template._id !== newTemplate._id),
+          templates: state.cart.templates.filter((template) => template._id !== newTemplate._id),
         },
       };
     case DO_PURCHASE_START:
