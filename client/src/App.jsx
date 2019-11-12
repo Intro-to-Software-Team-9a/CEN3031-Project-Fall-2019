@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './globals.css';
 
 import Home from './views/Home';
 import Login from './views/Login';
@@ -22,6 +23,7 @@ import { getQuestionnaire } from './actions/questionnaire';
 import { getProfile } from './actions/profile';
 import { addTemplate, doPurchase } from './actions/purchase';
 import Onboarding from './views/Onboarding';
+
 
 class App extends React.Component {
   async componentDidMount() {

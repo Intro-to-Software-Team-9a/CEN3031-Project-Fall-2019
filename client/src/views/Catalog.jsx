@@ -12,23 +12,23 @@ import './style.css';
 function Catalog({ onFinish, onBack }) {
   return (
     <Container className="pt-4" fluid>
-    <Row>
-      <Col md={1}>
-        <h1 onClick={onBack} className="float-right">&larr;</h1>
-      </Col>
-      <Col>
-        <h1>Select Documents</h1>
-      </Col>
-    </Row>
+      <Row>
+        <Col md={1}>
+          <h1 onClick={onBack} className="cursor-pointer hover-white float-right">&larr;</h1>
+        </Col>
+        <Col>
+          <h1>Select Documents</h1>
+        </Col>
+      </Row>
       <Row>
         <Col md={1}></Col>
         <Col md={4} className="border-right">
           <h5>Your Cart</h5>
           <div style={{ minHeight: '400px' }}>
-          <Cart />
+            <Cart />
           </div>
           <div className="text-right">
-            <Button variant="outline-light" onClick={onFinish}>Review and Finish Purchase</Button>
+            <Button variant="outline-dark" onClick={onFinish}>Review and Finish Purchase</Button>
           </div>
         </Col>
         <Col md>

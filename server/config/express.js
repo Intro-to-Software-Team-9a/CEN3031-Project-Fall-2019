@@ -11,7 +11,23 @@ const pdfRouter = require('../routes/pdf.server.routes');
 const documentsRouter = require('../routes/documents.server.routes');
 const questionnaireRouter = require('../routes/questionnaire.server.routes');
 const questionnaireResponseRouter = require('../routes/questionnaireResponse.server.routes');
-const config = require('./config');
+
+/* eslint-disable-next-line no-console */
+console.log(process.env.NODE_ENV);
+
+
+// parse config depending on environment
+let sessionSecret;
+let dbUri;
+if (process.env.NODE_ENV === 'production') {
+  sessionSecret = process.env.SESSION_SECRET;
+  dbUri = process.env.DB_URI;
+} else {
+  /* eslint-disable-next-line global-require */
+  const config = require('./config');
+  sessionSecret = config.session.secret;
+  dbUri = config.db.uri;
+}
 
 
 module.exports.init = () => {
@@ -19,7 +35,7 @@ module.exports.init = () => {
         connect to database
         - reference README for db uri
     */
-  mongoose.connect(process.env.DB_URI || config.db.uri, {
+  mongoose.connect(dbUri, {
     useNewUrlParser: true,
   });
   mongoose.set('useCreateIndex', true);
@@ -34,7 +50,7 @@ module.exports.init = () => {
   app.use(bodyParser.json());
 
   app.use(session({
-    secret: config.session.secret,
+    secret: sessionSecret,
     resave: true,
     saveUninitialized: true,
     cookie: { secure: false },

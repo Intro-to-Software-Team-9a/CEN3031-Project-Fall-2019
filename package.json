@@ -11,7 +11,7 @@
     "server": "nodemon server/server.js",
     "dev": "concurrently \"nodemon server/server.js\" \"cd client && npm run start\"",
     "build": "cd client && npm build",
-    "start": "node server/server.js",
+    "start": "NODE_ENV=production node server/server.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "lint": "eslint --ext .js --fix server/**/*"
   },

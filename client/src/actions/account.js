@@ -32,7 +32,7 @@ export function changeCreateField(fieldName, newValue) {
 }
 
 
-export function doLogin() {
+export function doLogin({ onSuccess }) {
   return async (dispatch, getState) => {
     const { accounts } = getState();
 
@@ -44,8 +44,18 @@ export function doLogin() {
       dispatch({ type: LOGIN_SUCCESS });
       await dispatch(getProfile());
       dispatch({ type: FORGET_LOGIN_FORM });
-      dispatch(getProfile());
+      await dispatch(getProfile());
+
+      const { accounts, profiles } = getState();
+      if (accounts.createState.isError || profiles.profileState.isError) {
+        return;
+      }
+      if (!onSuccess) {
+        return;
+      }
+      await onSuccess();
     } catch (error) {
+      console.error(error);
       // parse HTTP message
       let message = error.message;
       if (error.response && error.response.data && error.response.data.message) {
