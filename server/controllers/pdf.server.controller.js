@@ -6,7 +6,7 @@ const errors = require('../utils/errors');
 const Document = require('../models/Document.model.js')
 //import '../pdf_css/pdf.css'
 
-mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect(config.db.uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 /**
  * @param id {Integer}

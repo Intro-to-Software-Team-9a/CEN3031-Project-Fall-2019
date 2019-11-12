@@ -67,7 +67,6 @@ module.exports.init = () => {
   app.use('/api/documents', documentsRouter);
   app.use('/api/questionnaire', questionnaireRouter);
   app.use('/api/questionnaireResponse', questionnaireResponseRouter);
-  app.use('/api/pdf', pdfRouter);
 
   if (process.env.NODE_ENV === 'production') {
   // Serve any static files
