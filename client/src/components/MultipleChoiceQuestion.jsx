@@ -27,7 +27,7 @@ function MultipleChoiceQuestion({ question, onChange, currentResponse }) {
         <Form.Check
           key={response._id}
           type="radio"
-          label={response.label}
+          label={response.value}
           name={response.label}
           checked={!!currentResponse[response.label]}
           onChange={() => updateValue(response.label)}

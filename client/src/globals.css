@@ -22,3 +22,7 @@ button, p, span, label, li {
 .cursor-pointer {
     cursor: pointer;
 }
+
+html {
+    padding-bottom: 100px;
+}

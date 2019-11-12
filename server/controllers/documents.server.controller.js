@@ -41,9 +41,24 @@ async function generate(req, res) {
       return res.send({ message: errors.other.INVALID_INPUT });
     }
 
+    const data = JSON.parse(questionnaireResponse.serializedResult);
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    function formatDay(day) {
+      if (day % 10 === 1) return `${day}st`;
+      if (day % 10 === 2) return `${day}nd`;
+      return `${day}rd`;
+    }
+
+    Object.assign(data, {
+      currentDay: formatDay(new Date().getDay()),
+      currentMonth: monthNames[new Date().getMonth()],
+      currentYear: new Date().getFullYear(),
+    });
+
     const renderedDocument = TemplateRenderer.render(
       template.template,
-      JSON.parse(questionnaireResponse.serializedResult),
+      data,
     );
 
     const document = new Document({
