@@ -6,7 +6,7 @@ import './Home.css';
 function Home() {
   return (
     <Container className="pt-4">
-      <Link to="/get-started"><Button variant="outline-light">Get Started</Button></Link>
+      <Link to="/view-documents"><Button variant="outline-light">View Your Documents</Button></Link>
     </Container>
   );
 }

@@ -14,12 +14,14 @@ import NotFound from './views/NotFound';
 import ViewDocuments from './views/ViewDocuments';
 import Questionnaire from './views/Questionnaire';
 import ReviewPurchase from './views/ReviewPurchase';
+import ProfileHome from './views/ProfileHome';
 import NavBar from './components/NavBar';
 
 import { getTemplates } from './actions/template';
 import { getQuestionnaire } from './actions/questionnaire';
 import { getProfile } from './actions/profile';
 import { addTemplate, doPurchase } from './actions/purchase';
+import Onboarding from './views/Onboarding';
 
 class App extends React.Component {
   async componentDidMount() {
@@ -42,6 +44,8 @@ class App extends React.Component {
           <Route exact path="/catalog" component={Catalog} />
           <Route exact path="/create-template" component={CreateDocument} />
           <Route exact path="/questionnaire" component={Questionnaire} />
+          <Route exact path="/get-started" component={Onboarding} />
+          <Route exact path="/profile-home" component={ProfileHome} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
