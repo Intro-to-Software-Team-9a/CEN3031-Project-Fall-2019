@@ -1,4 +1,5 @@
 const QuestionTypes = require('../../utils/questionTypes');
+const Plans = require('../../utils/plans');
 
 // mock data for testing purposes
 
@@ -13,6 +14,8 @@ module.exports = {
       isUser: true,
       isAdmin: false,
     },
+    plan: Plans.NO_PLAN,
+    ownedTemplates: [],
   },
   document1: {
     text: 'Hello, my name is Example User',

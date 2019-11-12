@@ -22,6 +22,8 @@ const ProfileSchema = new Schema({
 
   // all templates owned by the user
   ownedTemplates: [{ type: Schema.Types.ObjectId, ref: 'Template' }],
+
+  plan: String,
 }, { timestamps: true });
 
 module.exports = mongoose.model('Profile', ProfileSchema);
