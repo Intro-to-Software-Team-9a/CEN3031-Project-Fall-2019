@@ -22,7 +22,9 @@
   "eslintConfig": {
     "extends": "airbnb-base",
     "rules": {
-      "no-underscore-dangle": "off"
+      "no-underscore-dangle": "off",
+      "no-restricted-syntax": "off",
+      "import/no-extraneous-dependencies": "off"
     }
   },
   "keywords": [],

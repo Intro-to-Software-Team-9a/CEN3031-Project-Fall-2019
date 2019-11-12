@@ -6,7 +6,7 @@ import AbstractForm from './AbstractForm.jsx';
 
 // stores name, email, password, and confirm-password
 const fields = [
-  { type: 'text', name: 'name', label: 'Your Name' },
+  { type: 'text', name: 'name', label: 'Your Name',},
   { type: 'email', name: 'email', label: 'Email' },
   { type: 'password', name: 'password', label: 'Password' },
   { type: 'password', name: 'confirmpassword', label: 'Confirm Password' },
