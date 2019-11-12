@@ -10,16 +10,10 @@ const QuestionniareResponseSchema = new Schema({
   // ref of the questionnaire
   questionnaireId: { type: Schema.Types.ObjectId, ref: 'Questionnaire', required: true },
 
-  // each response corresponds to a question in the questionnaire
-  questionResponses: [{
-    // id of the corresponding questionnaire.question
-    questionId: { type: String, required: true },
+  profileId: { type: Schema.Types.ObjectId, ref: 'Profile', required: true },
 
-    // a list of responses depending on question type
-    responses: [{
-      value: { type: String, required: true },
-    }],
-  }],
+  // serialized result of the response
+  serializedResult: String,
 }, { timestamps: true });
 
 module.exports = mongoose.model('QuestionnaireResponse', QuestionniareResponseSchema);

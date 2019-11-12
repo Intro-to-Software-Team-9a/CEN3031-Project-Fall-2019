@@ -9,14 +9,14 @@ function AddToCart({ filteredTemplates, addTemplate }) {
     <React.Fragment>
       <TemplateList onClick={addTemplate} templates={filteredTemplates} />
     </React.Fragment>
-  )
+  );
 }
 
 // create necessary props for AbstractForm
 const mapStateToProps = (state) => {
   const allTemplates = (state.templates.templates) ? state.templates.templates : [];
   const cartTemplates = state.purchase.cart.templates || [];
-  const filteredTemplates = allTemplates.filter(t => !cartTemplates.includes(t));
+  const filteredTemplates = allTemplates.filter((t) => !cartTemplates.includes(t));
   return {
     templates: state.templates.templates,
     filteredTemplates,

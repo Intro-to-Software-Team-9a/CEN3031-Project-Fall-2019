@@ -8,6 +8,8 @@ const accountsRouter = require('../routes/accounts.server.routes');
 const profilesRouter = require('../routes/profiles.server.routes');
 const templatesRouter = require('../routes/templates.server.routes');
 const documentsRouter = require('../routes/documents.server.routes');
+const questionnaireRouter = require('../routes/questionnaire.server.routes');
+const questionnaireResponseRouter = require('../routes/questionnaireResponse.server.routes');
 const config = require('./config');
 
 
@@ -45,6 +47,8 @@ module.exports.init = () => {
   app.use('/api/profiles', profilesRouter);
   app.use('/api/templates', templatesRouter);
   app.use('/api/documents', documentsRouter);
+  app.use('/api/questionnaire', questionnaireRouter);
+  app.use('/api/questionnaireResponse', questionnaireResponseRouter);
 
   if (process.env.NODE_ENV === 'production') {
   // Serve any static files
