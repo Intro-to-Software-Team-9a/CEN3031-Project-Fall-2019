@@ -3,6 +3,7 @@ const markdownpdf = require('markdown-pdf');
 const errors = require('../utils/errors');
 const Document = require('../models/Document.model.js');
 // import '../pdf_css/pdf.css'
+const path = require('path');
 
 /**
  * @param id {Integer}
@@ -21,7 +22,7 @@ async function genPDF(req, res) {
   reader.append(document.text);
   try {
     res.setHeader('content-type', 'application/pdf');
-    return reader.pipe(markdownpdf({ cssPath: '../pdf_css/pdf.css' })).pipe(res);
+    return reader.pipe(markdownpdf({ cssPath: path.join(__dirname, 'pdf.css') })).pipe(res);
   } catch (e) {
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });

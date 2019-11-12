@@ -27,6 +27,7 @@ async function run() {
   const document2 = new Document(mockdata.document2);
   const profile1 = new Profile(mockdata.profile1);
   const template1 = new Template(mockdata.template1);
+  const template2 = new Template(mockdata.template2);
 
   // add foreign keys
   profile1.accountId = account1;
@@ -41,6 +42,7 @@ async function run() {
   await document1.save();
   await document2.save();
   await template1.save();
+  await template2.save();
 
   const questionnaire1 = new Questionniare(mockdata.questionnaire1);
 
