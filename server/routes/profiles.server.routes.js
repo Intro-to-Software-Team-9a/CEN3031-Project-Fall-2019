@@ -8,4 +8,7 @@ const router = express.Router();
 router.route('/')
   .get(authenticate(), profiles.get);
 
+router.route('/plan')
+  .patch(authenticate(), profiles.changePlan);
+
 module.exports = router;
