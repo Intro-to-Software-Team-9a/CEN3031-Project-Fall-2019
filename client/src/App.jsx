@@ -9,17 +9,19 @@ import Login from './views/Login';
 import CreateAccount from './views/CreateAccount';
 import Catalog from './views/Catalog';
 import CreateDocument from './views/CreateDocument';
+import SelectPlan from './views/SelectPlan';
 import NotFound from './views/NotFound';
 import ViewDocuments from './views/ViewDocuments';
 import Questionnaire from './views/Questionnaire';
 import ReviewPurchase from './views/ReviewPurchase';
-
+import ProfileHome from './views/ProfileHome';
 import NavBar from './components/NavBar';
 
 import { getTemplates } from './actions/template';
 import { getQuestionnaire } from './actions/questionnaire';
 import { getProfile } from './actions/profile';
 import { addTemplate, doPurchase } from './actions/purchase';
+import Onboarding from './views/Onboarding';
 
 class App extends React.Component {
   async componentDidMount() {
@@ -36,11 +38,14 @@ class App extends React.Component {
           <Route exact path="/home" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/create-account" component={CreateAccount} />
+          <Route exact path="/select-plan" component={SelectPlan} />
           <Route exact path="/view-documents" component={ViewDocuments} />
           <Route exact path='/review-purchase' component = {ReviewPurchase} />
           <Route exact path="/catalog" component={Catalog} />
           <Route exact path="/create-template" component={CreateDocument} />
           <Route exact path="/questionnaire" component={Questionnaire} />
+          <Route exact path="/get-started" component={Onboarding} />
+          <Route exact path="/profile-home" component={ProfileHome} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>

@@ -9,21 +9,30 @@ import AddToCart from '../components/AddToCart';
 import './style.css';
 
 
-function Catalog() {
+function Catalog({ onFinish, onBack }) {
   return (
-    <Container fluid className="pt-4">
+    <Container className="pt-4" fluid>
+    <Row>
+      <Col md={1}>
+        <h1 onClick={onBack} className="float-right">&larr;</h1>
+      </Col>
+      <Col>
+        <h1>Select Documents</h1>
+      </Col>
+    </Row>
       <Row>
+        <Col md={1}></Col>
         <Col md={4} className="border-right">
-          <h2>Your Cart</h2>
+          <h5>Your Cart</h5>
           <div style={{ minHeight: '400px' }}>
           <Cart />
           </div>
           <div className="text-right">
-            <Link to='/review-purchase'><Button variant="outline-light">Check Out</Button></Link>
+            <Button variant="outline-light" onClick={onFinish}>Review and Finish Purchase</Button>
           </div>
         </Col>
-        <Col md={8}>
-          <h2>All Documents</h2>
+        <Col md>
+          <h5>All Documents</h5>
           <AddToCart />
         </Col>
       </Row>
