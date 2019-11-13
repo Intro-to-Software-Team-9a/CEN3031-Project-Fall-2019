@@ -31,7 +31,7 @@ export function getDocuments() {
       dispatch(getDocumentsSuccess(response.data.documents));
     } catch (error) {
       // parse HTTP message
-      let message = error.message;
+      let { message } = error;
       if (error.response && error.response.data && error.response.data.message) {
         message = error.response.data.message;
       }
@@ -45,13 +45,12 @@ export function generateDocuments(templateIds) {
     dispatch({ type: GENERATE_DOCUMENT_START });
 
     try {
-      await Promise.all(templateIds.map((templateId) => {
-        axios.get(`/api/documents/generate/${templateId}`);
-      }));
+      // generate all the documents
+      await Promise.all(templateIds.map((templateId) => axios.get(`/api/documents/generate/${templateId}`)));
 
       dispatch({ type: GENERATE_DOCUMENT_SUCCESS });
     } catch (error) {
-      let message = error.message;
+      let { message } = error;
       if (error.response && error.response.data && error.response.data.message) {
         message = error.response.data.message;
       }

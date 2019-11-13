@@ -41,28 +41,28 @@ module.exports = {
         questionType: QuestionTypes.SHORT_ANSWER,
         possibleResponses: [
           { responseType: QuestionTypes.SHORT_ANSWER, label: 'name' },
-        ],     
+        ],
       },
       {
         title: 'What is your address?',
         questionType: QuestionTypes.SHORT_ANSWER,
         possibleResponses: [
           { responseType: QuestionTypes.SHORT_ANSWER, label: 'address' },
-        ],     
+        ],
       },
       {
         title: 'What is the name of your surrogate?',
         questionType: QuestionTypes.SHORT_ANSWER,
         possibleResponses: [
           { responseType: QuestionTypes.SHORT_ANSWER, label: 'surrogateName' },
-        ],     
+        ],
       },
       {
         title: 'What is the address of your surrogate?',
         questionType: QuestionTypes.SHORT_ANSWER,
         possibleResponses: [
           { responseType: QuestionTypes.SHORT_ANSWER, label: 'surrogateAddress' },
-        ],     
+        ],
       },
       {
         title: 'Do you wish to continue care if you have a terminal condition?',
@@ -94,7 +94,7 @@ module.exports = {
         possibleResponses: [
           { responseType: QuestionTypes.SHORT_ANSWER, label: 'additionalInstructions' },
         ],
-      }
+      },
     ],
   },
   questionnaireResponse1: {

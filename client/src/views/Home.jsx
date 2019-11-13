@@ -2,10 +2,8 @@ import React from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './Home.css';
-import axios from 'axios';
 
 function Home() {
-
   return (
     <Container className="pt-4">
       <div className="spacing"></div>
@@ -20,7 +18,7 @@ function Home() {
       </ul>
       <br />
       <Link to="/get-started"><Button variant="outline-dark">Get Started</Button></Link>
-      <Link to="/catalog"><Button variant="outline-dark">See All Documents</Button></Link>
+      {/* <Link to="/catalog"><Button variant="outline-dark">See All Documents</Button></Link> */}
     </Container>
   );
 }

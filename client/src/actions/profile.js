@@ -29,7 +29,7 @@ export function getProfile() {
       dispatch(getProfileSuccess(response.data.profile));
     } catch (error) {
       // parse HTTP message
-      let message = error.message;
+      let { message } = error;
       if (error.response && error.response.data && error.response.data.message) {
         message = error.response.data.message;
       }

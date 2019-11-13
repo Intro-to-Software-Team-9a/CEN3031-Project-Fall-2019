@@ -1,9 +1,9 @@
 const streams = require('memory-streams');
 const markdownpdf = require('markdown-pdf');
+const path = require('path');
 const errors = require('../utils/errors');
 const Document = require('../models/Document.model.js');
 // import '../pdf_css/pdf.css'
-const path = require('path');
 
 /**
  * @param id {Integer}

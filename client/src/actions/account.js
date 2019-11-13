@@ -55,9 +55,8 @@ export function doLogin({ onSuccess }) {
       }
       await onSuccess();
     } catch (error) {
-      console.error(error);
       // parse HTTP message
-      let message = error.message;
+      let { message } = error;
       if (error.response && error.response.data && error.response.data.message) {
         message = error.response.data.message;
       }
@@ -76,7 +75,7 @@ export function doLogout() {
       dispatch(forgetProfile());
     } catch (error) {
       // parse HTTP message
-      let message = error.message;
+      let { message } = error;
       if (error.response && error.response.data && error.response.data.message) {
         message = error.response.data.message;
       }
@@ -103,7 +102,7 @@ export function doCreateAccount({ onSuccess }) {
       await axios.post('/api/accounts/create', { email, password, name });
       dispatch({ type: CREATE_SUCCESS });
       dispatch({ type: FORGET_CREATE_FORM });
-      await dispatch(getProfile());      
+      await dispatch(getProfile());
 
       const { accounts, profiles } = getState();
       if (accounts.createState.isError || profiles.profileState.isError) {
@@ -115,7 +114,7 @@ export function doCreateAccount({ onSuccess }) {
       await onSuccess();
     } catch (error) {
       // parse HTTP message
-      let message = error.message;
+      let { message } = error;
       if (error.response && error.response.data && error.response.data.message) {
         message = error.response.data.message;
       }

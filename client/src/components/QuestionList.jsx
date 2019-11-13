@@ -1,19 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+const checkmark = require('../assets/questionLabelCheckmark.png');
+
 function QuestionList({ questions, questionResp }) {
-  var count = 1
   return (
     <div>
-      {questions.map((question) => (
+      {questions.map((question, count) => {
+        // TODO: clean up
+        const isChecked = (
+          questionResp.questionnaire._id === question._id
+          && typeof (questionResp.questionnaireResponse[question.possibleResponses[0].label]) !== 'undefined'
+          && questionResp.questionnaireResponse[question.possibleResponses[0].label] !== ''
+        );
+        return (
           <tr>
-            <td key={question._id}>Question {count++}&nbsp;&nbsp;&nbsp;</td>
-            {(questionResp.questionnaire._id === question._id && 
-              typeof(questionResp.questionnaireResponse[question.possibleResponses[0].label]) !==  'undefined' && 
-              questionResp.questionnaireResponse[question.possibleResponses[0].label] !== "") ? 
-              <img src={require("../assets/questionLabelCheckmark.png")} alt="Checkmark" width="17" height="17"></img> : <td></td>}
+            <td key={question._id}>Question {count + 1}&nbsp;&nbsp;&nbsp;</td>
+            {isChecked
+              ? <img src={checkmark} alt="Checkmark" width="17" height="17"></img>
+              : <td></td>
+            }
           </tr>
-      ))}
+        );
+      })}
     </div>
   );
 }

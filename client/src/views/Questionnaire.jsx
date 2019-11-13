@@ -4,6 +4,8 @@ import { Container, Row, Col } from 'react-bootstrap';
 import QuestionList from '../components/QuestionList';
 import Questionnaire from '../components/Questionnaire';
 
+const safelock = require('../assets/safeLock.png');
+
 export default function QuestionnaireView({ onFinish, onBack }) {
   return (
     <Container className="pt-4" fluid>
@@ -14,7 +16,7 @@ export default function QuestionnaireView({ onFinish, onBack }) {
         <Col>
           <tr>
             <h1>Questionnaire&nbsp;</h1>
-            <td valign="middle"><img src={require("../assets/safeLock.png")}alt="Checkmark" width="15" height="15"></img></td>
+            <td valign="middle"><img src={safelock}alt="Checkmark" width="15" height="15"></img></td>
           </tr>
           <p><i>Personal information is required for state plans.</i></p>
         </Col>

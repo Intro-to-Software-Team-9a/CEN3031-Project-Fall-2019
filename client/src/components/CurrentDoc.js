@@ -3,7 +3,7 @@ import { Button, ButtonToolbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import PrintIcon from '@material-ui/icons/Print';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+// import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DocumentHistory from './DocumentHistory';
 
 function CurrentDoc({ activeTemplate, documents }) {
@@ -25,9 +25,32 @@ function CurrentDoc({ activeTemplate, documents }) {
 
         <h5>Actions</h5>
         <ButtonToolbar>
-          <Button variant="outline-dark" className="mr-2" style={{ minWidth: '175px' }} onClick={() => window.open('/api/pdf/'+activeDocuments[activeDocuments.length-1]._id, '_blank')}><span className="mr-1"><GetAppIcon /></span>Download</Button>
-          <Button variant="outline-dark" className="mr-2" style={{ minWidth: '175px' }} onClick={() => window.open('/api/pdf/'+activeDocuments[activeDocuments.length-1]._id, '_blank')}><span className="mr-2"><PrintIcon /></span>Print</Button>
-          {/* <Button variant="outline-dark" className="mr-3" style={{ minWidth: '175px' }}><span className="mr-2"><EditOutlinedIcon /></span>Edit</Button> */}
+          <Button
+            variant="outline-dark"
+            className="mr-2"
+            style={{ minWidth: '175px' }}
+            onClick={() => window.open(`/api/pdf/${activeDocuments[activeDocuments.length - 1]._id}`, '_blank')}
+          >
+            <span className="mr-1"><GetAppIcon /></span>
+            Download
+          </Button>
+          <Button
+            variant="outline-dark"
+            className="mr-2"
+            style={{ minWidth: '175px' }}
+            onClick={() => window.open(`/api/pdf/${activeDocuments[activeDocuments.length - 1]._id}`, '_blank')}
+          >
+            <span className="mr-2"><PrintIcon /></span>
+            Print
+          </Button>
+          {/* <Button
+            variant="outline-dark"
+            className="mr-3"
+            style={{ minWidth: '175px' }}
+            >
+              <span className="mr-2"><EditOutlinedIcon /></span>
+              Edit
+            </Button> */}
         </ButtonToolbar>
 
         <br />

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Container, Row, Col, Button, Card
+  Container, Row, Col, Button,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import TemplateList from '../components/TemplateList';
@@ -34,7 +34,7 @@ function ReviewPurchase({ templates, doPurchase, onBack }) {
         <Col md={2}>
           <h5>Purchase Info</h5>
           <div>
-            {templates.map(template => (
+            {templates.map((template) => (
               <p>
                 {template.title}
                 <span className="float-right">{formatCurrency(template.priceInCents)}</span>
@@ -67,7 +67,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   doPurchase: () => {
-    dispatch(doPurchase({ onSuccess: ownProps.onFinish }))
+    dispatch(doPurchase({ onSuccess: ownProps.onFinish }));
   },
 });
 
