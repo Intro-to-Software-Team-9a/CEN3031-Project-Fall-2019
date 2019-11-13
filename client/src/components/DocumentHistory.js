@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  ListGroup, Button, ButtonToolbar, Container, Col, Row,
+  Button, ButtonToolbar, Container, Col, Row,
 } from 'react-bootstrap';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import PrintIcon from '@material-ui/icons/Print';
+// import PrintIcon from '@material-ui/icons/Print';
 import moment from 'moment';
 
 function DocumentHistory({ activeTemplate, documents }) {
@@ -22,8 +22,16 @@ function DocumentHistory({ activeTemplate, documents }) {
             </Col>
             <Col>
               <ButtonToolbar>
-                <Button variant="outline-dark" className="mr-2" onClick={() => window.open('/api/pdf/'+document._id, 'Your Document')}><span className="mr-1"><GetAppIcon /></span>Download</Button>
-                {/*<Button variant="outline-dark" className="mr-2"><span className="mr-1"><PrintIcon />ˇ</span>Print</Button>*/}
+                <Button
+                  variant="outline-dark"
+                  className="mr-2"
+                  onClick={() => window.open(`/api/pdf/${document._id}`, 'Your Document')}
+                >
+                  <span className="mr-1"><GetAppIcon /></span>
+                  Download
+                </Button>
+                {/* <Button variant="outline-dark"
+                  className="mr-2"><span className="mr-1"><PrintIcon />ˇ</span>Print</Button> */}
               </ButtonToolbar>
             </Col>
           </Row>

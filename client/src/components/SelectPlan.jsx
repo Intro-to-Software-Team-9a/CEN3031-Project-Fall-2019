@@ -1,14 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
 import { selectPlan } from '../actions/selectplan';
 
-function SelectPlan({ plan, onPlanSelect, onFinish}) {
-
+function SelectPlan({ onPlanSelect, onFinish }) {
   function onClick(plan) {
     onPlanSelect(plan);
-    onFinish(); 
+    onFinish();
   }
 
   return (
@@ -30,10 +29,10 @@ function SelectPlan({ plan, onPlanSelect, onFinish}) {
               </div>
               <div class="card-footer d-flex justify-content-between">
                 <span className="planPrice">$50</span>
-                <a href="#" class="btn btn-outline-dark"
-                  onClick={(event) => onClick('BASIC_PLAN')}>
+                <Button variant="outline-dark mr-0"
+                  onClick={() => onClick('BASIC_PLAN')}>
                   Buy now
-                </a>
+                </Button>
               </div>
             </div>
           </Col>
@@ -51,10 +50,10 @@ function SelectPlan({ plan, onPlanSelect, onFinish}) {
               </div>
               <div class="card-footer d-flex justify-content-between">
                 <span className="planPrice">$50</span>
-                <a href="#" class="btn btn-outline-dark"
-                  onClick={(event) => onClick('ADVANCED_PLAN')}>
+                <Button variant="outline-dark mr-0"
+                  onClick={() => onClick('ADVANCED_PLAN')}>
                   Buy now
-                </a>
+                </Button>
               </div>
             </div>
           </Col>
@@ -72,24 +71,24 @@ function SelectPlan({ plan, onPlanSelect, onFinish}) {
               </div>
               <div class="card-footer d-flex justify-content-between">
                 <span className="planPrice">$50</span>
-                <a href="#" class="btn btn-outline-dark"
-                  onClick={(event) => onClick('COMPREHENSIVE_PLAN')}>
+                <Button variant="outline-dark mr-0"
+                  onClick={() => onClick('COMPREHENSIVE_PLAN')}>
                   Buy now
-                </a>
+                </Button>
               </div>
             </div>
           </Col>
         </Row>
       </Container>
     </React.Fragment>
-  )
+  );
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onPlanSelect: (plan) => dispatch(selectPlan(plan))
+  onPlanSelect: (plan) => dispatch(selectPlan(plan)),
 });
 
 export default connect(

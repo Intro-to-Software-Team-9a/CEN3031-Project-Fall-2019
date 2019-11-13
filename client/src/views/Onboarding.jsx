@@ -1,6 +1,7 @@
 import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import {
+  Container, Row, Col,
+} from 'react-bootstrap';
 
 import Catalog from './Catalog';
 import CreateAccount from './CreateAccount';
@@ -20,7 +21,7 @@ const Pages = [
   CREATE_ACCOUNT_PAGE,
   SELECT_PLAN_PAGE,
   CART_PAGE,
-  REVIEW_PAGE
+  REVIEW_PAGE,
 ];
 
 class Onboarding extends React.Component {
@@ -58,7 +59,7 @@ class Onboarding extends React.Component {
         currentpage = <CreateAccount onBack={this.decrementPage} onFinish={this.incrementPage} />;
         break;
       case SELECT_PLAN_PAGE:
-        currentpage = <SelectPlan onFinish={this.incrementPage} />
+        currentpage = <SelectPlan onFinish={this.incrementPage} />;
         break;
       case CART_PAGE:
         currentpage = <Catalog onBack={this.decrementPage} onFinish={this.incrementPage} />;

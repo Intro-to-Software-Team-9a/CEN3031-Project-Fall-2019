@@ -31,7 +31,7 @@ export function submitForm() {
       dispatch({ type: SUBMIT_FORM_SUCCESS });
     } catch (error) {
       // parse HTTP message
-      let message = error.message;
+      let { message } = error;
       if (error.response && error.response.data && error.response.data.message) {
         message = error.response.data.message;
       }
@@ -51,7 +51,7 @@ export function getQuestionnaire() {
       dispatch({ type: GET_QUESTIONNAIRE_SUCCESS, data: { questionnaire } });
     } catch (error) {
       // parse HTTP message
-      let message = error.message;
+      let { message } = error;
       if (error.response && error.response.data && error.response.data.message) {
         message = error.response.data.message;
       }
