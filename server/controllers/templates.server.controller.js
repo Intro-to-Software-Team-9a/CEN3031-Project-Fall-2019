@@ -14,6 +14,35 @@ async function get(req, res) {
   }
 }
 
+/** Adds a template to the database. */
+async function add(req, res) {
+   if (!req.body || !req.body.fileName || !req.body.buffer) {
+    res.status(400);
+    return res.send({ message: errors.other.MISSING_PARAMETER });
+  }
+
+  var templateTitle = req.body.fileName;
+
+  var template = await Template.findOne({
+    title: templateTitle
+  }).exec();
+
+  var msg = 'TEMPLATE_UPDATE';
+
+  if (!template) {
+    template = new Template();
+    template.title = req.body.fileName;
+    msg = 'TEMPLATE_CREATE';
+  }
+
+  template.template = req.body.buffer;
+  template.priceInCents = 5;
+  await template.save();
+
+  res.status(200);
+  return res.send({ message: msg });
+}
+
 
 /** Adds templates to the user's account. */
 async function purchase(req, res) {
@@ -45,5 +74,6 @@ async function purchase(req, res) {
 
 module.exports = {
   get,
+  add,
   purchase,
 };

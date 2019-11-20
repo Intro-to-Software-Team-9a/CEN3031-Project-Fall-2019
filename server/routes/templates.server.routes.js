@@ -7,6 +7,9 @@ const router = express.Router();
 router.route('/')
   .get(templates.get);
 
+router.route('/add')
+  .post(templates.add);
+
 router.route('/purchase')
   .post(templates.purchase);
 
