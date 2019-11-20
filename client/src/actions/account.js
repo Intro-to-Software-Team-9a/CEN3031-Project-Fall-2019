@@ -44,7 +44,6 @@ export function doLogin({ onSuccess }) {
       dispatch({ type: LOGIN_SUCCESS });
       await dispatch(getProfile());
       dispatch({ type: FORGET_LOGIN_FORM });
-      await dispatch(getProfile());
 
       const { accounts, profiles } = getState();
       if (accounts.createState.isError || profiles.profileState.isError) {
