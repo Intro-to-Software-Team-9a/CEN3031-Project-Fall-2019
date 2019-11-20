@@ -16,6 +16,8 @@ import ViewDocuments from './views/ViewDocuments';
 import Questionnaire from './views/Questionnaire';
 import ReviewPurchase from './views/ReviewPurchase';
 import ProfileHome from './views/ProfileHome';
+import UploadTemplate from './views/UploadTemplate';
+
 import NavBar from './components/NavBar';
 
 import { getTemplates } from './actions/template';
@@ -48,6 +50,7 @@ class App extends React.Component {
           <Route exact path="/questionnaire" component={Questionnaire} />
           <Route exact path="/get-started" component={Onboarding} />
           <Route exact path="/profile-home" component={ProfileHome} />
+          <Route exact path="/upload-template" component={UploadTemplate} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
