@@ -10,7 +10,7 @@ const TemplateSchema = new Schema({
   // title of the document
   title: { type: String, required: true },
 
-  // string for use in template rendering
+  // base64-encoded byte string
   template: { type: String, required: true },
 
   priceInCents: Number,
