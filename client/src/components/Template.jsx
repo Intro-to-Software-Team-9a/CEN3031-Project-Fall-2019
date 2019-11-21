@@ -1,19 +1,22 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { formatCurrency } from '../utils/format';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
+import './Template.css';
 
 export default function Template({ template, onClick }) {
   return (
-    <div className="hover-outline d-inline-block m-2" key={template._id} onClick={onClick} style={{ width: '8rem' }}>
-
-        <Card>
-          <Card.Img variant="top" src="https://www.pinclipart.com/picdir/middle/23-237671_document-clipart-stack-papers-file-stack-icon-png.png" />
-        </Card>
-
-        <center className="pt-2">
-          <p className="mb-0">{template.title}</p>
-          <p className="mt-1">{formatCurrency(template.priceInCents)}</p>
-        </center>
-    </div>
+    <Card style={{width: '10rem'}} className="hover-outline d-inline-block m-2" key={template._id} onClick={onClick}>
+      <Card.Header className="templateCardHeader">
+        {template.title}
+      </Card.Header>
+      <Card.Body className="templateCardBody">
+        <DescriptionOutlinedIcon className="templateIcon" color="primary" style={{ fontSize: 120 }}/>
+        <ListGroup className="list-group-flush">
+          <ListGroupItem>{template.title}</ListGroupItem>
+          <ListGroupItem>{formatCurrency(template.priceInCents)}</ListGroupItem>
+        </ListGroup>
+      </Card.Body>
+    </Card>
   );
 }
