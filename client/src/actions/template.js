@@ -33,7 +33,7 @@ export function uploadTemplate() {
   return async(dispatch) => {
     dispatch({ type: UPLOAD_TEMPLATE_START });
     try {
-      const response = await axios.post('/api/templates/add');
+      await axios.post('/api/templates/add');
       dispatch({ type: UPLOAD_TEMPLATE_SUCCESS });
     } catch (error) {
       // parse HTTP message
