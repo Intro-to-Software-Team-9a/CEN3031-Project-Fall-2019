@@ -7,9 +7,8 @@ function QuestionList({ questions, questionResp }) {
     <div>
       {questions.map((question) => (
           <tr>
-            <td key={question._id}>Question {count++}&nbsp;&nbsp;&nbsp;</td>
-            {(questionResp.questionnaire._id = question._id && 
-              typeof(questionResp.questionnaireResponse[question.possibleResponses[0].label]) !==  'undefined' && 
+            <td key={question._id}>Questiona {count++}&nbsp;&nbsp;&nbsp;</td>
+            {( typeof(questionResp.questionnaireResponse[question.possibleResponses[0].label]) !==  'undefined' && 
               questionResp.questionnaireResponse[question.possibleResponses[0].label] !== "") ? 
               <img src={require("../assets/questionLabelCheckmark.png")} alt="Checkmark" width="17" height="17"></img> : <td></td>}
           </tr>
