@@ -1,8 +1,17 @@
 import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
 
-class UploadTemplateView extends React.Component {  
+import './UploadTemplate.css';
+
+class UploadTemplateModal extends React.Component {  
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      curFileName: null
+    }
+  }
 
   onFileUpload(e) {
     e.preventDefault();
@@ -18,6 +27,7 @@ class UploadTemplateView extends React.Component {
         byteStr += byteArray[i];
       }
 
+      // Todo: Move to actions/template.js
       axios.post("/api/templates/add", {
         fileName: file.name,
         buffer: btoa(byteStr)
@@ -25,28 +35,37 @@ class UploadTemplateView extends React.Component {
     });
   }
 
-  onFileSelect(file) {
-    console.log(file.value);
+  onFileSelect(e) {
+    this.setState({ curFileName: e.target.files[0].name });
   }
 
   render() {
-    return (
-      <Container className="pt-4" fluid>
-        <Row>
-          <Col>
-            <form onSubmit={this.onFileUpload.bind(this)}>
-              <div class="custom-file">
-                <label class="custom-file-label" for="templateFileInput">Choose file</label>
-                <input type="file" class="custom-file-input" id="templateFileInput" name="templateFile" onChange={this.onFileSelect.bind(this)}/>
-                <button class="btn btn-primary" type="submit">Upload</button>
-              </div>
-            </form>
-          </Col>
-        </Row>
+    var fileName = this.state.curFileName;
+    var selectedFile = fileName == null ? (<span>Choose file</span>) : (<span>{fileName}</span>);
 
-      </Container>
+    return (
+      <Modal {...this.props} size="lg" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Edit Form Template
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h4>Upload Form</h4>
+          <form onSubmit={this.onFileUpload.bind(this)}>
+            <div className="custom-file">
+              <label className="custom-file-label" htmlFor="templateFileInput">{selectedFile}</label>
+              <input type="file" className="custom-file-input" id="templateFileInput" name="templateFile" onChange={this.onFileSelect.bind(this)}/>
+            </div>
+            <Button type="submit" className="uploadButton">Upload</Button>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.props.onHide}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     );
   }
 }
 
-export default UploadTemplateView;
+export default UploadTemplateModal;
