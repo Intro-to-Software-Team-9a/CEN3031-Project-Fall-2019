@@ -64,7 +64,7 @@ class PaypalButton extends React.Component {
       const onAuthorize = (data, actions) =>
       actions.payment.execute()
         .then(() => {
-          console.log("On auth")
+          console.log("Here is where we can add the documents to the owned, this only runs on success")
           const payment = {
             paid: true,
             cancelled: false,
