@@ -22,6 +22,7 @@ import { getTemplates } from './actions/template';
 import { getQuestionnaire } from './actions/questionnaire';
 import { getProfile } from './actions/profile';
 import { addTemplate, doPurchase } from './actions/purchase';
+import { getUserInfo } from './actions/userSettings'
 import Onboarding from './views/Onboarding';
 
 
@@ -29,6 +30,7 @@ class App extends React.Component {
   async componentDidMount() {
     this.props.getProfile();
     this.props.getQuestionnaire();
+    this.props.getUserInfo();
     await this.props.getTemplates();
   }
 
@@ -68,6 +70,7 @@ const mapDispatchToProps = (dispatch) => ({
   getTemplates: () => dispatch(getTemplates()),
   doPurchase: () => dispatch(doPurchase()),
   addTemplate: (template) => dispatch(addTemplate(template)),
+  getUserInfo: () => dispatch(getUserInfo()),
 });
 
 export default connect(
