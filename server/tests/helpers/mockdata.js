@@ -27,11 +27,13 @@ module.exports = {
   template1: {
     title: 'Introduction',
     template: 'Hello, my name is {{ name }}',
+    fileName: 'intro.docx',
     priceInCents: 1000,
   },
   template2: {
     title: 'Living Will',
     template: livingWillTemplate,
+    fileName: 'living_will.docx',
     priceInCents: 2000,
   },
   questionnaire1: {
