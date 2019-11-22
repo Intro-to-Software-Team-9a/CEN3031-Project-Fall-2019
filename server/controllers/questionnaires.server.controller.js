@@ -28,11 +28,10 @@ async function getMostRecent(req, res) {
 }
 
 
-
 /**
  * Creates a new questionnaire in the database.
  * Parameters:
- * 
+ *
  * req.body: {
  *  questionnaire: {
  *    questions: [

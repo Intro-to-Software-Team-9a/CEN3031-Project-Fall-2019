@@ -10,7 +10,7 @@ const profilesRouter = require('../routes/profiles.server.routes');
 const templatesRouter = require('../routes/templates.server.routes');
 const pdfRouter = require('../routes/pdf.server.routes');
 const documentsRouter = require('../routes/documents.server.routes');
-const questionnaireRouter = require('../routes/questionnaire.server.routes');
+const questionnaireRouter = require('../routes/questionnaires.server.routes');
 const questionnaireResponseRouter = require('../routes/questionnaireResponse.server.routes');
 
 /* eslint-disable-next-line no-console */
