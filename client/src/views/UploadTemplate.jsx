@@ -47,7 +47,7 @@ class UploadTemplateModal extends React.Component {
       });
     }
     else {
-        axios.post("/api/templates/update", {
+        axios.patch("/api/templates/update", {
           name: name,
           price: price
         }).then(this.props.onTemplateUpload);
