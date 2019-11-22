@@ -25,5 +25,5 @@ function authenticateAdmin() {
 
 module.exports = {
   authenticate,
-  authenticateAdmin
+  authenticateAdmin,
 };

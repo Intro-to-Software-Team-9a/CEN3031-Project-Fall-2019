@@ -16,18 +16,18 @@ async function get(req, res) {
 
 /** Adds a template to the database. */
 async function add(req, res) {
-   if (!req.body || !req.body.fileName || !req.body.buffer) {
+  if (!req.body || !req.body.fileName || !req.body.buffer) {
     res.status(400);
     return res.send({ message: errors.other.MISSING_PARAMETER });
   }
 
-  var templateTitle = req.body.fileName;
+  const templateTitle = req.body.fileName;
 
-  var template = await Template.findOne({
-    title: templateTitle
+  let template = await Template.findOne({
+    title: templateTitle,
   }).exec();
 
-  var msg = 'TEMPLATE_UPDATE';
+  let msg = 'TEMPLATE_UPDATE';
 
   if (!template) {
     template = new Template();
@@ -47,18 +47,18 @@ async function add(req, res) {
 
 /** Updates a pre-existing tmplate */
 async function update(req, res) {
-   if (!req.body.name) {
+  if (!req.body.name) {
     res.status(400);
     return res.send({ message: errors.other.MISSING_PARAMETER });
   }
 
-  var templateTitle = req.body.name;
+  const templateTitle = req.body.name;
 
-  var template = await Template.findOne({
-    title: templateTitle
+  let template = await Template.findOne({
+    title: templateTitle,
   }).exec();
 
-  var msg = 'TEMPLATE_UPDATE';
+  let msg = 'TEMPLATE_UPDATE';
 
   if (!template) {
     template = new Template();
@@ -80,7 +80,6 @@ async function update(req, res) {
   res.status(200);
   return res.send({ message: msg });
 }
-
 
 
 /** Adds templates to the user's account. */
