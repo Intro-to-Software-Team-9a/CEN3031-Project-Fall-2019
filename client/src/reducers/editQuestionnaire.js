@@ -1,25 +1,40 @@
 
 import {
   ADD_NEW_QUESTION,
+  DELETE_QUESTION,
   CHANGE_QUESTION_TYPE,
   CHANGE_QUESTION_TITLE,
   ADD_RESPONSE,
   REMOVE_RESPONSE,
   CHANGE_QUESTION_RESPONSE_LABEL,
   CHANGE_QUESTION_RESPONSE_VALUE,
+  SAVE_QUESTIONNAIRE_START,
+  SAVE_QUESTIONNAIRE_FAIL,
+  SAVE_QUESTIONNAIRE_SUCCESS,
   SWAP_RESPONSE,
   RESET_QUESTIONS,
   SWAP_QUESTIONS,
 } from '../actions/editQuestionnaire';
 
-
+import { stateStart, stateFailure, stateSuccess } from '../utils/asyncStates';
 
 const defaultState = {
   questions: [],
+  loadingState: stateSuccess(),
 };
 
 export default function questionnaireReducer(state = defaultState, action) {
   const questions = state.questions.slice();
+
+  if (action.type === SAVE_QUESTIONNAIRE_START) {
+    return { ...state, loadingState: stateStart() };
+  }
+  if (action.type === SAVE_QUESTIONNAIRE_SUCCESS) {
+    return { ...state, loadingState: stateSuccess() };
+  }
+  if (action.type === SAVE_QUESTIONNAIRE_FAIL) {
+    return { ...state, loadingState: stateFailure(action) };
+  }
 
   if (action.type === RESET_QUESTIONS) {
     return { ... state, questions: action.data.questions };
@@ -27,6 +42,11 @@ export default function questionnaireReducer(state = defaultState, action) {
 
   if (action.type === ADD_NEW_QUESTION) {
     questions.splice(action.data.afterIndex, 0, action.data.question);
+    return { ...state, questions };
+  }
+
+  if (action.type === DELETE_QUESTION) {
+    questions.splice(action.data.index, 1);
     return { ...state, questions };
   }
 

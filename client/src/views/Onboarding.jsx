@@ -38,6 +38,9 @@ class Onboarding extends React.Component {
   }
 
   changePage(newPage) {
+    if (newPage < 0) {
+      this.props.history.goBack();
+    }
     if (newPage >= Pages.length || newPage < 0) {
       return;
     }

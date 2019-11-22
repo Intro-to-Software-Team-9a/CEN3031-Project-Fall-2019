@@ -46,8 +46,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  doLogout: () => dispatch(doLogout()),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  doLogout: () => dispatch(doLogout(ownProps.onLogout)),
 });
 
 export default connect(

@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Col, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
+import { Form, Button, Col, ButtonToolbar, ButtonGroup, Container, Row } from 'react-bootstrap';
 import EditableQuestion from './EditableQuestion';
 
 import { addNewQuestion, saveQuestionnaire, resetQuestions, swapQuestionDown } from '../actions/editQuestionnaire';
 
 import SwapVertical from '@material-ui/icons/SwapVert';
 import AddCircle from '@material-ui/icons/Add';
+import Delete from '@material-ui/icons/Delete';
 
 /**
  *
@@ -20,54 +21,68 @@ class Questionnaire extends React.Component {
   }
 
   render() {
-    const { questions, addNewQuestion, saveQuestionnaire, swapQuestionDown } = this.props;
+    const { questions, addNewQuestion, saveQuestionnaire, swapQuestionDown, isWaiting, goBack } = this.props;
     if (!questions) return <div></div>;
 
     return (
       <React.Fragment>
         <Form>
-          <ButtonGroup>
-            <Button variant="outline-dark" onClick={() => addNewQuestion(0)}>
-              <AddCircle />
-            </Button>
-            {/* <Button variant="outline-dark" onClick={() => swapQuestionDown(index)}>
-                  <SwapVertical />
-                </Button> */}
-            {/* <Button variant="outline-dark" onClick={addNewQuestion}>+ Section</Button> */}
-          </ButtonGroup>
-          {questions.map((question, index, questions) => (
-            <div className="my-2">
-              <div className="p-3 my-2 border border-muted" style={{ maxWidth: '700px' }}>
-                <EditableQuestion index={index} key={question._id} question={question} />
-              </div>
-              <ButtonGroup>
-                <Button variant="outline-dark" onClick={() => addNewQuestion(index + 1)}>
-                  <AddCircle />
-                </Button>
-                {(index !== questions.length - 1) ?
-                  <Button variant="outline-dark" onClick={() => swapQuestionDown(index)}>
-                    <SwapVertical />
+          <Container fluid>
+            <ButtonGroup className="my-2">
+              <Button variant="outline-dark" onClick={() => addNewQuestion(0)}>
+                <AddCircle /> Question
+              </Button>
+            </ButtonGroup>
+            {questions.map((question, index, questions) => (
+              <React.Fragment>
+                <Row className="my-2 pt-3 border border-muted" style={{ maxWidth: '700px' }}>
+                  <EditableQuestion index={index} key={question._id} question={question} />
+                </Row>
+                <ButtonGroup className="my-2" style={{ maxWidth: '700px' }}>
+                  <Button variant="outline-dark" onClick={() => addNewQuestion(index + 1)}>
+                    <AddCircle /> Question
                   </Button>
-                  : ''
-                }
-                {/* <Button variant="outline-dark" onClick={addNewQuestion}>+ Section</Button> */}
-              </ButtonGroup>
-            </div>
-          ))}
+                  {(index !== questions.length - 1) ?
+                    <Button variant="outline-dark" onClick={() => swapQuestionDown(index)}>
+                      <SwapVertical /> Swap
+                    </Button>
+                    : ''
+                  }
+                </ButtonGroup>
+              </React.Fragment>
+            ))}
+            <Row style={{ maxWidth: '700px' }}>
+              <Col>
+                <ButtonToolbar className="float-right">
+                  <Button
+                    onClick={goBack}
+                    variant="outline-dark">
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={saveQuestionnaire}
+                    variant="dark"
+                    disabled={isWaiting}>
+                    Save
+                  </Button>
+                </ButtonToolbar>
+              </Col>
+            </Row>
+          </Container>
         </Form>
-        <Button onClick={saveQuestionnaire} variant="outline-dark">Finish</Button>
-      </React.Fragment>
+      </React.Fragment >
     );
   }
 }
 
 const mapStateToProps = (state) => ({
   questions: state.editQuestionnaire.questions,
+  isWaiting: state.editQuestionnaire.loadingState.isWaiting,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   addNewQuestion: (afterIndex) => dispatch(addNewQuestion(afterIndex)),
-  saveQuestionnaire: () => dispatch(saveQuestionnaire()),
+  saveQuestionnaire: () => dispatch(saveQuestionnaire(ownProps.onSuccess)),
   resetQuestions: () => dispatch(resetQuestions()),
   swapQuestionDown: (index) => dispatch(swapQuestionDown(index)),
 });

@@ -16,6 +16,7 @@ export const SAVE_QUESTIONNAIRE_SUCCESS = 'SAVE_QUESTIONNAIRE_SUCCESS';
 export const SAVE_QUESTIONNAIRE_FAIL = 'SAVE_QUESTIONNAIRE_FAIL';
 export const RESET_QUESTIONS = 'RESET_QUESTIONS';
 export const CHANGE_QUESTION_TITLE = 'CHANGE_QUESTION_TITLE';
+export const DELETE_QUESTION = 'DELETE_QUESTION';
 
 function sanitizeResponse({ responseType, value, label }) {
   return ({
@@ -33,7 +34,7 @@ function sanitizeQuestion({ title, questionType, possibleResponses }) {
   });
 }
 
-export function saveQuestionnaire() {
+export function saveQuestionnaire(onSuccess) {
   return async (dispatch, getState) => {
     dispatch({ type: SAVE_QUESTIONNAIRE_START });
     const state = getState();
@@ -45,6 +46,13 @@ export function saveQuestionnaire() {
     try {
       const response = await axios.post('/api/questionnaire', { questionnaire });
       dispatch({ type: SAVE_QUESTIONNAIRE_SUCCESS });
+
+      await dispatch(resetQuestions());
+
+      if (!onSuccess) {
+        return;
+      }
+      await onSuccess();
     } catch (error) {
       // parse HTTP message
       let { message } = error;
@@ -147,6 +155,14 @@ export function addNewQuestion(afterIndex) {
     });
     dispatch(event);
   };
+}
+
+export function deleteQuestion(index) {
+  const event = ({
+    type: DELETE_QUESTION,
+    data: { index },
+  });
+  return event;
 }
 
 export function changeQuestionType(index, newType) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Nav, NavDropdown, Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-import { changeQuestionType, changeQuestionTitle, addResponse, removeResponse, changeQuestionFieldLabel, changeQuestionFieldValue, swapResponseUp, swapResponseDown } from '../actions/editQuestionnaire';
+import { changeQuestionType, changeQuestionTitle, addResponse, deleteQuestion, removeResponse, changeQuestionFieldLabel, changeQuestionFieldValue, swapResponseUp, swapResponseDown } from '../actions/editQuestionnaire';
 
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -20,11 +20,10 @@ function getQuestionTypeLabel(typeKey) {
   return match ? match.label : 'Unknown';
 }
 /**
- * 
+ * Represents a question in the EditableQuestionnaire.
  */
-function EditableQuestion({ question, addResponse, removeResponse, changeQuestionType, changeResponseValue, changeResponseLabel, swapResponseUp, swapResponseDown, changeQuestionTitle }) {
+function EditableQuestion({ question, addResponse, removeResponse, deleteQuestion, changeQuestionType, changeResponseValue, changeResponseLabel, swapResponseUp, swapResponseDown, changeQuestionTitle }) {
   let answers = <div></div>;
-
 
   if (question.questionType === 'SHORT_ANSWER') {
     answers = (
@@ -66,13 +65,13 @@ function EditableQuestion({ question, addResponse, removeResponse, changeQuestio
                       disabled={index === 0}
                       onClick={() => swapResponseUp(index)}
                       variant="outline-dark">
-                      {(index === 0) ? <Block /> : <ArrowUpward />}
+                      <ArrowUpward />
                     </Button>
                     <Button
                       disabled={index === responses.length - 1}
                       onClick={() => swapResponseDown(index)}
                       variant="outline-dark">
-                      {(index === responses.length - 1) ? <Block /> : <ArrowDownward />}
+                      <ArrowDownward />
                     </Button>
                     <Button
                       onClick={() => addResponse(index)}
@@ -111,25 +110,40 @@ function EditableQuestion({ question, addResponse, removeResponse, changeQuestio
   }
   return (
     <React.Fragment>
-      <Form.Group>
-        <Form.Control
-          name={`${question._id}-title`}
-          type="text"
-          value={question.title}
-          onChange={(e) => changeQuestionTitle(e.target.value)}
-        />
-      </Form.Group>
-      <Nav activeKey={question.questionType} variant="light" onSelect={(key) => changeQuestionType(key)}>
-        <Nav.Item>
-          <Nav.Link disabled>Type</Nav.Link>
-        </Nav.Item>
+      <Container>
+        <Row>
+          <Col>
+            <Form.Group>
+              <Form.Control
+                name={`${question._id}-title`}
+                type="text"
+                value={question.title}
+                onChange={(e) => changeQuestionTitle(e.target.value)}
+              />
+            </Form.Group>
+          </Col>
+          <Col md={2}>
+            <ButtonGroup className="float-right">
+              <Button
+                onClick={deleteQuestion}
+                variant="outline-dark">
+                <Delete />
+              </Button>
+            </ButtonGroup>
+          </Col>
+        </Row>
+        <Nav activeKey={question.questionType} variant="light" onSelect={(key) => changeQuestionType(key)}>
+          <Nav.Item>
+            <Nav.Link disabled>Type</Nav.Link>
+          </Nav.Item>
 
-        <NavDropdown title={getQuestionTypeLabel(question.questionType)}>
-          {QuestionTypes.map(({ key, label }) => (
-            <NavDropdown.Item key={key} eventKey={key}>{label}</NavDropdown.Item>
-          ))}
-        </NavDropdown>
-      </Nav>
+          <NavDropdown title={getQuestionTypeLabel(question.questionType)}>
+            {QuestionTypes.map(({ key, label }) => (
+              <NavDropdown.Item key={key} eventKey={key}>{label}</NavDropdown.Item>
+            ))}
+          </NavDropdown>
+        </Nav>
+      </Container>
       {answers}
     </React.Fragment>
   );
@@ -147,6 +161,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   changeResponseValue: (responseIndex, newValue) => dispatch(changeQuestionFieldValue(ownProps.index, responseIndex, newValue)),
   swapResponseUp: (responseIndex) => dispatch(swapResponseUp(ownProps.index, responseIndex)),
   swapResponseDown: (responseIndex) => dispatch(swapResponseDown(ownProps.index, responseIndex)),
+  deleteQuestion: () => dispatch(deleteQuestion(ownProps.index)),
 });
 
 export default connect(
