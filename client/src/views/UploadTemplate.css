@@ -1,8 +1,6 @@
 .custom-file {
-  display: inline-block;
-  width: 50%;
+  margin-bottom: 20px;
 }
 
 .uploadButton {
-  float: right;
 }

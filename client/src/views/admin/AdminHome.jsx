@@ -13,7 +13,6 @@ class AdminHomeView extends React.Component {
             <Link to='/admin/templates'>
               <Button variant="outline-dark">Manage Templates</Button>
             </Link>
-
           </Col>
         </Row>
       </Container>

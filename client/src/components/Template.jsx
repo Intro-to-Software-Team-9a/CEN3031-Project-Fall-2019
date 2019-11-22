@@ -12,9 +12,9 @@ export default function Template({ template, onClick }) {
       </Card.Header>
       <Card.Body className="templateCardBody">
         <DescriptionOutlinedIcon className="templateIcon" color="primary" style={{ fontSize: 120 }}/>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem>{template.title}</ListGroupItem>
-          <ListGroupItem>{formatCurrency(template.priceInCents)}</ListGroupItem>
+        <ListGroup variant="flush">
+          <ListGroup.Item className="templateCardListItem">{template.fileName}</ListGroup.Item>
+          <ListGroup.Item className="templateCardListItem">{formatCurrency(template.priceInCents)}</ListGroup.Item>
         </ListGroup>
       </Card.Body>
     </Card>
