@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getTemplates } from '../../actions/template';
-import { Button, Container, Card, CardDeck } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import Template from '../../components/Template';
 import UploadTemplateModal from '../UploadTemplate';
+import NoAccess from '../NoAccess';
 
 class ManageTemplates extends React.Component {
   templates;
@@ -33,6 +34,10 @@ class ManageTemplates extends React.Component {
   }
 
   render() {
+    if (!this.props.profile || !this.props.profile.role.isAdmin) {
+      return (<NoAccess/>);
+    }
+
     const documentList = this.props.templates.map((template) => (
         <Template
           template={template}
@@ -56,6 +61,7 @@ class ManageTemplates extends React.Component {
 
 const mapStateToProps = (state) => ({
   templates: state.templates.templates,
+  profile: state.profiles.profile
 });
 
 const mapDispatchToProps = (dispatch) => ({
