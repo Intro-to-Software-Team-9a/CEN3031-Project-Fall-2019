@@ -10,10 +10,12 @@ export const REMOVE_RESPONSE = 'REMOVE_RESPONSE';
 export const CHANGE_QUESTION_RESPONSE_LABEL = 'CHANGE_QUESTION_RESPONSE_LABEL';
 export const CHANGE_QUESTION_RESPONSE_VALUE = 'CHANGE_QUESTION_RESPONSE_VALUE';
 export const SWAP_RESPONSE = 'SWAP_RESPONSE';
+export const SWAP_QUESTIONS = 'SWAP_QUESITONS';
 export const SAVE_QUESTIONNAIRE_START = 'SAVE_QUESTIONNAIRE_START';
 export const SAVE_QUESTIONNAIRE_SUCCESS = 'SAVE_QUESTIONNAIRE_SUCCESS';
 export const SAVE_QUESTIONNAIRE_FAIL = 'SAVE_QUESTIONNAIRE_FAIL';
 export const RESET_QUESTIONS = 'RESET_QUESTIONS';
+export const CHANGE_QUESTION_TITLE = 'CHANGE_QUESTION_TITLE';
 
 function sanitizeResponse({ responseType, value, label }) {
   return ({
@@ -172,6 +174,14 @@ export function changeQuestionType(index, newType) {
   };
 }
 
+export function changeQuestionTitle(index, newTitle) {
+  const event = ({
+    type: CHANGE_QUESTION_TITLE,
+    data: { index, newTitle },
+  });
+  return event;
+}
+
 export function addResponse(questionIndex, responseIndex) {
   return (dispatch, getState) => {
     const state = getState();
@@ -221,6 +231,23 @@ export function swapResponseDown(questionIndex, responseIndex) {
   const event = ({
     type: SWAP_RESPONSE,
     data: { questionIndex, index1: responseIndex, index2: responseIndex + 1 },
+  });
+  return event;
+}
+
+
+export function swapQuestionUp(questionIndex) {
+  const event = ({
+    type: SWAP_QUESTIONS,
+    data: { index1: questionIndex, index2: questionIndex - 1 },
+  });
+  return event;
+}
+
+export function swapQuestionDown(questionIndex) {
+  const event = ({
+    type: SWAP_QUESTIONS,
+    data: { index1: questionIndex, index2: questionIndex + 1 },
   });
   return event;
 }

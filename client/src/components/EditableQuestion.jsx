@@ -2,13 +2,13 @@ import React from 'react';
 import { Form, Nav, NavDropdown, Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-import { changeQuestionType, addResponse, removeResponse, changeQuestionFieldLabel, changeQuestionFieldValue, swapResponseUp, swapResponseDown } from '../actions/editQuestionnaire';
+import { changeQuestionType, changeQuestionTitle, addResponse, removeResponse, changeQuestionFieldLabel, changeQuestionFieldValue, swapResponseUp, swapResponseDown } from '../actions/editQuestionnaire';
 
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Block from '@material-ui/icons/Block';
 import Delete from '@material-ui/icons/Delete';
-import AddCircle from '@material-ui/icons/AddCircle';
+import AddCircle from '@material-ui/icons/Add';
 
 const QuestionTypes = [
   { key: 'MULTIPLE_CHOICE', label: 'Multiple Choice' },
@@ -22,7 +22,7 @@ function getQuestionTypeLabel(typeKey) {
 /**
  * 
  */
-function EditableQuestion({ question, addResponse, removeResponse, changeQuestionType, changeResponseValue, changeResponseLabel, swapResponseUp, swapResponseDown }) {
+function EditableQuestion({ question, addResponse, removeResponse, changeQuestionType, changeResponseValue, changeResponseLabel, swapResponseUp, swapResponseDown, changeQuestionTitle }) {
   let answers = <div></div>;
 
 
@@ -116,6 +116,7 @@ function EditableQuestion({ question, addResponse, removeResponse, changeQuestio
           name={`${question._id}-title`}
           type="text"
           value={question.title}
+          onChange={(e) => changeQuestionTitle(e.target.value)}
         />
       </Form.Group>
       <Nav activeKey={question.questionType} variant="light" onSelect={(key) => changeQuestionType(key)}>
@@ -139,6 +140,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   changeQuestionType: (newType) => dispatch(changeQuestionType(ownProps.index, newType)),
+  changeQuestionTitle: (newTitle) => dispatch(changeQuestionTitle(ownProps.index, newTitle)),
   addResponse: (responseIndex) => dispatch(addResponse(ownProps.index, responseIndex)),
   removeResponse: (responseIndex) => dispatch(removeResponse(ownProps.index, responseIndex)),
   changeResponseLabel: (responseIndex, newLabel) => dispatch(changeQuestionFieldLabel(ownProps.index, responseIndex, newLabel)),

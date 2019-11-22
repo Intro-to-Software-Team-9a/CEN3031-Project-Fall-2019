@@ -2,12 +2,14 @@
 import {
   ADD_NEW_QUESTION,
   CHANGE_QUESTION_TYPE,
+  CHANGE_QUESTION_TITLE,
   ADD_RESPONSE,
   REMOVE_RESPONSE,
   CHANGE_QUESTION_RESPONSE_LABEL,
   CHANGE_QUESTION_RESPONSE_VALUE,
   SWAP_RESPONSE,
   RESET_QUESTIONS,
+  SWAP_QUESTIONS,
 } from '../actions/editQuestionnaire';
 
 
@@ -34,6 +36,17 @@ export default function questionnaireReducer(state = defaultState, action) {
       ...question,
       questionType: action.data.newType,
       possibleResponses: action.data.newResponses,
+    };
+
+    questions[action.data.index] = updatedQuestion;
+    return { ...state, questions };
+  }
+
+  if (action.type === CHANGE_QUESTION_TITLE) {
+    const question = questions[action.data.index];
+    const updatedQuestion = {
+      ...question,
+      title: action.data.newTitle,
     };
 
     questions[action.data.index] = updatedQuestion;
@@ -102,6 +115,18 @@ export default function questionnaireReducer(state = defaultState, action) {
 
     const updatedQuestion = { ...question, possibleResponses: responses };
     questions[action.data.questionIndex] = updatedQuestion;
+    return { ...state, questions };
+  }
+
+  if (action.type === SWAP_QUESTIONS) {
+
+    // swap responses
+    const i1 = action.data.index1;
+    const i2 = action.data.index2;
+    const temp = questions[i1];
+    questions[i1] = questions[i2];
+    questions[i2] = temp;
+
     return { ...state, questions };
   }
   return state;
