@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Form, Button, Col, ButtonToolbar } from 'react-bootstrap';
 import EditableQuestion from './EditableQuestion';
 
-import { addNewQuestion } from '../actions/editQuestionnaire';
+import { addNewQuestion, saveQuestionnaire, resetQuestions } from '../actions/editQuestionnaire';
 
 /**
  *
@@ -11,27 +11,35 @@ import { addNewQuestion } from '../actions/editQuestionnaire';
  * @param title From Questionnaire.question object in DB
  * @param onClick Callback for onclick
  */
-function Questionnaire({ questions, addNewQuestion }) {
-  if (!questions) return <div></div>;
+class Questionnaire extends React.Component {
+  componentDidMount() {
+    this.props.resetQuestions();
+  }
 
-  return (
-    <React.Fragment>
-      <Form>
-        {questions.map((question, index) => (
-          <div className="my-2">
-            <ButtonToolbar>
-              <Button variant="outline-dark" onClick={() => addNewQuestion(index)}>+ Question</Button>
-              {/* <Button variant="outline-dark" onClick={addNewQuestion}>+ Section</Button> */}
-            </ButtonToolbar>
-            <div className="p-3 my-2 border border-muted" style={{ maxWidth: '700px' }}>
-              <EditableQuestion index={index} key={question._id} question={question} />
+  render() {
+    const { questions, addNewQuestion, saveQuestionnaire } = this.props;
+    if (!questions) return <div></div>;
+
+    return (
+      <React.Fragment>
+        <Form>
+          <Button variant="outline-dark" onClick={() => addNewQuestion(0)}>+ Question</Button>
+          {questions.map((question, index) => (
+            <div className="my-2">
+              <div className="p-3 my-2 border border-muted" style={{ maxWidth: '700px' }}>
+                <EditableQuestion index={index} key={question._id} question={question} />
+              </div>
+              <ButtonToolbar>
+                <Button variant="outline-dark" onClick={() => addNewQuestion(index + 1)}>+ Question</Button>
+                {/* <Button variant="outline-dark" onClick={addNewQuestion}>+ Section</Button> */}
+              </ButtonToolbar>
             </div>
-          </div>
-        ))}
-      </Form>
-      <Button variant="outline-dark">Continue</Button>
-    </React.Fragment>
-  );
+          ))}
+        </Form>
+        <Button onClick={saveQuestionnaire} variant="outline-dark">Finish</Button>
+      </React.Fragment>
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({
@@ -40,6 +48,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   addNewQuestion: (afterIndex) => dispatch(addNewQuestion(afterIndex)),
+  saveQuestionnaire: () => dispatch(saveQuestionnaire()),
+  resetQuestions: () => dispatch(resetQuestions()),
 });
 
 export default connect(

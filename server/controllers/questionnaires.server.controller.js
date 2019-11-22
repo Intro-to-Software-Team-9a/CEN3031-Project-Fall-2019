@@ -59,6 +59,7 @@ async function create(req, res) {
 
     return res.send({ questionnaire });
   } catch (error) {
+    console.error(error);
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }
