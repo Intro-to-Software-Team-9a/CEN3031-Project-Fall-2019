@@ -6,6 +6,7 @@ import documents from './documents';
 import questionnaire from './questionnaire';
 import templates from './templates';
 import purchase from './purchase';
+import editQuestionnaire from './editQuestionnaire';
 
 export default combineReducers({
   count,
@@ -15,4 +16,5 @@ export default combineReducers({
   questionnaire,
   templates,
   purchase,
+  editQuestionnaire,
 });

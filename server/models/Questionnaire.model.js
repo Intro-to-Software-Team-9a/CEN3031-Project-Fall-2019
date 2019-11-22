@@ -4,6 +4,8 @@ const { Schema } = mongoose;
 
 /**
  * Stores a questionnaire and its corresponding questions.
+ * These objects are immutable in the database because they are referenced
+ * by QuestionnaireResponses.
  */
 
 /**
