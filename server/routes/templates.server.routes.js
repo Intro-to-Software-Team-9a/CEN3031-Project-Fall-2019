@@ -10,6 +10,9 @@ router.route('/')
 router.route('/add')
   .post(templates.add);
 
+router.route('/update')
+  .post(templates.update);
+
 router.route('/purchase')
   .post(templates.purchase);
 
