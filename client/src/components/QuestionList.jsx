@@ -9,8 +9,7 @@ function QuestionList({ questions, questionResp }) {
       {questions.map((question, count) => {
         // TODO: clean up
         const isChecked = (
-          questionResp.questionnaire._id === question._id
-          && typeof (questionResp.questionnaireResponse[question.possibleResponses[0].label]) !== 'undefined'
+            typeof (questionResp.questionnaireResponse[question.possibleResponses[0].label]) !== 'undefined'
           && questionResp.questionnaireResponse[question.possibleResponses[0].label] !== ''
         );
         return (
