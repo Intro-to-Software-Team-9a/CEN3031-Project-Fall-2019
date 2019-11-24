@@ -37,7 +37,7 @@ export default function questionnaireReducer(state = defaultState, action) {
   }
 
   if (action.type === RESET_QUESTIONS) {
-    return { ... state, questions: action.data.questions };
+    return { ...state, questions: action.data.questions };
   }
 
   if (action.type === ADD_NEW_QUESTION) {
@@ -72,7 +72,7 @@ export default function questionnaireReducer(state = defaultState, action) {
     questions[action.data.index] = updatedQuestion;
     return { ...state, questions };
   }
-    
+
   if (action.type === ADD_RESPONSE) {
     const question = questions[action.data.questionIndex];
     const responses = question.possibleResponses.slice();
@@ -139,7 +139,6 @@ export default function questionnaireReducer(state = defaultState, action) {
   }
 
   if (action.type === SWAP_QUESTIONS) {
-
     // swap responses
     const i1 = action.data.index1;
     const i2 = action.data.index2;

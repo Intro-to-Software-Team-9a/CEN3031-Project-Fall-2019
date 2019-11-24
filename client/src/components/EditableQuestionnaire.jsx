@@ -1,13 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Button, Col, ButtonToolbar, ButtonGroup, Container, Row } from 'react-bootstrap';
-import EditableQuestion from './EditableQuestion';
+import {
+  Form, Button, Col, ButtonToolbar, ButtonGroup, Container, Row,
+} from 'react-bootstrap';
 
-import { addNewQuestion, saveQuestionnaire, resetQuestions, swapQuestionDown } from '../actions/editQuestionnaire';
 
 import SwapVertical from '@material-ui/icons/SwapVert';
 import AddCircle from '@material-ui/icons/Add';
-import Delete from '@material-ui/icons/Delete';
+import {
+  addNewQuestion, saveQuestionnaire, resetQuestions, swapQuestionDown,
+} from '../actions/editQuestionnaire';
+import EditableQuestion from './EditableQuestion';
 
 /**
  *
@@ -21,7 +24,9 @@ class Questionnaire extends React.Component {
   }
 
   render() {
-    const { questions, addNewQuestion, saveQuestionnaire, swapQuestionDown, isWaiting, goBack } = this.props;
+    const {
+      questions, addNewQuestion, saveQuestionnaire, swapQuestionDown, isWaiting, goBack,
+    } = this.props;
     if (!questions) return <div></div>;
 
     return (
@@ -42,8 +47,8 @@ class Questionnaire extends React.Component {
                   <Button variant="outline-dark" onClick={() => addNewQuestion(index + 1)}>
                     <AddCircle /> Question
                   </Button>
-                  {(index !== questions.length - 1) ?
-                    <Button variant="outline-dark" onClick={() => swapQuestionDown(index)}>
+                  {(index !== questions.length - 1)
+                    ? <Button variant="outline-dark" onClick={() => swapQuestionDown(index)}>
                       <SwapVertical /> Swap
                     </Button>
                     : ''

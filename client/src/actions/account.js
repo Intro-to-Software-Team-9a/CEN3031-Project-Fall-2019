@@ -73,7 +73,7 @@ export function doLogout(onSuccess) {
       await axios.post('/api/accounts/logout');
       dispatch({ type: LOGOUT_SUCCESS });
       dispatch(forgetProfile());
-      
+
       if (onSuccess) {
         await onSuccess();
       }
