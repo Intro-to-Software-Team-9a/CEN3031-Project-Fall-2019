@@ -1,6 +1,7 @@
 
 import {
   ADD_NEW_QUESTION,
+  ADD_NEW_SECTION,
   DELETE_QUESTION,
   CHANGE_QUESTION_TYPE,
   CHANGE_QUESTION_TITLE,
@@ -14,17 +15,21 @@ import {
   SWAP_RESPONSE,
   RESET_QUESTIONS,
   SWAP_QUESTIONS,
+  DELETE_SECTION,
+  CHANGE_SECTION_TITLE,
 } from '../actions/editQuestionnaire';
 
 import { stateStart, stateFailure, stateSuccess } from '../utils/asyncStates';
 
 const defaultState = {
   questions: [],
+  sections: [],
   loadingState: stateSuccess(),
 };
 
 export default function questionnaireReducer(state = defaultState, action) {
   const questions = state.questions.slice();
+  const sections = state.sections.slice();
 
   if (action.type === SAVE_QUESTIONNAIRE_START) {
     return { ...state, loadingState: stateStart() };
@@ -37,7 +42,11 @@ export default function questionnaireReducer(state = defaultState, action) {
   }
 
   if (action.type === RESET_QUESTIONS) {
-    return { ...state, questions: action.data.questions };
+    return {
+      ...state,
+      questions: action.data.questions,
+      sections: action.data.sections,
+    };
   }
 
   if (action.type === ADD_NEW_QUESTION) {
@@ -45,9 +54,37 @@ export default function questionnaireReducer(state = defaultState, action) {
     return { ...state, questions };
   }
 
+  if (action.type === ADD_NEW_SECTION) {
+    const { startIndex } = action.data.section;
+    const afterIndex = sections.findIndex(
+      (section) => section.startIndex < startIndex,
+    );
+
+    if (afterIndex !== -1) {
+      sections.splice(afterIndex, 0, action.data.section);
+    } else {
+      sections.push(action.data.section);
+    }
+
+    return { ...state, sections };
+  }
+
   if (action.type === DELETE_QUESTION) {
     questions.splice(action.data.index, 1);
     return { ...state, questions };
+  }
+
+  if (action.type === DELETE_SECTION) {
+    // delete the section
+    const index = sections.findIndex((section) => section._id === action.data.sectionId);
+    sections.splice(index, 1);
+
+    // relabel the startIndex-es if necessary
+    if (index === 0) {
+      sections[0] = { ...sections[0], startIndex: 0 };
+    }
+
+    return { ...state, sections };
   }
 
   if (action.type === CHANGE_QUESTION_TYPE) {
@@ -71,6 +108,13 @@ export default function questionnaireReducer(state = defaultState, action) {
 
     questions[action.data.index] = updatedQuestion;
     return { ...state, questions };
+  }
+
+  if (action.type === CHANGE_SECTION_TITLE) {
+    const index = sections.findIndex((section) => section._id === action.data.sectionId);
+
+    sections[index] = { ...sections[index], title: action.data.newTitle };
+    return { ...state, sections };
   }
 
   if (action.type === ADD_RESPONSE) {

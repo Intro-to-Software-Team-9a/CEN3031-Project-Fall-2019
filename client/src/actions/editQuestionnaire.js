@@ -4,8 +4,11 @@ import axios from 'axios';
 import { getQuestionnaire } from './questionnaire';
 
 export const ADD_NEW_QUESTION = 'ADD_NEW_QUESTION';
+export const ADD_NEW_SECTION = 'ADD_NEW_SECTION';
 export const ADD_RESPONSE = 'ADD_RESPONSE';
 export const CHANGE_QUESTION_TYPE = 'CHANGE_QUESTION_TYPE';
+export const CHANGE_QUESTION_TITLE = 'CHANGE_QUESTION_TITLE';
+export const CHANGE_SECTION_TITLE = 'CHANGE_SECTION_TITLE';
 export const REMOVE_RESPONSE = 'REMOVE_RESPONSE';
 export const CHANGE_QUESTION_RESPONSE_LABEL = 'CHANGE_QUESTION_RESPONSE_LABEL';
 export const CHANGE_QUESTION_RESPONSE_VALUE = 'CHANGE_QUESTION_RESPONSE_VALUE';
@@ -15,8 +18,9 @@ export const SAVE_QUESTIONNAIRE_START = 'SAVE_QUESTIONNAIRE_START';
 export const SAVE_QUESTIONNAIRE_SUCCESS = 'SAVE_QUESTIONNAIRE_SUCCESS';
 export const SAVE_QUESTIONNAIRE_FAIL = 'SAVE_QUESTIONNAIRE_FAIL';
 export const RESET_QUESTIONS = 'RESET_QUESTIONS';
-export const CHANGE_QUESTION_TITLE = 'CHANGE_QUESTION_TITLE';
 export const DELETE_QUESTION = 'DELETE_QUESTION';
+export const DELETE_SECTION = 'DELETE_SECTION';
+
 
 function sanitizeResponse({ responseType, value, label }) {
   return ({
@@ -34,26 +38,33 @@ function sanitizeQuestion({ title, questionType, possibleResponses }) {
   });
 }
 
+function sanitizeSection({ title, startIndex, _id }) {
+  return ({ title, startIndex, _id });
+}
+
 export function resetQuestions() {
   return async (dispatch, getState) => {
     await dispatch(getQuestionnaire());
     const state = getState();
-    const questions = state.questionnaire.questionnaire.questions.map(sanitizeQuestion);
+    const { questions } = state.questionnaire.questionnaire;
+    const { sections } = state.questionnaire.questionnaire;
     dispatch({
       type: RESET_QUESTIONS,
-      data: { questions },
+      data: { questions, sections },
     });
   };
 }
 
 export function saveQuestionnaire(onSuccess) {
   return async (dispatch, getState) => {
-    dispatch({ type: SAVE_QUESTIONNAIRE_START });
     const state = getState();
 
     const questionnaire = {
       questions: state.editQuestionnaire.questions.map(sanitizeQuestion),
+      sections: state.editQuestionnaire.sections.map(sanitizeSection),
     };
+
+    dispatch({ type: SAVE_QUESTIONNAIRE_START, data: { questionnaire } });
 
     try {
       await axios.post('/api/questionnaire', { questionnaire });
@@ -145,6 +156,15 @@ export function defaultQuestion(state) {
   };
 }
 
+export function defaultSection(startIndex) {
+  return {
+    _id: uuid(),
+    title: 'New Section',
+    startIndex,
+  };
+}
+
+/** Adds a new question after the one at `afterIndex` */
 export function addNewQuestion(afterIndex) {
   return (dispatch, getState) => {
     const state = getState();
@@ -156,10 +176,29 @@ export function addNewQuestion(afterIndex) {
   };
 }
 
+/** Adds a new section after the question at `afterQuestionIndex` */
+export function addNewSection(afterQuestionIndex) {
+  const event = ({
+    type: ADD_NEW_SECTION,
+    data: { afterQuestionIndex, section: defaultSection(afterQuestionIndex) },
+  });
+  return event;
+}
+
+/** Deletes a question by index in the array of questions */
 export function deleteQuestion(index) {
   const event = ({
     type: DELETE_QUESTION,
     data: { index },
+  });
+  return event;
+}
+
+/** Delete a section by `_id` in the array of sections */
+export function deleteSection(sectionId) {
+  const event = ({
+    type: DELETE_SECTION,
+    data: { sectionId },
   });
   return event;
 }
@@ -193,6 +232,15 @@ export function changeQuestionTitle(index, newTitle) {
   const event = ({
     type: CHANGE_QUESTION_TITLE,
     data: { index, newTitle },
+  });
+  return event;
+}
+
+
+export function changeSectionTitle(sectionId, newTitle) {
+  const event = ({
+    type: CHANGE_SECTION_TITLE,
+    data: { sectionId, newTitle },
   });
   return event;
 }

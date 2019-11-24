@@ -51,7 +51,7 @@ function EditableQuestion({
       <Form.Group>
         <Container>
           {question.possibleResponses.map((response, index) => (
-            <Row>
+            <Row key={response._id}>
               <Col>
                 <Form.Control
                   name={response._id}
@@ -134,6 +134,7 @@ function EditableQuestion({
       <Container>
         <Row>
           <Col>
+            <h5 className="pl-1">Question</h5>
             <Form.Group>
               <Form.Control
                 name={`${question._id}-title`}

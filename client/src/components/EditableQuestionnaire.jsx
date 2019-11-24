@@ -8,10 +8,14 @@ import {
 import SwapVertical from '@material-ui/icons/SwapVert';
 import AddCircle from '@material-ui/icons/Add';
 import {
-  addNewQuestion, saveQuestionnaire, resetQuestions, swapQuestionDown,
+  addNewQuestion,
+  addNewSection,
+  saveQuestionnaire,
+  resetQuestions,
+  swapQuestionDown,
 } from '../actions/editQuestionnaire';
 import EditableQuestion from './EditableQuestion';
-
+import EditableSection from './EditableSection';
 /**
  *
  * @param possibleResponses From Questionnaire.question object in DB
@@ -25,9 +29,30 @@ class Questionnaire extends React.Component {
 
   render() {
     const {
-      questions, addNewQuestion, saveQuestionnaire, swapQuestionDown, isWaiting, goBack,
+      questions,
+      sections,
+      addNewQuestion,
+      saveQuestionnaire,
+      swapQuestionDown,
+      isWaiting,
+      goBack,
+      addNewSection,
     } = this.props;
-    if (!questions) return <div></div>;
+    if (!questions || !sections) return <div></div>;
+
+
+    const orderedSections = sections.slice();
+    orderedSections.sort((s1, s2) => s1.startIndex - s2.startIndex);
+
+    const sectionRanges = orderedSections.map((section, index, sections) => {
+      let endIndex = questions.length;
+      if (index + 1 < sections.length) {
+        endIndex = sections[index + 1].startIndex;
+      }
+
+      return { ...section, endIndex };
+    });
+
 
     return (
       <React.Fragment>
@@ -38,24 +63,50 @@ class Questionnaire extends React.Component {
                 <AddCircle /> Question
               </Button>
             </ButtonGroup>
-            {questions.map((question, index, questions) => (
-              <React.Fragment>
-                <Row className="my-2 pt-3 border border-muted" style={{ maxWidth: '700px' }}>
-                  <EditableQuestion index={index} key={question._id} question={question} />
-                </Row>
-                <ButtonGroup className="my-2" style={{ maxWidth: '700px' }}>
-                  <Button variant="outline-dark" onClick={() => addNewQuestion(index + 1)}>
-                    <AddCircle /> Question
-                  </Button>
-                  {(index !== questions.length - 1)
-                    ? <Button variant="outline-dark" onClick={() => swapQuestionDown(index)}>
-                      <SwapVertical /> Swap
-                    </Button>
-                    : ''
-                  }
-                </ButtonGroup>
-              </React.Fragment>
-            ))}
+            {/* {questions.map((question, index, questions) => ( */}
+            {sectionRanges.map((section, sectionIndex) => {
+              const { startIndex, endIndex } = section;
+              const questionElements = [];
+              for (let i = startIndex; i < endIndex; i += 1) {
+                const index = i;
+                const question = questions[i];
+
+                questionElements.push(
+                  <div key={`editableQuestion-${i}`}>
+                    <Row className="my-2 pt-3 border border-dark" style={{ maxWidth: '700px' }}>
+                      <EditableQuestion index={index} key={question._id} question={question} />
+                    </Row>
+                    <ButtonGroup className="my-2" style={{ maxWidth: '700px' }}>
+                      <Button
+                        variant="outline-dark"
+                        onClick={() => addNewQuestion(index + 1)}>
+                        <AddCircle /> Question
+                      </Button>
+                      <Button
+                        variant="outline-dark"
+                        onClick={() => addNewSection(index + 1)}>
+                        <AddCircle /> Section
+                      </Button>
+                      {(index === questions.length - 1) ? ''
+                        : <Button
+                          variant="outline-dark"
+                          onClick={() => swapQuestionDown(index)}>
+                          <SwapVertical /> Swap
+                        </Button>
+                      }
+                    </ButtonGroup>
+                  </div>,
+                );
+              }
+              return (
+                <div key={section._id}>
+                  <Row className="my-2 pt-3 border border-dark" style={{ maxWidth: '700px' }}>
+                    <EditableSection section={section} index={sectionIndex} />
+                  </Row>
+                  {questionElements}
+                </div>
+              );
+            })}
             <Row style={{ maxWidth: '700px' }}>
               <Col>
                 <ButtonToolbar className="float-right">
@@ -82,11 +133,13 @@ class Questionnaire extends React.Component {
 
 const mapStateToProps = (state) => ({
   questions: state.editQuestionnaire.questions,
+  sections: state.editQuestionnaire.sections,
   isWaiting: state.editQuestionnaire.loadingState.isWaiting,
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   addNewQuestion: (afterIndex) => dispatch(addNewQuestion(afterIndex)),
+  addNewSection: (afterQuestionIndex) => dispatch(addNewSection(afterQuestionIndex)),
   saveQuestionnaire: () => dispatch(saveQuestionnaire(ownProps.onSuccess)),
   resetQuestions: () => dispatch(resetQuestions()),
   swapQuestionDown: (index) => dispatch(swapQuestionDown(index)),
