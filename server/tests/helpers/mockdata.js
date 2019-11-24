@@ -35,6 +35,20 @@ module.exports = {
     priceInCents: 2000,
   },
   questionnaire1: {
+    sections: [
+      {
+        title: 'General Information',
+        startIndex: 0,
+      },
+      {
+        title: 'Beneficiary Information',
+        startIndex: 2,
+      },
+      {
+        title: 'Final Instructions',
+        startIndex: 4,
+      },
+    ],
     questions: [
       {
         title: 'What is your name?',
