@@ -1,14 +1,24 @@
 import React from 'react';
-import { Form, Nav, NavDropdown, Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
+import {
+  Form, Nav, NavDropdown, Container, Row, Col, ButtonGroup, Button,
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
-
-import { changeQuestionType, changeQuestionTitle, addResponse, deleteQuestion, removeResponse, changeQuestionFieldLabel, changeQuestionFieldValue, swapResponseUp, swapResponseDown } from '../actions/editQuestionnaire';
 
 import ArrowUpward from '@material-ui/icons/ArrowUpward';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import Block from '@material-ui/icons/Block';
 import Delete from '@material-ui/icons/Delete';
 import AddCircle from '@material-ui/icons/Add';
+import {
+  changeQuestionType,
+  changeQuestionTitle,
+  addResponse,
+  deleteQuestion,
+  removeResponse,
+  changeQuestionFieldLabel,
+  changeQuestionFieldValue,
+  swapResponseUp,
+  swapResponseDown,
+} from '../actions/editQuestionnaire';
 
 const QuestionTypes = [
   { key: 'MULTIPLE_CHOICE', label: 'Multiple Choice' },
@@ -16,13 +26,24 @@ const QuestionTypes = [
 ];
 
 function getQuestionTypeLabel(typeKey) {
-  const match = QuestionTypes.find(type => type.key === typeKey);
+  const match = QuestionTypes.find((type) => type.key === typeKey);
   return match ? match.label : 'Unknown';
 }
 /**
  * Represents a question in the EditableQuestionnaire.
  */
-function EditableQuestion({ question, addResponse, removeResponse, deleteQuestion, changeQuestionType, changeResponseValue, changeResponseLabel, swapResponseUp, swapResponseDown, changeQuestionTitle }) {
+function EditableQuestion({
+  question,
+  addResponse,
+  removeResponse,
+  deleteQuestion,
+  changeQuestionType,
+  changeResponseValue,
+  changeResponseLabel,
+  swapResponseUp,
+  swapResponseDown,
+  changeQuestionTitle,
+}) {
   let answers = <div></div>;
 
   if (question.questionType === 'SHORT_ANSWER') {
@@ -132,7 +153,10 @@ function EditableQuestion({ question, addResponse, removeResponse, deleteQuestio
             </ButtonGroup>
           </Col>
         </Row>
-        <Nav activeKey={question.questionType} variant="light" onSelect={(key) => changeQuestionType(key)}>
+        <Nav activeKey={question.questionType}
+          variant="light"
+          onSelect={(key) => changeQuestionType(key)}
+        >
           <Nav.Item>
             <Nav.Link disabled>Type</Nav.Link>
           </Nav.Item>
@@ -149,7 +173,7 @@ function EditableQuestion({ question, addResponse, removeResponse, deleteQuestio
   );
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -157,8 +181,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   changeQuestionTitle: (newTitle) => dispatch(changeQuestionTitle(ownProps.index, newTitle)),
   addResponse: (responseIndex) => dispatch(addResponse(ownProps.index, responseIndex)),
   removeResponse: (responseIndex) => dispatch(removeResponse(ownProps.index, responseIndex)),
-  changeResponseLabel: (responseIndex, newLabel) => dispatch(changeQuestionFieldLabel(ownProps.index, responseIndex, newLabel)),
-  changeResponseValue: (responseIndex, newValue) => dispatch(changeQuestionFieldValue(ownProps.index, responseIndex, newValue)),
+  changeResponseLabel: (responseIndex, newLabel) => dispatch(
+    changeQuestionFieldLabel(ownProps.index, responseIndex, newLabel),
+  ),
+  changeResponseValue: (responseIndex, newValue) => dispatch(
+    changeQuestionFieldValue(ownProps.index, responseIndex, newValue),
+  ),
   swapResponseUp: (responseIndex) => dispatch(swapResponseUp(ownProps.index, responseIndex)),
   swapResponseDown: (responseIndex) => dispatch(swapResponseDown(ownProps.index, responseIndex)),
   deleteQuestion: () => dispatch(deleteQuestion(ownProps.index)),

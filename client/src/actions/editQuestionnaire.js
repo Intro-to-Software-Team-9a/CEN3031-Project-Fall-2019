@@ -34,17 +34,29 @@ function sanitizeQuestion({ title, questionType, possibleResponses }) {
   });
 }
 
+export function resetQuestions() {
+  return async (dispatch, getState) => {
+    await dispatch(getQuestionnaire());
+    const state = getState();
+    const questions = state.questionnaire.questionnaire.questions.map(sanitizeQuestion);
+    dispatch({
+      type: RESET_QUESTIONS,
+      data: { questions },
+    });
+  };
+}
+
 export function saveQuestionnaire(onSuccess) {
   return async (dispatch, getState) => {
     dispatch({ type: SAVE_QUESTIONNAIRE_START });
     const state = getState();
-    
+
     const questionnaire = {
       questions: state.editQuestionnaire.questions.map(sanitizeQuestion),
     };
 
     try {
-      const response = await axios.post('/api/questionnaire', { questionnaire });
+      await axios.post('/api/questionnaire', { questionnaire });
       dispatch({ type: SAVE_QUESTIONNAIRE_SUCCESS });
 
       await dispatch(resetQuestions());
@@ -64,28 +76,16 @@ export function saveQuestionnaire(onSuccess) {
   };
 }
 
-export function resetQuestions() {
-  return async (dispatch, getState) => {
-    await dispatch(getQuestionnaire());
-    const state = getState();
-    const questions = state.questionnaire.questionnaire.questions.map(sanitizeQuestion);
-    dispatch({
-      type: RESET_QUESTIONS,
-      data: { questions },
-    });
-  };
-}
-
 function genLabel(state) {
-  const questions = state.editQuestionnaire.questions;
-  const labels = questions.flatMap((question) => {
-    return question.possibleResponses.map((response) => response.label);
-  });
+  const { questions } = state.editQuestionnaire;
+  const labels = questions.flatMap(
+    (question) => question.possibleResponses.map((response) => response.label),
+  );
 
   let newLabel = 'MyLabel1';
   let i = 1;
   while (labels.includes(newLabel)) {
-    i++;
+    i += 1;
     newLabel = `MyLabel${i}`;
   }
   return newLabel;
@@ -97,8 +97,8 @@ function defaultShortAnswer(state, question) {
       {
         _id: uuid(),
         responseType: 'SHORT_ANSWER',
-        label: genLabel(state)
-      }
+        label: genLabel(state),
+      },
     ];
   }
 
@@ -107,7 +107,7 @@ function defaultShortAnswer(state, question) {
       _id: uuid(),
       responseType: 'SHORT_ANSWER',
       label: question.possibleResponses[0].label,
-    }
+    },
   ];
 }
 
@@ -116,7 +116,7 @@ function defaultMultipleChoiceResponse(state) {
     _id: uuid(),
     responseType: 'MULTIPLE_CHOICE',
     label: genLabel(state),
-    value: 'Option Name'
+    value: 'Option Name',
   };
 }
 
@@ -132,10 +132,9 @@ function defaultMultipleChoice(state, question) {
       _id: uuid(),
       responseType: 'MULTIPLE_CHOICE',
       label: response.label,
-      value: 'Option Name'
+      value: 'Option Name',
     }
   ));
-
 }
 export function defaultQuestion(state) {
   return {
@@ -144,7 +143,7 @@ export function defaultQuestion(state) {
     questionType: 'SHORT_ANSWER',
     possibleResponses: defaultShortAnswer(state),
   };
-};
+}
 
 export function addNewQuestion(afterIndex) {
   return (dispatch, getState) => {
