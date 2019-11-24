@@ -15,7 +15,7 @@ export default function QuestionnaireView({ onFinish, onBack }) {
         </Col>
         <Col>
           <h1>Questionnaire&nbsp; <img src={safelock} alt="Checkmark" width="15" height="15"></img></h1>
-          <p><i>Personal information is required for state plans.</i></p>
+          <p><i>Personal information is required for estate plans.</i></p>
         </Col>
       </Row>
       <Row>
