@@ -8,7 +8,6 @@ const validation = require('../../utils/validation');
 const questionnaires = require('../../controllers/questionnaires.server.controller');
 
 const mockData = require('../helpers/mockdata');
-const { stubExec } = require('../helpers/utils');
 
 function mockRequest() {
   return {
@@ -26,10 +25,21 @@ function mockResponse() {
 
 
 describe('Questionnaires Controller', () => {
+
   describe('create', () => {
     // "globals" for login tests
     let req;
     let res;
+
+    let oldIsValidQuestionnaire;
+
+    before(() => {
+      oldIsValidQuestionnaire = validation.isValidQuestionnaire;
+    });
+
+    after(() => {
+      validation.isValidQuestionnaire = oldIsValidQuestionnaire;
+    });
 
     beforeEach(() => {
       Questionnaire.prototype.save = sinon.stub().resolves();
