@@ -4,22 +4,15 @@ import {
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Delete from '@material-ui/icons/Delete';
-import AddCircle from '@material-ui/icons/Add';
+
 import {
   changeQuestionType,
   changeQuestionTitle,
-  addResponse,
   deleteQuestion,
-  removeResponse,
-  changeQuestionFieldLabel,
-  changeQuestionFieldValue,
-  swapResponseUp,
-  swapResponseDown,
 } from '../actions/editQuestionnaire';
-import { getDuplicateLabels } from '../utils/validation';
+import EditableMultipleChoice from './EditableMultipleChoice';
+import EditableShortAnswer from './EditableShortAnswer';
 
 const QuestionTypes = [
   { key: 'MULTIPLE_CHOICE', label: 'Multiple Choice' },
@@ -37,18 +30,12 @@ class EditableQuestion extends React.Component {
   render() {
     const {
       question,
-      addResponse,
-      removeResponse,
       deleteQuestion,
       changeQuestionType,
-      changeResponseValue,
-      changeResponseLabel,
-      swapResponseUp,
-      swapResponseDown,
       changeQuestionTitle,
     } = this.props;
 
-    const duplicateLabels = JSON.parse(this.props.duplicateLabels);
+    // const duplicateLabels = JSON.parse(this.props.duplicateLabels);
 
     if (!question) return '';
 
@@ -57,29 +44,11 @@ class EditableQuestion extends React.Component {
       answers = (
         <Form.Group>
           <Container>
-            {question.possibleResponses.map((response, index) => (
-              <Row key={response._id}>
-                <Col>
-                  <Form.Control
-                    name={response._id}
-                    type="text"
-                    value={response.value}
-                    disabled
-                  />
-                </Col>
-                <Col>
-                  <Form.Control
-                    name={response._id}
-                    type="text"
-                    value={response.label}
-                    onChange={(e) => changeResponseLabel(index, e.target.value)}
-                    isInvalid={duplicateLabels.includes(response.label)}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Labels can't used more than once.
-                </Form.Control.Feedback>
-                </Col>
-              </Row>
+            {question.possibleResponses.map((responseId, index) => (
+              <EditableShortAnswer
+                questionIndex={this.props.index}
+                responseId={responseId}
+                responseIndex={index} />
             ))}
           </Container>
         </Form.Group>
@@ -88,59 +57,21 @@ class EditableQuestion extends React.Component {
       answers = (
         <Form.Group>
           <Container>
-            {question.possibleResponses.map((response, index, responses) => (
-              <Form.Row key={response._id} className="py-1">
-                <Col>
-                  <div className="d-flex">
-                    <ButtonGroup className="flex-shrink-1 mr-2">
-                      <Button
-                        disabled={index === 0}
-                        onClick={() => swapResponseUp(index)}
-                        variant="outline-dark">
-                        <ArrowUpward />
-                      </Button>
-                      <Button
-                        disabled={index === responses.length - 1}
-                        onClick={() => swapResponseDown(index)}
-                        variant="outline-dark">
-                        <ArrowDownward />
-                      </Button>
-                      <Button
-                        onClick={() => addResponse(index)}
-                        variant="outline-dark">
-                        <AddCircle />
-                      </Button>
-                      <Button
-                        onClick={() => removeResponse(index)}
-                        variant="outline-dark">
-                        <Delete />
-                      </Button>
-                    </ButtonGroup>
-                    <Form.Control
-                      name={response._id}
-                      type="text"
-                      value={response.value}
-                      label="Prompt"
-                      onChange={(e) => changeResponseValue(index, e.target.value)}
-                    />
-                  </div>
-                </Col>
-                <Col md={4}>
-                  <Form.Control
-                    name={response._id}
-                    type="text"
-                    value={response.label}
-                    label="Option Label"
-                    isInvalid={duplicateLabels.includes(response.label)}
-                    onChange={(e) => changeResponseLabel(index, e.target.value)}
-                  />
-                </Col>
-              </Form.Row>
+            {question.possibleResponses.map((responseId, index, arr) => (
+              <EditableMultipleChoice
+                questionIndex={this.props.index}
+                responseId={responseId}
+                responseIndex={index}
+                isLast={index === arr.length - 1}
+                isFirst={index === 0}
+              />
             ))}
           </Container>
         </Form.Group>
       );
     }
+
+    const isTitleValid = question.title || question.title.length > 0;
     return (
       <React.Fragment>
         <Container>
@@ -153,7 +84,8 @@ class EditableQuestion extends React.Component {
                   type="text"
                   value={question.title}
                   onChange={(e) => changeQuestionTitle(e.target.value)}
-                  isInvalid={!question.title || question.title.length === 0}
+                  isInvalid={!isTitleValid}
+                  isValid={isTitleValid}
                 />
                 <Form.Control.Feedback type="invalid">
                   Titles can't be blank.
@@ -193,24 +125,13 @@ class EditableQuestion extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   // encode to avoid state rerender
-  const duplicateLabels = JSON.stringify(getDuplicateLabels(state.editQuestionnaire.questions));
   const question = state.editQuestionnaire.questions.find((q) => q._id === ownProps.questionId);
-  return { question, duplicateLabels };
+  return { question };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   changeQuestionType: (newType) => dispatch(changeQuestionType(ownProps.index, newType)),
   changeQuestionTitle: (newTitle) => dispatch(changeQuestionTitle(ownProps.index, newTitle)),
-  addResponse: (responseIndex) => dispatch(addResponse(ownProps.index, responseIndex)),
-  removeResponse: (responseIndex) => dispatch(removeResponse(ownProps.index, responseIndex)),
-  changeResponseLabel: (responseIndex, newLabel) => dispatch(
-    changeQuestionFieldLabel(ownProps.index, responseIndex, newLabel),
-  ),
-  changeResponseValue: (responseIndex, newValue) => dispatch(
-    changeQuestionFieldValue(ownProps.index, responseIndex, newValue),
-  ),
-  swapResponseUp: (responseIndex) => dispatch(swapResponseUp(ownProps.index, responseIndex)),
-  swapResponseDown: (responseIndex) => dispatch(swapResponseDown(ownProps.index, responseIndex)),
   deleteQuestion: () => dispatch(deleteQuestion(ownProps.index)),
 });
 

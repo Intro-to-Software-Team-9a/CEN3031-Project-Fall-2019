@@ -48,11 +48,19 @@ export function resetQuestions() {
   return async (dispatch, getState) => {
     await dispatch(getQuestionnaire());
     const state = getState();
-    const { questions } = state.questionnaire.questionnaire;
+    const questions = state.questionnaire.questionnaire.questions
+      .map((question) => ({
+        ...question,
+        possibleResponses: question.possibleResponses.map((response) => response._id),
+      }));
+    const responses = state.questionnaire.questionnaire.questions.flatMap(
+      (question) => question.possibleResponses,
+    );
+
     const { sections } = state.questionnaire.questionnaire;
     dispatch({
       type: RESET_QUESTIONS,
-      data: { questions, sections },
+      data: { questions, sections, responses },
     });
   };
 }
@@ -61,8 +69,18 @@ export function saveQuestionnaire(onSuccess) {
   return async (dispatch, getState) => {
     const state = getState();
 
+    const { responses } = state.editQuestionnaire;
+
+    const joinedQuestions = state.editQuestionnaire.questions.map(
+      (question) => ({
+        ...question,
+        possibleResponses: question.possibleResponses.map(
+          (responseId) => responses.find((r) => r._id === responseId),
+        ),
+      }),
+    );
     const questionnaire = {
-      questions: state.editQuestionnaire.questions.map(sanitizeQuestion),
+      questions: joinedQuestions.map(sanitizeQuestion),
       sections: state.editQuestionnaire.sections.map(sanitizeSection),
     };
 
@@ -90,10 +108,8 @@ export function saveQuestionnaire(onSuccess) {
 }
 
 function genLabel(state) {
-  const { questions } = state.editQuestionnaire;
-  const labels = questions.flatMap(
-    (question) => question.possibleResponses.map((response) => response.label),
-  );
+  const { responses } = state.editQuestionnaire;
+  const labels = responses.map((response) => response.label);
 
   let newLabel = 'MyLabel1';
   let i = 1;
@@ -115,11 +131,14 @@ function defaultShortAnswer(state, question) {
     ];
   }
 
+  const { responses } = state.editQuestionnaire;
+  const responseId = question.possibleResponses[0];
+
   return [
     {
       _id: uuid(),
       responseType: 'SHORT_ANSWER',
-      label: question.possibleResponses[0].label,
+      label: responses.find((r) => r._id === responseId).label,
     },
   ];
 }
@@ -140,14 +159,17 @@ function defaultMultipleChoice(state, question) {
     ];
   }
 
-  return question.possibleResponses.map((response) => (
-    {
+  const { responses } = state.editQuestionnaire;
+
+  return question.possibleResponses.map((responseId) => {
+    const response = responses.find((r) => r._id === responseId);
+    return {
       _id: uuid(),
       responseType: 'MULTIPLE_CHOICE',
       label: response.label,
       value: 'Option Name',
-    }
-  ));
+    };
+  });
 }
 export function defaultQuestion(state) {
   return {

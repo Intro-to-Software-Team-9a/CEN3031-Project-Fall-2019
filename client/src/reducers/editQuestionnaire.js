@@ -24,9 +24,12 @@ import {
 
 import { stateStart, stateFailure, stateSuccess } from '../utils/asyncStates';
 
+// NOTE: this data is stored in normalized form
+// for performance purposes (to prevent unncecessary re-rendering)
 const defaultState = {
-  questions: [],
+  questions: [], // questions have possibleResponses projected onto _id
   sections: [],
+  responses: [], // responses are normalized from questions
   duplicateLabels: [],
   loadingState: stateSuccess(),
 };
@@ -34,6 +37,7 @@ const defaultState = {
 export default function questionnaireReducer(state = defaultState, action) {
   const questions = state.questions.slice();
   const sections = state.sections.slice();
+  const responses = state.responses.slice();
 
   if (action.type === SAVE_QUESTIONNAIRE_START) {
     return { ...state, loadingState: stateStart() };
@@ -50,12 +54,25 @@ export default function questionnaireReducer(state = defaultState, action) {
       ...state,
       questions: action.data.questions || [],
       sections: action.data.sections || [],
+      responses: action.data.responses || [],
     };
   }
 
   if (action.type === ADD_NEW_QUESTION) {
-    questions.splice(action.data.afterIndex, 0, action.data.question);
-    return { ...state, questions };
+    const { question } = action.data;
+    const { possibleResponses } = question;
+
+    // normalize data by splitting
+    // possibleResponses from questions
+    const normalizedQuestion = {
+      ...question,
+      possibleResponses: question.possibleResponses.map((r) => r._id),
+    };
+
+    // update state
+    questions.splice(action.data.afterIndex, 0, normalizedQuestion);
+    const newResponses = responses.concat(possibleResponses);
+    return { ...state, questions, responses: newResponses };
   }
 
   if (action.type === ADD_NEW_SECTION) {
@@ -74,8 +91,10 @@ export default function questionnaireReducer(state = defaultState, action) {
   }
 
   if (action.type === DELETE_QUESTION) {
+    const question = questions[action.data.index];
+    const newResponses = responses.filter((r) => !question.possibleResponses.includes(r._id));
     questions.splice(action.data.index, 1);
-    return { ...state, questions };
+    return { ...state, questions, responses: newResponses };
   }
 
   if (action.type === DELETE_SECTION) {
@@ -133,14 +152,19 @@ export default function questionnaireReducer(state = defaultState, action) {
 
   if (action.type === CHANGE_QUESTION_TYPE) {
     const question = questions[action.data.index];
+
+    const newResponses = responses
+      .filter((r) => !question.possibleResponses.includes(r._id))
+      .concat(action.data.newResponses);
+
     const updatedQuestion = {
       ...question,
       questionType: action.data.newType,
-      possibleResponses: action.data.newResponses,
+      possibleResponses: action.data.newResponses.map((r) => r._id),
     };
 
     questions[action.data.index] = updatedQuestion;
-    return { ...state, questions };
+    return { ...state, questions, responses: newResponses };
   }
 
   if (action.type === CHANGE_QUESTION_TITLE) {
@@ -170,65 +194,65 @@ export default function questionnaireReducer(state = defaultState, action) {
 
   if (action.type === ADD_RESPONSE) {
     const question = questions[action.data.questionIndex];
-    const responses = question.possibleResponses.slice();
+    const possibleResponses = question.possibleResponses.slice();
 
-    responses.splice(action.data.responseIndex + 1, 0, action.data.response);
+    possibleResponses.splice(action.data.responseIndex + 1, 0, action.data.response._id);
+    responses.push(action.data.response);
 
-    const updatedQuestion = { ...question, possibleResponses: responses };
+    const updatedQuestion = { ...question, possibleResponses };
     questions[action.data.questionIndex] = updatedQuestion;
-    return { ...state, questions };
+    return { ...state, questions, responses };
   }
 
   if (action.type === REMOVE_RESPONSE) {
     const question = questions[action.data.questionIndex];
-    const responses = question.possibleResponses.slice();
+    const possibleResponses = question.possibleResponses.slice();
+    const responseId = question.possibleResponses[action.data.responseIndex];
 
-    responses.splice(action.data.responseIndex, 1);
+    const newResponses = responses.filter((r) => r._id !== responseId);
+    possibleResponses.splice(action.data.responseIndex, 1);
 
-    const updatedQuestion = { ...question, possibleResponses: responses };
+    const updatedQuestion = { ...question, possibleResponses };
     questions[action.data.questionIndex] = updatedQuestion;
-    return { ...state, questions };
+    return { ...state, questions, responses: newResponses };
   }
 
   if (action.type === CHANGE_QUESTION_RESPONSE_LABEL) {
     const question = questions[action.data.questionIndex];
-    const responses = question.possibleResponses.slice();
+    const responseId = question.possibleResponses[action.data.responseIndex];
 
-    const response = responses[action.data.responseIndex];
-    const updatedResponse = { ...response, label: action.data.label };
+    const currResponseIndex = responses.findIndex((r) => r._id === responseId);
+    const currResponse = responses[currResponseIndex];
+    const updatedResponse = { ...currResponse, label: action.data.label };
 
-    responses.splice(action.data.responseIndex, 1, updatedResponse);
-    const updatedQuestion = { ...question, possibleResponses: responses };
-    questions[action.data.questionIndex] = updatedQuestion;
-    return { ...state, questions };
+    responses.splice(currResponseIndex, 1, updatedResponse);
+    return { ...state, responses };
   }
 
   if (action.type === CHANGE_QUESTION_RESPONSE_VALUE) {
     const question = questions[action.data.questionIndex];
-    const responses = question.possibleResponses.slice();
+    const responseId = question.possibleResponses[action.data.responseIndex];
 
+    const currResponseIndex = responses.findIndex((r) => r._id === responseId);
+    const currResponse = responses[currResponseIndex];
+    const updatedResponse = { ...currResponse, value: action.data.value };
 
-    const response = responses[action.data.responseIndex];
-    const updatedResponse = { ...response, value: action.data.value };
-
-    responses.splice(action.data.responseIndex, 1, updatedResponse);
-    const updatedQuestion = { ...question, possibleResponses: responses };
-    questions[action.data.questionIndex] = updatedQuestion;
-    return { ...state, questions };
+    responses.splice(currResponseIndex, 1, updatedResponse);
+    return { ...state, responses };
   }
 
   if (action.type === SWAP_RESPONSE) {
     const question = questions[action.data.questionIndex];
-    const responses = question.possibleResponses.slice();
+    const possibleResponses = question.possibleResponses.slice();
 
     // swap responses
     const i1 = action.data.index1;
     const i2 = action.data.index2;
-    const temp = responses[i1];
-    responses[i1] = responses[i2];
-    responses[i2] = temp;
+    const temp = possibleResponses[i1];
+    possibleResponses[i1] = possibleResponses[i2];
+    possibleResponses[i2] = temp;
 
-    const updatedQuestion = { ...question, possibleResponses: responses };
+    const updatedQuestion = { ...question, possibleResponses };
     questions[action.data.questionIndex] = updatedQuestion;
     return { ...state, questions };
   }
