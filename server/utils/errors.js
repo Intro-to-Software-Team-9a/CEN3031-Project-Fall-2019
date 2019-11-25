@@ -8,7 +8,11 @@ module.exports = {
     PASSWORD_NOT_OK: 'Passwords must be a minimum of 8 characters',
   },
   profile: {
-    NOT_FOUND: 'No Profile is associated with the specified Account.',
+    NOT_FOUND: 'No Profile is associated with your Account.',
+  },
+  questionnaireResponse: {
+    NOT_FOUND: 'There is no Questionnaire Response for your Account that matches the filters you specified.',
+    PERMISSION_DENIED: 'That Questionnaire Response does not belong to your Account.',
   },
   other: {
     UNKNOWN: 'An unknown error occurred.',

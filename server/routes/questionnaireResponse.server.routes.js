@@ -5,7 +5,11 @@ const { authenticate } = require('../middleware/authenticate');
 
 const router = express.Router();
 
+router.route('/')
+  .get(authenticate(), questionnaireResponse.getMostRecent);
+
 router.route('/:questionnaireId')
+  .get(authenticate(), questionnaireResponse.getById)
   .post(authenticate(), questionnaireResponse.create);
 
 module.exports = router;

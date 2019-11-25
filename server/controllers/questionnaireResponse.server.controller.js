@@ -1,5 +1,5 @@
 const Questionniare = require('../models/Questionnaire.model');
-const QuestionniareResponse = require('../models/QuestionnaireResponse.model');
+const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
 const errors = require('../utils/errors');
 const QuestionTypes = require('../utils/questionTypes');
 
@@ -52,7 +52,7 @@ async function create(req, res) {
     return res.send({ message: errors.other.INVALID_INPUT, missingResponseLabels });
   }
 
-  const response = new QuestionniareResponse({
+  const response = new QuestionnaireResponse({
     questionnaireId: req.params.questionnaireId,
     serializedResult: JSON.stringify(req.body.questionnaireResponse),
     profileId: req.session.profileId,
@@ -62,6 +62,54 @@ async function create(req, res) {
   return res.send({ response });
 }
 
+async function getById(req, res) {
+  try {
+    if (!req.params.questionnaireId) {
+      res.status(400);
+      return res.send({ message: errors.other.INVALID_INPUT });
+    }
+
+    const questionnaireResponse = await QuestionnaireResponse.findById(req.params.questionnaireId).exec();
+
+    if (!questionnaireResponse) {
+      res.status(404);
+      return res.send({ message: errors.questionnaireResponse.NOT_FOUND });
+    }
+
+    if (questionnaireResponse.profileId !== req.session.profileId) {
+      res.status(403);
+      return res.send({ message: errors.questionnaireResponse.PERMISSION_DENIED });
+    }
+
+    return res.send({ questionnaireResponse });
+  } catch (error) {
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
+  }
+}
+
+async function getMostRecent(req, res) {
+  try {
+    const questionnaireResponse = await QuestionnaireResponse
+      .findOne({ profileId: req.session.profileId })
+      .sort({ createdAt: -1 })
+      .exec();
+
+    if (!questionnaireResponse) {
+      res.status(404);
+      return res.send({ message: errors.questionnaireResponse.NOT_FOUND });
+    }
+
+    return res.send({ questionnaireResponse });
+  } catch (error) {
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
+  }
+}
+
+
 module.exports = {
   create,
+  getById,
+  getMostRecent
 };

@@ -23,6 +23,7 @@ import { getQuestionnaire } from './actions/questionnaire';
 import { getProfile } from './actions/profile';
 import { addTemplate, doPurchase } from './actions/purchase';
 import Onboarding from './views/Onboarding';
+import EditQuestionnaireResponse from './views/EditQuestionnaireResponse';
 
 
 class App extends React.Component {
@@ -48,6 +49,7 @@ class App extends React.Component {
           <Route exact path="/get-started" component={Onboarding} />
           <Route exact path="/profile-home" component={ProfileHome} />
           <Route exact path="/edit-questionnaire" component={EditQuestionnaire} />
+          <Route exact path="/edit-questionnaire-response" component={EditQuestionnaireResponse} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
