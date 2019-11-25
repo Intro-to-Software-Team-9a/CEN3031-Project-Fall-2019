@@ -39,14 +39,17 @@ module.exports = {
       {
         title: 'General Information',
         startIndex: 0,
+        isShownBeforeLogin: true,
       },
       {
         title: 'Beneficiary Information',
         startIndex: 2,
+        isShownBeforeLogin: false,
       },
       {
         title: 'Final Instructions',
         startIndex: 4,
+        isShownBeforeLogin: false,
       },
     ],
     questions: [

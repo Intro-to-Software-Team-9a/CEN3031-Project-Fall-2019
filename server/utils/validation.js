@@ -102,7 +102,7 @@ function areSectionsValid(sections, questions, errorStream) {
     return false;
   }
 
-  if (!sections.every(section => isSectionValid(section, errorStream))) {
+  if (!sections.every((section) => isSectionValid(section, errorStream))) {
     return false;
   }
 

@@ -12,40 +12,27 @@ import { submitForm } from '../actions/questionnaire';
  * @param title From Questionnaire.question object in DB
  * @param onClick Callback for onclick
  */
-function Questionnaire({ questionnaire, onFinish }) {
-  if (!questionnaire.sections || !questionnaire.questions) return <div></div>;
+function Questionnaire({ sections, questions, onFinish }) {
+  if (!sections || !questions) return <div></div>;
 
-  const { questions, sections } = questionnaire;
-
-  const orderedSections = sections.slice();
-  orderedSections.sort((s1, s2) => s1.startIndex - s2.startIndex);
-
-  const sectionElements = orderedSections.map((section, index, sections) => {
-    // get end index from next section
-    let endIndex = questions.length;
-    if (index !== sections.length - 1) {
-      endIndex = sections[index + 1].startIndex;
-    }
-
-    // return array of all questions in the section
-    return (
-      <div className="py-2" key={section._id}>
-        <h4>{section.title.toUpperCase()}</h4>
-        <hr />
-        {questions.slice(section.startIndex, endIndex)
-          .map((question) => {
-            switch (question.questionType) {
-              case 'MULTIPLE_CHOICE':
-                return <MultipleChoiceQuestion key={question._id} question={question} />;
-              case 'SHORT_ANSWER':
-                return <ShortAnswerQuestion key={question._id} question={question} />;
-              default:
-                return <div></div>;
-            }
-          })}
-      </div>
-    );
-  });
+  // return array of all questions in the section
+  const sectionElements = sections.map((section) => (
+    <div className="py-2" key={section._id}>
+      <h4>{section.title.toUpperCase()}</h4>
+      <hr />
+      {questions.slice(section.startIndex, section.endIndex)
+        .map((question) => {
+          switch (question.questionType) {
+            case 'MULTIPLE_CHOICE':
+              return <MultipleChoiceQuestion key={question._id} question={question} />;
+            case 'SHORT_ANSWER':
+              return <ShortAnswerQuestion key={question._id} question={question} />;
+            default:
+              return <div></div>;
+          }
+        })}
+    </div>
+  ));
 
   return (
     <React.Fragment>
@@ -57,9 +44,35 @@ function Questionnaire({ questionnaire, onFinish }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  questionnaire: state.questionnaire.questionnaire,
-});
+const mapStateToProps = (state, ownProps) => {
+  const { sections, questions } = state.questionnaire.questionnaire;
+
+  if (!sections || !questions) {
+    return ({
+      questions: [],
+      sections: [],
+    });
+  }
+
+  const orderedSections = sections.slice();
+  orderedSections.sort((s1, s2) => s1.startIndex - s2.startIndex);
+
+  // add endIndex to each section
+  const combinedSections = orderedSections.map((section, index) => {
+    // get end index from next section
+    let endIndex = questions.length;
+    if (index !== orderedSections.length - 1) {
+      endIndex = orderedSections[index + 1].startIndex;
+    }
+
+    return { ...section, endIndex };
+  });
+
+  return ({
+    questions: (questions || []),
+    sections: (combinedSections || []).filter(ownProps.sectionFilter || (() => true)),
+  });
+};
 
 const mapDispatchToProps = (dispatch) => ({
   submitForm: () => dispatch(submitForm()),

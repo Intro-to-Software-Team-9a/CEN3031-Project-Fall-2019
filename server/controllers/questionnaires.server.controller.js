@@ -50,7 +50,8 @@ async function getMostRecent(req, res) {
 async function create(req, res) {
   try {
     const errorStream = [];
-    if (!req.body.questionnaire || !validation.isValidQuestionnaire(req.body.questionnaire, errorStream)) {
+    if (!req.body.questionnaire
+        || !validation.isValidQuestionnaire(req.body.questionnaire, errorStream)) {
       res.status(400);
       return res.send({ message: errors.other.INVALID_INPUT, errors: errorStream });
     }
