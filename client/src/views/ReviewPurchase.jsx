@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  Container, Row, Col, Button, Card
+  Container, Row, Col,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import TemplateList from '../components/TemplateList';
 import { doPurchase } from '../actions/purchase';
 import { formatCurrency } from '../utils/format';
-
+import PaypalButton1 from '../components/PaypalButton1';
 
 function ReviewPurchase({ templates, doPurchase, onBack }) {
   const totalPurchase = templates.reduce((accum, template) => accum + template.priceInCents, 0);
@@ -45,16 +45,13 @@ function ReviewPurchase({ templates, doPurchase, onBack }) {
               Total
               <span className="float-right font-weight-bold">{formatCurrency(totalPurchase)}</span>
             </p>
+            <PaypalButton1
+            totalPurchase={totalPurchase}
+            />
           </div>
         </Col>
       </Row>
       <br />
-      <Row>
-        <Col md={1}></Col>
-        <Col>
-          <Button onClick={doPurchase} variant="outline-dark">Finish Purchase</Button>
-        </Col>
-      </Row>
     </Container>
   );
 }
@@ -66,8 +63,8 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  doPurchase: () => {
-    dispatch(doPurchase({ onSuccess: ownProps.onFinish }))
+  doPurchase: (paymentId) => {
+    dispatch(doPurchase(paymentId))
   },
 });
 

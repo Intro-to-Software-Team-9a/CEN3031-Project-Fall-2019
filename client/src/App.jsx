@@ -16,7 +16,6 @@ import ViewDocuments from './views/ViewDocuments';
 import Questionnaire from './views/Questionnaire';
 import ReviewPurchase from './views/ReviewPurchase';
 import ProfileHome from './views/ProfileHome';
-import paypal from './views/paypalTest';
 import NavBar from './components/NavBar';
 
 import { getTemplates } from './actions/template';
@@ -37,7 +36,6 @@ class App extends React.Component {
       <div>
         <NavBar />
         <Switch>
-          <Route exact path="/paypal" component={paypal} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/create-account" component={CreateAccount} />

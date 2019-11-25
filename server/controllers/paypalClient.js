@@ -1,10 +1,11 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable linebreak-style */
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
 
 function environment() {
-  const clientId = process.env.PAYPAL_CLIENT_ID || 'PAYPAL-SANDBOX-CLIENT-ID';
-  const clientSecret = process.env.PAYPAL_CLIENT_SECRET || 'PAYPAL-SANDBOX-CLIENT-SECRET';
+  const clientId = process.env.PAYPAL_CLIENT_ID || 'AY7O6M0NDbBh3f6eaRpynKmm5v7KUgf6pWaKXJIr3UY0i10x5uPB9a6CmjUWlWD-jpZ8HWXJFuJq03fL';
+  const clientSecret = process.env.PAYPAL_CLIENT_SECRET || 'EARZHbTGFb5tyUMQG_Y5O6ScxbOeD13uxUqmOHYuylnekbR1Y8SQzH_un2XyIoU9TyxwR5k_BrEswuPF';
 
   return new checkoutNodeJssdk.core.SandboxEnvironment(
     clientId, clientSecret,

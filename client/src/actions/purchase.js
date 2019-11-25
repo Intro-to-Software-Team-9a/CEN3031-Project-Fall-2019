@@ -22,9 +22,12 @@ export function removeTemplate(template) {
   };
 }
 
-export function doPurchase({ onSuccess }) {
+export function doPurchase(order, total) {
   return async (dispatch, getState) => {
     let state = getState();
+    console.log(order.orderID)
+    order = { orderID: order.orderID, payerID: order.payerID, total: total};
+    await axios.post(`/api/paypal/paypalVerification/`, order)
 
     dispatch({ type: DO_PURCHASE_START });
 
@@ -38,16 +41,9 @@ export function doPurchase({ onSuccess }) {
 
       // generate all documents
       await dispatch(generateDocuments(templateIds));
-
-      // call onSuccess if no error occurred
-      state = getState();
-      if (state.purchase.purchaseState.isError || state.profiles.profileState.isError) {
-        return;
-      }
-      await onSuccess();
     } catch (error) {
       // parse HTTP message
-      let message = error.message;
+      let { message } = error;
       if (error.response && error.response.data && error.response.data.message) {
         message = error.response.data.message;
       }
