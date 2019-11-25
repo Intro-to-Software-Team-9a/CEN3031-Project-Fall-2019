@@ -1,3 +1,4 @@
+import uuid from 'uuid/v4';
 
 import {
   ADD_NEW_QUESTION,
@@ -17,6 +18,8 @@ import {
   SWAP_QUESTIONS,
   DELETE_SECTION,
   CHANGE_SECTION_TITLE,
+  MOVE_SECTION,
+  CHANGE_SECTION_SHOWN,
 } from '../actions/editQuestionnaire';
 
 import { stateStart, stateFailure, stateSuccess } from '../utils/asyncStates';
@@ -24,6 +27,7 @@ import { stateStart, stateFailure, stateSuccess } from '../utils/asyncStates';
 const defaultState = {
   questions: [],
   sections: [],
+  duplicateLabels: [],
   loadingState: stateSuccess(),
 };
 
@@ -44,8 +48,8 @@ export default function questionnaireReducer(state = defaultState, action) {
   if (action.type === RESET_QUESTIONS) {
     return {
       ...state,
-      questions: action.data.questions,
-      sections: action.data.sections,
+      questions: action.data.questions || [],
+      sections: action.data.sections || [],
     };
   }
 
@@ -79,9 +83,49 @@ export default function questionnaireReducer(state = defaultState, action) {
     const index = sections.findIndex((section) => section._id === action.data.sectionId);
     sections.splice(index, 1);
 
+    // if no more sections left, add one at the beginning
+    if (sections.length === 0) {
+      const newSection = ({
+        title: 'Untitled Section',
+        _id: uuid(),
+        startIndex: 0,
+        isShownBeforeLogin: true,
+      });
+      sections.push(newSection);
+      return { ...state, sections };
+    }
+    
+    // otherwise just ensure there is a section with startindex 0
+    const sortedSections = sections.slice().sort((s1, s2) => s1.startIndex - s2.startIndex);
+    
     // relabel the startIndex-es if necessary
-    if (index === 0) {
-      sections[0] = { ...sections[0], startIndex: 0 };
+    sortedSections[0] = { ...sortedSections[0], startIndex: 0 };
+
+    return { ...state, sections: sortedSections };
+  }
+
+  if (action.type === MOVE_SECTION) {
+    const index = sections.findIndex((section) => section._id === action.data.sectionId);
+    const section = sections[index];
+
+    // whether there's another section with startindex 0
+    const countStartingIndexZero = (sum, curr) => sum += (curr.startIndex === 0) ? 1 : 0;
+    const isAnotherStartingSection = sections.reduce(countStartingIndexZero, 0) > 1;
+
+    // update section startIndex
+    const startIndex = section.startIndex + action.data.distance;
+    sections[index] = { ...section, startIndex };
+
+    // if there's no section at the front, then add one
+    if (section.startIndex === 0 && !isAnotherStartingSection) {
+      // create new section
+      const newSection = ({
+        title: 'Untitled Section',
+        _id: uuid(),
+        startIndex: 0,
+        isShownBeforeLogin: true,
+      });
+      sections.splice(0, 0, newSection);
     }
 
     return { ...state, sections };
@@ -115,6 +159,13 @@ export default function questionnaireReducer(state = defaultState, action) {
 
     sections[index] = { ...sections[index], title: action.data.newTitle };
     return { ...state, sections };
+  }
+
+  if (action.type === CHANGE_SECTION_SHOWN) {
+    const index = sections.findIndex((section) => section._id === action.data.sectionId);
+
+    sections[index] = { ...sections[index], isShownBeforeLogin: action.data.newValue };
+    return { ...state, sections }
   }
 
   if (action.type === ADD_RESPONSE) {
@@ -192,5 +243,6 @@ export default function questionnaireReducer(state = defaultState, action) {
 
     return { ...state, questions };
   }
+
   return state;
 }

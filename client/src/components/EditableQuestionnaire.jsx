@@ -53,6 +53,13 @@ class Questionnaire extends React.Component {
       return { ...section, endIndex };
     });
 
+    const isStartIndexInvalid = {};
+    sectionRanges.forEach((range) => {
+      if (range.startIndex === range.endIndex) {
+        isStartIndexInvalid[range.startIndex] = true;
+      }
+    });
+
 
     return (
       <React.Fragment>
@@ -62,19 +69,27 @@ class Questionnaire extends React.Component {
               <Button variant="outline-dark" onClick={() => addNewQuestion(0)}>
                 <AddCircle /> Question
               </Button>
+              <Button
+                variant="outline-dark"
+                onClick={() => addNewSection(0)}>
+                <AddCircle /> Section
+              </Button>
             </ButtonGroup>
-            {/* {questions.map((question, index, questions) => ( */}
             {sectionRanges.map((section, sectionIndex) => {
+              if (!section) return '';
+
               const { startIndex, endIndex } = section;
               const questionElements = [];
               for (let i = startIndex; i < endIndex; i += 1) {
                 const index = i;
                 const question = questions[i];
 
+                if (!question) continue;
+
                 questionElements.push(
                   <div key={`editableQuestion-${i}`}>
                     <Row className="my-2 pt-3 border border-dark" style={{ maxWidth: '700px' }}>
-                      <EditableQuestion index={index} key={question._id} question={question} />
+                      <EditableQuestion index={index} key={question ? question._id : ''} questionId={question._id} />
                     </Row>
                     <ButtonGroup className="my-2" style={{ maxWidth: '700px' }}>
                       <Button
@@ -98,11 +113,29 @@ class Questionnaire extends React.Component {
                   </div>,
                 );
               }
+
+              const isInvalid = isStartIndexInvalid[section.startIndex] 
+              const borderColor = isInvalid ? 'border-danger' : 'border-dark';
               return (
                 <div key={section._id}>
-                  <Row className="my-2 pt-3 border border-dark" style={{ maxWidth: '700px' }}>
-                    <EditableSection section={section} index={sectionIndex} />
+                  <Row className={`my-2 pt-3 border ${borderColor}`} style={{ maxWidth: '700px' }}>
+                    <EditableSection
+                      isInvalid={isInvalid}
+                      sectionId={section._id}
+                      index={sectionIndex} />
                   </Row>
+                  <ButtonGroup className="my-2" style={{ maxWidth: '700px' }}>
+                    <Button
+                      variant="outline-dark"
+                      onClick={() => addNewQuestion(startIndex)}>
+                      <AddCircle /> Question
+                      </Button>
+                    <Button
+                      variant="outline-dark"
+                      onClick={() => addNewSection(startIndex)}>
+                      <AddCircle /> Section
+                      </Button>
+                  </ButtonGroup>
                   {questionElements}
                 </div>
               );

@@ -8,11 +8,12 @@ import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import reducer from './reducers';
+import perflogger from 'redux-perf-middleware';
 
 import App from './App.jsx';
 
 // https://github.com/reduxjs/redux/blob/master/examples/async/src/index.js
-const middleware = [thunk];
+const middleware = [thunk, perflogger];
 if (process.env.NODE_ENV !== 'production') {
   middleware.push(createLogger());
 }

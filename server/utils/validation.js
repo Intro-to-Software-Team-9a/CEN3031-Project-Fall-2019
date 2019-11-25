@@ -61,10 +61,67 @@ function isValidMultipleChoice(question) {
   });
 }
 
+function isSectionValid(section) {
+  if (section.startIndex !== 0 && !section.startIndex) {
+    return false;
+  }
+
+  if (!section.title) {
+    return false;
+  }
+
+  if (section.isShownBeforeLogin !== false && !section.isShownBeforeLogin) {
+    return false;
+  }
+
+  return true;
+}
+
+function areSectionsValid(sections, questions) {
+  if (!sections || !questions) {
+    return false;
+  }
+
+  if (!sections.every(isSectionValid)) {
+    return false;
+  }
+
+  const sortedSections = sections.slice();
+  sortedSections.sort((s1, s2) => s1.startIndex - s2.startIndex);
+
+  // first section must start at the beginning
+  if (sortedSections[0].startIndex !== 0) {
+    return false;
+  }
+
+  // subsequent sections cannot overlap
+  for (let i = 1; i < sortedSections.length; i++) {
+    const currIndex = sortedSections[i].startIndex;
+    const prevIndex = sortedSections[i-1].startIndex
+    if (currIndex <= prevIndex) {
+      return false;
+    }
+  }
+
+  // section should not go over the end of the questions
+  for (let i = 1; i < sortedSections.length; i++) {
+    const currIndex = sortedSections[i].startIndex;
+    if (currIndex >= questions.length) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 
 /** Returns whether the questionnaire is valid to store in the database. */
 function isValidQuestionnaire(questionnaire) {
   if (!questionnaire.questions || !(questionnaire.questions instanceof Array)) {
+    return false;
+  }
+
+  if (!areSectionsValid(questionnaire.sections, questionnaire.questions)) {
     return false;
   }
 

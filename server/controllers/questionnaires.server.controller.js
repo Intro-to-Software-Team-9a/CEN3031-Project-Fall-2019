@@ -48,7 +48,6 @@ async function getMostRecent(req, res) {
  * },
  */
 async function create(req, res) {
-  console.log(req.body.questionnaire);
   try {
     if (!req.body.questionnaire || !validation.isValidQuestionnaire(req.body.questionnaire)) {
       res.status(400);
@@ -60,6 +59,7 @@ async function create(req, res) {
 
     return res.send({ questionnaire });
   } catch (error) {
+    console.error(error);
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }

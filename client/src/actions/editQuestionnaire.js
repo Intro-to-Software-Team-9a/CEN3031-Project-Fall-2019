@@ -9,11 +9,13 @@ export const ADD_RESPONSE = 'ADD_RESPONSE';
 export const CHANGE_QUESTION_TYPE = 'CHANGE_QUESTION_TYPE';
 export const CHANGE_QUESTION_TITLE = 'CHANGE_QUESTION_TITLE';
 export const CHANGE_SECTION_TITLE = 'CHANGE_SECTION_TITLE';
+export const CHANGE_SECTION_SHOWN = 'CHANGE_SECTION_SHOWN';
 export const REMOVE_RESPONSE = 'REMOVE_RESPONSE';
 export const CHANGE_QUESTION_RESPONSE_LABEL = 'CHANGE_QUESTION_RESPONSE_LABEL';
 export const CHANGE_QUESTION_RESPONSE_VALUE = 'CHANGE_QUESTION_RESPONSE_VALUE';
 export const SWAP_RESPONSE = 'SWAP_RESPONSE';
 export const SWAP_QUESTIONS = 'SWAP_QUESITONS';
+export const MOVE_SECTION = 'MOVE_SECTION';
 export const SAVE_QUESTIONNAIRE_START = 'SAVE_QUESTIONNAIRE_START';
 export const SAVE_QUESTIONNAIRE_SUCCESS = 'SAVE_QUESTIONNAIRE_SUCCESS';
 export const SAVE_QUESTIONNAIRE_FAIL = 'SAVE_QUESTIONNAIRE_FAIL';
@@ -38,8 +40,8 @@ function sanitizeQuestion({ title, questionType, possibleResponses }) {
   });
 }
 
-function sanitizeSection({ title, startIndex, _id }) {
-  return ({ title, startIndex, _id });
+function sanitizeSection({ title, startIndex, isShownBeforeLogin }) {
+  return ({ title, startIndex, isShownBeforeLogin });
 }
 
 export function resetQuestions() {
@@ -161,6 +163,7 @@ export function defaultSection(startIndex) {
     _id: uuid(),
     title: 'New Section',
     startIndex,
+    isShownBeforeLogin: false,
   };
 }
 
@@ -241,6 +244,25 @@ export function changeSectionTitle(sectionId, newTitle) {
   const event = ({
     type: CHANGE_SECTION_TITLE,
     data: { sectionId, newTitle },
+  });
+  return event;
+}
+
+export function changeSectionShown(sectionId, newValue) {
+  const event = ({
+    type: CHANGE_SECTION_SHOWN,
+    data: { sectionId, newValue },
+  });
+  return event;
+}
+
+/** Moves the start of section with the specified
+ *  id by `distance` (can be negative)
+ */
+export function moveSection(sectionId, distance) {
+  const event = ({
+    type: MOVE_SECTION,
+    data: { sectionId, distance },
   });
   return event;
 }

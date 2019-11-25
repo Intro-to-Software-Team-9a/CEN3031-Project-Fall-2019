@@ -35,6 +35,11 @@ const QuestionniareSchema = new Schema({
 
     // index of the first question in the section
     startIndex: { type: Number, required: true },
+
+    // whether the section is part of the
+    // "interview questions", which are shown after login,
+    // or the "questionnaire", which is shown before login
+    isShownBeforeLogin: { type: Boolean, default: false },
   }],
   questions: [{
 
