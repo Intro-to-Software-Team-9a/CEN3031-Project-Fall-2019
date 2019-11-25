@@ -128,8 +128,9 @@ export default function questionnaireReducer(state = defaultState, action) {
     const section = sections[index];
 
     // whether there's another section with startindex 0
-    const countStartingIndexZero = (sum, curr) => (sum + (curr.startIndex === 0) ? 1 : 0);
-    const isAnotherStartingSection = sections.reduce(countStartingIndexZero, 0) > 1;
+    const countStartingIndexZero = (sum, curr) => sum + ((curr.startIndex === 0) ? 1 : 0);
+    const numSectionsIndex0 = sections.reduce(countStartingIndexZero, 0);
+    const isAnotherStartingSection = numSectionsIndex0 > 1;
 
     // update section startIndex
     const startIndex = section.startIndex + action.data.distance;
