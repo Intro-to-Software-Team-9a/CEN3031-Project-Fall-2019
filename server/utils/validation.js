@@ -95,16 +95,16 @@ function areSectionsValid(sections, questions) {
   }
 
   // subsequent sections cannot overlap
-  for (let i = 1; i < sortedSections.length; i++) {
+  for (let i = 1; i < sortedSections.length; i += 1) {
     const currIndex = sortedSections[i].startIndex;
-    const prevIndex = sortedSections[i-1].startIndex
+    const prevIndex = sortedSections[i - 1].startIndex;
     if (currIndex <= prevIndex) {
       return false;
     }
   }
 
   // section should not go over the end of the questions
-  for (let i = 1; i < sortedSections.length; i++) {
+  for (let i = 1; i < sortedSections.length; i += 1) {
     const currIndex = sortedSections[i].startIndex;
     if (currIndex >= questions.length) {
       return false;
