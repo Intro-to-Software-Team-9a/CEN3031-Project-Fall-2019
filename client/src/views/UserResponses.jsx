@@ -1,21 +1,26 @@
 import { connect } from 'react-redux';
 import React from 'react';
+import moment from 'moment';
 import { Container, Row, Col } from 'react-bootstrap';
 
-import QuestionList from '../components/QuestionList';
-import Questionnaire from '../components/Questionnaire';
-import { getResponse, submitForm, getQuestionnaire } from '../actions/questionnaire';
-import { getProfile } from '../actions/profile';
+import { getResponses, getQuestionnaire } from '../actions/questionnaire';
 
 const safelock = require('../assets/safeLock.png');
 
 class EditQuestionnaireResponse extends React.Component {
   componentDidMount() {
-    this.props.getResponse();
+    this.props.getResponses();
   }
 
   render() {
-    const { onFinish } = this.props;
+    function makeResponse(response) {
+      return (
+        <div key={response._id}>
+          <h4>Response</h4>
+          <p>{moment(response.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
+        </div>
+      )
+    }
     return (
       <Container className="pt-4" fluid>
         <Row>
@@ -23,19 +28,15 @@ class EditQuestionnaireResponse extends React.Component {
             <h1 onClick={() => this.props.history.goBack()} className="cursor-pointer hover-white float-right">&larr;</h1>
           </Col>
           <Col>
-            <h1>Edit Questionnaire Response&nbsp; <img src={safelock} alt="Checkmark" width="15" height="15"></img></h1>
-            <p><i>Personal information is required for estate plans.</i></p>
+            <h1>Your Responses&nbsp; <img src={safelock} alt="Checkmark" width="15" height="15"></img></h1>
           </Col>
         </Row>
         <Row>
           <Col md={1}></Col>
           <Col className="pt-4" md={3}>
-            <QuestionList />
-          </Col>
-          <Col className="pt-4" md={5}>
-            <Questionnaire
-              onFinish={onFinish}
-              prompt="Save" />
+            {this.props.responses.map((response) => (
+              makeResponse(response)
+            ))}
           </Col>
         </Row>
       </Container>
@@ -44,15 +45,13 @@ class EditQuestionnaireResponse extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
+  responses: state.questionnaire.questionnaireResponses || [],
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getResponse: async () => {
+  getResponses: async () => {
     await dispatch(getQuestionnaire());
-    await dispatch(getResponse());
-  },
-  onFinish: async () => {
-    await dispatch(submitForm());
+    await dispatch(getResponses());
   },
 });
 

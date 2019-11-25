@@ -3,6 +3,12 @@ import axios from 'axios';
 export const GET_QUESTIONNAIRE_START = 'GET_QUESTIONNAIRE_START';
 export const GET_QUESTIONNAIRE_SUCCESS = 'GET_QUESTIONNAIRE_SUCCESS';
 export const GET_QUESTIONNAIRE_FAIL = 'GET_QUESTIONNAIRE_FAIL';
+export const GET_RESPONSE_START = 'GET_RESPONSE_START';
+export const GET_RESPONSE_SUCCESS = 'GET_RESPONSE_SUCCESS';
+export const GET_RESPONSE_FAIL = 'GET_RESPONSE_FAIL';
+export const GET_RESPONSES_START = 'GET_RESPONSES_START';
+export const GET_RESPONSES_SUCCESS = 'GET_RESPONSES_SUCCESS';
+export const GET_RESPONSES_FAIL = 'GET_RESPONSES_FAIL';
 export const SUBMIT_FORM_START = 'SUBMIT_FORM_START';
 export const SUBMIT_FORM_SUCCESS = 'SUBMIT_FORM_SUCCESS';
 export const SUBMIT_FORM_FAIL = 'SUBMIT_FORM_FAIL';
@@ -58,4 +64,45 @@ export function getQuestionnaire() {
       dispatch({ type: GET_QUESTIONNAIRE_FAIL, data: { message } });
     }
   };
+}
+
+export function getResponses() {
+  return async (dispatch) => {
+    dispatch({ type: GET_RESPONSES_START });
+
+    try {
+      const responses = await axios.get('/api/questionnaireResponse');
+      const { questionnaireResponses } = responses.data;
+
+      dispatch({ type: GET_RESPONSES_SUCCESS, data: { questionnaireResponses } });
+    } catch (error) {
+      // parse HTTP message
+      let { message } = error;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
+      dispatch({ type: GET_RESPONSES_FAIL, data: { message } });
+    }
+  }
+}
+
+
+export function getResponse() {
+  return async (dispatch) => {
+    dispatch({ type: GET_RESPONSE_START });
+
+    try {
+      const response = await axios.get('/api/questionnaireResponse/latest');
+      const { questionnaireResponse } = response.data;
+
+      dispatch({ type: GET_RESPONSE_SUCCESS, data: { questionnaireResponse } });
+    } catch (error) {
+      // parse HTTP message
+      let { message } = error;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
+      dispatch({ type: GET_RESPONSE_FAIL, data: { message } });
+    }
+  }
 }

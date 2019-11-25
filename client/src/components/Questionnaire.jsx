@@ -12,7 +12,7 @@ import { submitForm } from '../actions/questionnaire';
  * @param title From Questionnaire.question object in DB
  * @param onClick Callback for onclick
  */
-function Questionnaire({ sections, questions, onFinish }) {
+function Questionnaire({ sections, questions, onFinish, prompt }) {
   if (!sections || !questions) return <div></div>;
 
   // return array of all questions in the section
@@ -39,7 +39,7 @@ function Questionnaire({ sections, questions, onFinish }) {
       <Form>
         {sectionElements}
       </Form>
-      <Button variant="outline-dark" onClick={onFinish}>Continue</Button>
+      <Button variant="dark" onClick={onFinish}>{prompt || 'Continue'}</Button>
     </React.Fragment>
   );
 }

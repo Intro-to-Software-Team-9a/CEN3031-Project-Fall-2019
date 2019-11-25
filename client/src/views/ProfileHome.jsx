@@ -18,6 +18,7 @@ function ProfileHome({ profile }) {
           <Link to="/view-documents"><Button variant="outline-dark">View Your Documents</Button></Link>
           <Link to="/edit-questionnaire"><Button variant="outline-dark">Edit the Questionnaire</Button></Link>
           <Link to="/edit-questionnaire-response"><Button variant="outline-dark">Edit your Responses</Button></Link>
+          <Link to="/view-responses"><Button variant="outline-dark">View Responses</Button></Link>
         </Col>
         <Col md={6}>
           <div className="spacing"></div>

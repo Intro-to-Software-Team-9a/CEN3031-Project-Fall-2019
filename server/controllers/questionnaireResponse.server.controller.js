@@ -88,8 +88,29 @@ async function getById(req, res) {
   }
 }
 
+async function getAll(req, res) {
+  try {
+
+    const questionnaireResponses = await QuestionnaireResponse
+      .find({ profileId: req.session.profileId })
+      .sort({ createdAt: -1 })
+      .exec();
+
+    if (!questionnaireResponses) {
+      res.status(404);
+      return res.send({ message: errors.questionnaireResponse.NOT_FOUND });
+    }
+
+    return res.send({ questionnaireResponses });
+  } catch (error) {
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
+  }
+}
+
 async function getMostRecent(req, res) {
   try {
+
     const questionnaireResponse = await QuestionnaireResponse
       .findOne({ profileId: req.session.profileId })
       .sort({ createdAt: -1 })
@@ -111,5 +132,6 @@ async function getMostRecent(req, res) {
 module.exports = {
   create,
   getById,
-  getMostRecent
+  getMostRecent,
+  getAll,
 };
