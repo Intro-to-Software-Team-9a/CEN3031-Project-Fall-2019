@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Form, Container, Row, Col, ButtonGroup, Button, FormCheck,
+  Form, Container, Row, Col, ButtonGroup, Button,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
@@ -9,7 +9,7 @@ import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Delete from '@material-ui/icons/Delete';
 
 import {
-  deleteSection, changeSectionTitle, moveSection, changeSectionShown
+  deleteSection, changeSectionTitle, moveSection, changeSectionShown,
 } from '../actions/editQuestionnaire';
 
 function EditableSection({
@@ -82,7 +82,7 @@ function EditableSection({
 const mapStateToProps = (state, ownProps) => {
   const { questions } = state.editQuestionnaire;
   const { sectionId } = ownProps;
-  const section = state.editQuestionnaire.sections.find(section => section._id === sectionId);
+  const section = state.editQuestionnaire.sections.find((section) => section._id === sectionId);
   return {
     isFirst: section.startIndex === 0,
     isLast: section.startIndex >= questions.length,

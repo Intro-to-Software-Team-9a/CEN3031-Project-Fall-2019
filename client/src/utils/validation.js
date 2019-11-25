@@ -8,7 +8,5 @@ export function getDuplicateLabels(questions) {
     });
   });
 
-  return Object.keys(labelToCount).filter((label) => {
-    return labelToCount[label] >= 2;
-  });
+  return Object.keys(labelToCount).filter((label) => labelToCount[label] >= 2);
 }

@@ -114,7 +114,7 @@ class Questionnaire extends React.Component {
                 );
               }
 
-              const isInvalid = isStartIndexInvalid[section.startIndex] 
+              const isInvalid = isStartIndexInvalid[section.startIndex];
               const borderColor = isInvalid ? 'border-danger' : 'border-dark';
               return (
                 <div key={section._id}>

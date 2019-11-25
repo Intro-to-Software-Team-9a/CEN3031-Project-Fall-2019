@@ -94,10 +94,10 @@ export default function questionnaireReducer(state = defaultState, action) {
       sections.push(newSection);
       return { ...state, sections };
     }
-    
+
     // otherwise just ensure there is a section with startindex 0
     const sortedSections = sections.slice().sort((s1, s2) => s1.startIndex - s2.startIndex);
-    
+
     // relabel the startIndex-es if necessary
     sortedSections[0] = { ...sortedSections[0], startIndex: 0 };
 
@@ -109,7 +109,7 @@ export default function questionnaireReducer(state = defaultState, action) {
     const section = sections[index];
 
     // whether there's another section with startindex 0
-    const countStartingIndexZero = (sum, curr) => sum += (curr.startIndex === 0) ? 1 : 0;
+    const countStartingIndexZero = (sum, curr) => (sum + (curr.startIndex === 0) ? 1 : 0);
     const isAnotherStartingSection = sections.reduce(countStartingIndexZero, 0) > 1;
 
     // update section startIndex
@@ -165,7 +165,7 @@ export default function questionnaireReducer(state = defaultState, action) {
     const index = sections.findIndex((section) => section._id === action.data.sectionId);
 
     sections[index] = { ...sections[index], isShownBeforeLogin: action.data.newValue };
-    return { ...state, sections }
+    return { ...state, sections };
   }
 
   if (action.type === ADD_RESPONSE) {

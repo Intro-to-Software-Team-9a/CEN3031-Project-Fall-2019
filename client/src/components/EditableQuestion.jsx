@@ -47,11 +47,11 @@ class EditableQuestion extends React.Component {
       swapResponseDown,
       changeQuestionTitle,
     } = this.props;
-    
+
     const duplicateLabels = JSON.parse(this.props.duplicateLabels);
 
     if (!question) return '';
-    
+
     let answers = <div></div>;
     if (question.questionType === 'SHORT_ANSWER') {
       answers = (
@@ -192,12 +192,11 @@ class EditableQuestion extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-
   // encode to avoid state rerender
   const duplicateLabels = JSON.stringify(getDuplicateLabels(state.editQuestionnaire.questions));
-  const question = state.editQuestionnaire.questions.find(q => q._id === ownProps.questionId);
+  const question = state.editQuestionnaire.questions.find((q) => q._id === ownProps.questionId);
   return { question, duplicateLabels };
-}
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   changeQuestionType: (newType) => dispatch(changeQuestionType(ownProps.index, newType)),

@@ -33,7 +33,9 @@
       "no-underscore-dangle": "off",
       "import/no-unresolved": "off",
       "class-methods-use-this": "off",
-      "no-case-declarations": "off"
+      "no-case-declarations": "off",
+      "import/prefer-default-export": "off",
+      "no-continue": "off"
     }
   },
   "scripts": {
