@@ -11,7 +11,9 @@ import { changeForm } from '../actions/questionnaire';
  * @param onChange Callback for change event
  * @param isDisabled Whether editing is allowed
  */
-function MultipleChoiceQuestion({ question, onChange, currentResponse, isDisabled }) {
+function MultipleChoiceQuestion({
+  question, onChange, currentResponse, isDisabled,
+}) {
   const { possibleResponses, title } = question;
 
   function updateValue(label) {
@@ -24,9 +26,7 @@ function MultipleChoiceQuestion({ question, onChange, currentResponse, isDisable
   return (
     <Form.Group>
       <Form.Label>{title}</Form.Label>
-      {possibleResponses.map((response) => {
-        console.log(response, currentResponse);
-        return (
+      {possibleResponses.map((response) => (
           <Form.Check
             disabled={isDisabled}
             key={response._id}
@@ -36,14 +36,12 @@ function MultipleChoiceQuestion({ question, onChange, currentResponse, isDisable
             checked={!!currentResponse[response.label]}
             onChange={() => updateValue(response.label)}
           />
-        )
-      })}
+      ))}
     </Form.Group>
   );
 }
 
-const mapStateToProps = (state) => ({
-  // currentResponse: state.questionnaire.questionnaireResponse,
+const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({

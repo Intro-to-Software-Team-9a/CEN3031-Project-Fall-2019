@@ -1,28 +1,33 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { getResponses } from '../actions/questionnaire';
-import { loadQuestionnaire } from '../actions/viewResponse';
+import { getResponses, loadQuestionnaire, getResponsesAndLoadQuestionnaire } from '../actions/viewResponse';
 import ReadOnlyQuestionnaire from '../components/ReadOnlyQuestionnaire';
+import moment from 'moment';
 
 const safelock = require('../assets/safeLock.png');
 
 class ViewResponse extends React.Component {
   async componentDidMount() {
-    if (!this.props.response && !this.props.isWaiting) {
-      await this.props.getResponses();
+    if (!this.props.response._id) {
+      await this.props.getResponsesAndLoadQuestionnaire(this.props.responseId);
+    } else {
+      await this.props.loadQuestionnaire(this.props.response.questionnaireId);
     }
-    console.log(this.props.response);
-    await this.props.getQuestionnaire(this.props.response.questionnaireId);
   }
 
   render() {
     if (!this.props.response) return '';
+
+    const { response } = this.props;
+
     return (
       <Container className="pt-4" fluid>
-        <Row>
+        <Row className="pt-4">
           <Col md={1}>
-            <h1 onClick={() => this.props.history.goBack()} className="cursor-pointer hover-white float-right">&larr;</h1>
+            <h1
+              onClick={() => this.props.history.goBack()}
+              className="cursor-pointer hover-white float-right">&larr;</h1>
           </Col>
           <Col>
             <h1>View Response&nbsp; <img src={safelock} alt="Checkmark" width="15" height="15"></img></h1>
@@ -31,7 +36,10 @@ class ViewResponse extends React.Component {
         <Row>
           <Col md={1}></Col>
           <Col className="pt-4" md={5}>
-            <ReadOnlyQuestionnaire response={this.props.response.questionnaireResponse} />
+            <p>
+              <i>Submitted {moment(response.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</i>
+            </p>
+            <ReadOnlyQuestionnaire response={response.questionnaireResponse} />
           </Col>
         </Row>
       </Container>
@@ -41,18 +49,23 @@ class ViewResponse extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { responseId } = ownProps.match.params;
-  const response = state.questionnaire.questionnaireResponses.find(r => r._id === responseId) || {};
+  const allResponses = state.viewResponse.questionnaireResponses;
+  const response = allResponses.find((r) => r._id === responseId) || {};
   return {
     response,
+    responseId,
     questionnaire: state.viewResponse.questionnaire || {},
-    isWaiting: state.questionnaire.questionnaireResponsesState.isWaiting,
+    isWaiting: state.viewResponse.questionnaireResponsesState.isWaiting,
   };
-}
+};
 
 
 const mapDispatchToProps = (dispatch) => ({
-  getResponses: () => dispatch(getResponses()),
-  getQuestionnaire: (id) => dispatch(loadQuestionnaire(id)),
+  getResponses: async () => {
+    await dispatch(getResponses());
+  },
+  getResponsesAndLoadQuestionnaire: (id) => dispatch(getResponsesAndLoadQuestionnaire(id)),
+  loadQuestionnaire: (id) => dispatch(loadQuestionnaire(id)),
 });
 
 export default connect(

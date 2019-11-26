@@ -11,7 +11,9 @@ import { changeForm } from '../actions/questionnaire';
  * @param onChange Callback for change event
  * @param isDisabled Whether editing is allowed
  */
-function ShortAnswerQuestion({ question, onChange, currentResponse, isDisabled }) {
+function ShortAnswerQuestion({
+  question, onChange, currentResponse, isDisabled,
+}) {
   const { possibleResponses, title } = question;
   return (
 
@@ -32,8 +34,7 @@ function ShortAnswerQuestion({ question, onChange, currentResponse, isDisabled }
   );
 }
 
-const mapStateToProps = (state) => ({
-  // currentResponse: state.questionnaire.questionnaireResponse,
+const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({

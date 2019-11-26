@@ -5,9 +5,6 @@ import {
   GET_RESPONSE_START,
   GET_RESPONSE_SUCCESS,
   GET_RESPONSE_FAIL,
-  GET_RESPONSES_START,
-  GET_RESPONSES_SUCCESS,
-  GET_RESPONSES_FAIL,
   CHANGE_FORM,
 } from '../actions/questionnaire';
 
@@ -18,8 +15,6 @@ const defaultState = {
   questionnaireState: stateSuccess(),
   questionnaireResponse: {},
   questionnaireResponseState: stateSuccess(),
-  questionnaireResponses: [],
-  questionnaireResponsesState: stateSuccess(),
 };
 
 export default function questionnaireReducer(state = defaultState, action) {
@@ -58,23 +53,7 @@ export default function questionnaireReducer(state = defaultState, action) {
         questionnaireResponseState: stateFailure(action),
         questionnaireResponse: {},
       };
-    case GET_RESPONSES_START:
-      return {
-        ...state,
-        questionnaireResponsesState: stateStart(),
-      };
-    case GET_RESPONSES_SUCCESS:
-      return {
-        ...state,
-        questionnaireResponsesState: stateSuccess(),
-        questionnaireResponses: action.data.questionnaireResponses,
-      };
-    case GET_RESPONSES_FAIL:
-      return {
-        ...state,
-        questionnaireResponsesState: stateFailure(action),
-        questionnaireResponses: [],
-      };
+
     case CHANGE_FORM:
       const newResponse = {
         ...state.questionnaireResponse,

@@ -5,7 +5,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import QuestionList from '../components/QuestionList';
 import Questionnaire from '../components/Questionnaire';
 import { getResponse, submitForm, getQuestionnaire } from '../actions/questionnaire';
-import { getProfile } from '../actions/profile';
 
 const safelock = require('../assets/safeLock.png');
 
@@ -43,7 +42,7 @@ class EditQuestionnaireResponse extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({

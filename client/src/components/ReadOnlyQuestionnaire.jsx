@@ -5,11 +5,11 @@ import DisplayQuestionnaire from './DisplayQuestionnaire';
 
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps.response);
   if (!state.viewResponse.questionnaire) {
     return ({
       questions: [],
       sections: [],
+      isDisabled: true,
     });
   }
   const { sections, questions } = state.viewResponse.questionnaire;
@@ -18,6 +18,7 @@ const mapStateToProps = (state, ownProps) => {
     return ({
       questions: [],
       sections: [],
+      isDisabled: true,
     });
   }
 

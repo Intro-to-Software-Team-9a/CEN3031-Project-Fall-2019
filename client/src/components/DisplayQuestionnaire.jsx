@@ -1,8 +1,8 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
+
 import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import ShortAnswerQuestion from './ShortAnswerQuestion';
-
 
 /**
  *
@@ -12,7 +12,9 @@ import ShortAnswerQuestion from './ShortAnswerQuestion';
  * @param prompt Prompt for button
  * @param isDisabled Whether editing is allowed
  */
-export default function Questionnaire({ sections, questions, onFinish, prompt, isDisabled, response }) {
+export default function Questionnaire({
+  sections, questions, onFinish, prompt, isDisabled, response,
+}) {
   if (!sections || !questions) return <div></div>;
 
   // return array of all questions in the section
@@ -24,9 +26,17 @@ export default function Questionnaire({ sections, questions, onFinish, prompt, i
         .map((question) => {
           switch (question.questionType) {
             case 'MULTIPLE_CHOICE':
-              return <MultipleChoiceQuestion isDisabled={isDisabled} key={question._id} currentResponse={response} question={question} />;
+              return <MultipleChoiceQuestion
+                isDisabled={isDisabled}
+                key={question._id}
+                currentResponse={response}
+                question={question} />;
             case 'SHORT_ANSWER':
-              return <ShortAnswerQuestion isDisabled={isDisabled} key={question._id} currentResponse={response} question={question} />;
+              return <ShortAnswerQuestion
+                isDisabled={isDisabled}
+                key={question._id}
+                currentResponse={response}
+                question={question} />;
             default:
               return <div></div>;
           }

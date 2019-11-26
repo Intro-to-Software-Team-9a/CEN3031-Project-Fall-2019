@@ -78,7 +78,9 @@ export default function questionnaireReducer(state = defaultState, action) {
       }
       return { ...section };
     });
-    return { ...state, questions, responses: newResponses, sections: newSections };
+    return {
+      ...state, questions, responses: newResponses, sections: newSections,
+    };
   }
 
   if (action.type === ADD_NEW_SECTION) {
@@ -106,7 +108,9 @@ export default function questionnaireReducer(state = defaultState, action) {
       }
       return { ...section };
     });
-    return { ...state, questions, responses: newResponses, sections: newSections };
+    return {
+      ...state, questions, responses: newResponses, sections: newSections,
+    };
   }
 
   if (action.type === DELETE_SECTION) {
