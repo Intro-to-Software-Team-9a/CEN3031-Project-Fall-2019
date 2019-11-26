@@ -59,7 +59,7 @@ export default function questionnaireReducer(state = defaultState, action) {
   }
 
   if (action.type === ADD_NEW_QUESTION) {
-    const { question } = action.data;
+    const { question, afterIndex } = action.data;
     const { possibleResponses } = question;
 
     // normalize data by splitting
@@ -70,9 +70,15 @@ export default function questionnaireReducer(state = defaultState, action) {
     };
 
     // update state
-    questions.splice(action.data.afterIndex, 0, normalizedQuestion);
+    questions.splice(afterIndex, 0, normalizedQuestion);
     const newResponses = responses.concat(possibleResponses);
-    return { ...state, questions, responses: newResponses };
+    const newSections = sections.map((section) => {
+      if (section.startIndex > 0 && section.startIndex >= afterIndex) {
+        return { ...section, startIndex: section.startIndex + 1 };
+      }
+      return { ...section };
+    });
+    return { ...state, questions, responses: newResponses, sections: newSections };
   }
 
   if (action.type === ADD_NEW_SECTION) {
@@ -94,7 +100,13 @@ export default function questionnaireReducer(state = defaultState, action) {
     const question = questions[action.data.index];
     const newResponses = responses.filter((r) => !question.possibleResponses.includes(r._id));
     questions.splice(action.data.index, 1);
-    return { ...state, questions, responses: newResponses };
+    const newSections = sections.map((section) => {
+      if (section.startIndex > action.data.index) {
+        return { ...section, startIndex: section.startIndex - 1 };
+      }
+      return { ...section };
+    });
+    return { ...state, questions, responses: newResponses, sections: newSections };
   }
 
   if (action.type === DELETE_SECTION) {
