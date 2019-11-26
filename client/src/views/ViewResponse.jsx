@@ -1,17 +1,19 @@
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import React from 'react';
-import moment from 'moment';
 import { Container, Row, Col } from 'react-bootstrap';
 import { getResponses } from '../actions/questionnaire';
+import { loadQuestionnaire } from '../actions/viewResponse';
+import ReadOnlyQuestionnaire from '../components/ReadOnlyQuestionnaire';
 
 const safelock = require('../assets/safeLock.png');
 
 class ViewResponse extends React.Component {
-  componentDidMount() {
+  async componentDidMount() {
     if (!this.props.response && !this.props.isWaiting) {
-      this.props.getResponses();
+      await this.props.getResponses();
     }
+    console.log(this.props.response);
+    await this.props.getQuestionnaire(this.props.response.questionnaireId);
   }
 
   render() {
@@ -28,8 +30,8 @@ class ViewResponse extends React.Component {
         </Row>
         <Row>
           <Col md={1}></Col>
-          <Col className="pt-4" md={3}>
-            {this.props.response._id}
+          <Col className="pt-4" md={5}>
+            <ReadOnlyQuestionnaire response={this.props.response.questionnaireResponse} />
           </Col>
         </Row>
       </Container>
@@ -39,8 +41,10 @@ class ViewResponse extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { responseId } = ownProps.match.params;
+  const response = state.questionnaire.questionnaireResponses.find(r => r._id === responseId) || {};
   return {
-    response: state.questionnaire.questionnaireResponses.find(r => r._id === responseId),
+    response,
+    questionnaire: state.viewResponse.questionnaire || {},
     isWaiting: state.questionnaire.questionnaireResponsesState.isWaiting,
   };
 }
@@ -48,6 +52,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
   getResponses: () => dispatch(getResponses()),
+  getQuestionnaire: (id) => dispatch(loadQuestionnaire(id)),
 });
 
 export default connect(

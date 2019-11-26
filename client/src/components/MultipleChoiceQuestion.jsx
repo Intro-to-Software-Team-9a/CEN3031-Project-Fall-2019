@@ -6,11 +6,12 @@ import { changeForm } from '../actions/questionnaire';
 
 /**
  *
- * @param possibleResponses From Questionnaire.question object in DB
- * @param title From Questionnaire.question object in DB
- * @param onClick Callback for onclick
+ * @param currentResponse current questionnaire response
+ * @param question Question object in DB
+ * @param onChange Callback for change event
+ * @param isDisabled Whether editing is allowed
  */
-function MultipleChoiceQuestion({ question, onChange, currentResponse }) {
+function MultipleChoiceQuestion({ question, onChange, currentResponse, isDisabled }) {
   const { possibleResponses, title } = question;
 
   function updateValue(label) {
@@ -23,22 +24,26 @@ function MultipleChoiceQuestion({ question, onChange, currentResponse }) {
   return (
     <Form.Group>
       <Form.Label>{title}</Form.Label>
-      {possibleResponses.map((response) => (
-        <Form.Check
-          key={response._id}
-          type="radio"
-          label={response.value}
-          name={response.label}
-          checked={!!currentResponse[response.label]}
-          onChange={() => updateValue(response.label)}
-        />
-      ))}
+      {possibleResponses.map((response) => {
+        console.log(response, currentResponse);
+        return (
+          <Form.Check
+            disabled={isDisabled}
+            key={response._id}
+            type="radio"
+            label={response.value}
+            name={response.label}
+            checked={!!currentResponse[response.label]}
+            onChange={() => updateValue(response.label)}
+          />
+        )
+      })}
     </Form.Group>
   );
 }
 
 const mapStateToProps = (state) => ({
-  currentResponse: state.questionnaire.questionnaireResponse,
+  // currentResponse: state.questionnaire.questionnaireResponse,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -7,6 +7,7 @@ import questionnaire from './questionnaire';
 import templates from './templates';
 import purchase from './purchase';
 import editQuestionnaire from './editQuestionnaire';
+import viewResponse from './viewResponse';
 
 export default combineReducers({
   count,
@@ -17,4 +18,5 @@ export default combineReducers({
   templates,
   purchase,
   editQuestionnaire,
+  viewResponse,
 });

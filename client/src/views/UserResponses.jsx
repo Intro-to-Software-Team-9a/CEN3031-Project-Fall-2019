@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import moment from 'moment';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Button, ButtonToolbar } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { getResponses, getQuestionnaire } from '../actions/questionnaire';
 
@@ -15,10 +16,18 @@ class UserResponses extends React.Component {
   render() {
     const makeResponse = (response) => {
       return (
-        <div key={response._id} onClick={() => this.props.history.push(`/view-response/${response._id}`)}>
-          <h4>Response</h4>
-          <p>{moment(response.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
-        </div>
+        <Row key={response._id} className="my-2">
+          <Col>
+            <p className="mt-2 mb-2">
+              {moment(response.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
+            </p>
+            <ButtonToolbar>
+              <Link to={`/view-response/${response._id}`}>
+                <Button variant="outline-dark">View</Button>
+              </Link>
+            </ButtonToolbar>
+          </Col>
+        </Row>
       )
     }
     return (
@@ -28,15 +37,17 @@ class UserResponses extends React.Component {
             <h1 onClick={() => this.props.history.goBack()} className="cursor-pointer hover-white float-right">&larr;</h1>
           </Col>
           <Col>
-            <h1>Your Responses&nbsp; <img src={safelock} alt="Checkmark" width="15" height="15"></img></h1>
+            <h1>Your Responses</h1>
           </Col>
         </Row>
         <Row>
           <Col md={1}></Col>
-          <Col className="pt-4" md={3}>
-            {this.props.responses.map((response) => (
-              makeResponse(response)
-            ))}
+          <Col className="pt-4 pl-4" md={4}>
+            <Container>
+              {this.props.responses.map((response) => (
+                makeResponse(response)
+              ))}
+            </Container>
           </Col>
         </Row>
       </Container>

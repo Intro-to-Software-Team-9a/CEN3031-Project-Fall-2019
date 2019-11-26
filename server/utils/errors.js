@@ -18,6 +18,7 @@ module.exports = {
     UNKNOWN: 'An unknown error occurred.',
     MISSING_PARAMETER: 'Missing required parameter in request.',
     INVALID_INPUT: 'The input parameter is not valid.',
+    NOT_FOUND: 'The requested resource could not be found.',
   },
 
   templates: {

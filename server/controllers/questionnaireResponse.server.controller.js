@@ -81,6 +81,9 @@ async function getById(req, res) {
       return res.send({ message: errors.questionnaireResponse.PERMISSION_DENIED });
     }
 
+    questionnaireResponse.questionnaireResponse = JSON.parse(questionnaireResponse.serializedResult);
+    delete questionnaireResponse.serializedResult;
+
     return res.send({ questionnaireResponse });
   } catch (error) {
     res.status(500);
@@ -91,18 +94,29 @@ async function getById(req, res) {
 async function getAll(req, res) {
   try {
 
-    const questionnaireResponses = await QuestionnaireResponse
+    const rawQuestionnaireResponses = await QuestionnaireResponse
       .find({ profileId: req.session.profileId })
       .sort({ createdAt: -1 })
       .exec();
 
-    if (!questionnaireResponses) {
+    if (!rawQuestionnaireResponses) {
       res.status(404);
       return res.send({ message: errors.questionnaireResponse.NOT_FOUND });
     }
 
+    const questionnaireResponses = rawQuestionnaireResponses.map(
+      response => ({
+        _id: response._id,
+        questionnaireId: response.questionnaireId,
+        profileId: response.profileId,
+        questionnaireResponse: JSON.parse(response.serializedResult),
+        createdAt: response.createdAt,
+      })
+    )
+
     return res.send({ questionnaireResponses });
   } catch (error) {
+    console.error(error);
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }
