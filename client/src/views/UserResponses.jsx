@@ -7,15 +7,15 @@ import { getResponses, getQuestionnaire } from '../actions/questionnaire';
 
 const safelock = require('../assets/safeLock.png');
 
-class EditQuestionnaireResponse extends React.Component {
+class UserResponses extends React.Component {
   componentDidMount() {
     this.props.getResponses();
   }
 
   render() {
-    function makeResponse(response) {
+    const makeResponse = (response) => {
       return (
-        <div key={response._id}>
+        <div key={response._id} onClick={() => this.props.history.push(`/view-response/${response._id}`)}>
           <h4>Response</h4>
           <p>{moment(response.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
         </div>
@@ -58,4 +58,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(EditQuestionnaireResponse);
+)(UserResponses);

@@ -25,6 +25,7 @@ import { getProfile } from './actions/profile';
 import { addTemplate, doPurchase } from './actions/purchase';
 import Onboarding from './views/Onboarding';
 import EditQuestionnaireResponse from './views/EditQuestionnaireResponse';
+import ViewResponse from './views/ViewResponse';
 
 
 class App extends React.Component {
@@ -52,6 +53,7 @@ class App extends React.Component {
           <Route exact path="/edit-questionnaire" component={EditQuestionnaire} />
           <Route exact path="/edit-questionnaire-response" component={EditQuestionnaireResponse} />
           <Route exact path="/view-responses" component={UserResponses} />
+          <Route exact path="/view-response/:responseId" component={ViewResponse} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
