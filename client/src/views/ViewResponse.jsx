@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import moment from 'moment';
 import { getResponses, loadQuestionnaire, getResponsesAndLoadQuestionnaire } from '../actions/viewResponse';
 import ReadOnlyQuestionnaire from '../components/ReadOnlyQuestionnaire';
-import moment from 'moment';
+import { Routes } from '../utils/constants';
 
 const safelock = require('../assets/safeLock.png');
 
@@ -26,7 +27,7 @@ class ViewResponse extends React.Component {
         <Row className="pt-4">
           <Col md={1}>
             <h1
-              onClick={() => this.props.history.goBack()}
+              onClick={() => this.props.history.push(Routes.VIEW_RESPONSES)}
               className="cursor-pointer hover-white float-right">&larr;</h1>
           </Col>
           <Col>

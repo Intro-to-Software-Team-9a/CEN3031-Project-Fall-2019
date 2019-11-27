@@ -9,6 +9,7 @@ import Edit from '@material-ui/icons/Edit';
 
 import { getQuestionnaire } from '../actions/questionnaire';
 import { getResponses } from '../actions/viewResponse';
+import { Routes } from '../utils/constants';
 
 class UserResponses extends React.Component {
   componentDidMount() {
@@ -16,9 +17,8 @@ class UserResponses extends React.Component {
   }
 
   render() {
-
     const makeResponse = (response) => (
-      <LinkContainer to={`/view-response/${response._id}`}>
+      <LinkContainer to={Routes.VIEW_RESPONSE(response._id)}>
         <ListGroup.Item key={response._id} action>
           {moment(response.createdAt).format('MMMM Do YYYY, h:mm:ss a')}
         </ListGroup.Item>
@@ -29,7 +29,7 @@ class UserResponses extends React.Component {
         <Row className="pt-4">
           <Col md={1}>
             <h1
-              onClick={() => this.props.history.goBack()}
+              onClick={() => this.props.history.push(Routes.PROFILE_HOME)}
               className="cursor-pointer hover-white float-right"
             >&larr;</h1>
           </Col>
@@ -42,7 +42,7 @@ class UserResponses extends React.Component {
           <Col>
             <h5>Actions</h5>
             <ButtonToolbar>
-              <LinkContainer to="/edit-questionnaire-response">
+              <LinkContainer to={Routes.NEW_RESPONSE}>
                 <Button variant="outline-dark">
                   <Edit /> Update Response
                 </Button>

@@ -5,8 +5,9 @@ import { Row, Col, Container } from 'react-bootstrap';
 import Search from '../components/Search';
 import CurrentDoc from '../components/CurrentDoc';
 import DocumentList from '../components/DocumentList';
-
 import { getDocuments } from '../actions/document';
+import { getResponses } from '../actions/viewResponse';
+import { Routes } from '../utils/constants';
 
 class ViewDocuments extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class ViewDocuments extends React.Component {
 
   componentDidMount() {
     this.props.getDocuments();
+    this.props.getResponses();
   }
 
   setDocument(document) {
@@ -35,13 +37,15 @@ class ViewDocuments extends React.Component {
 
   render() {
     return (
-      <Container fluid>
-        <Row>
+      <Container className="pt-4" fluid>
+        <Row className="pt-4">
           <Col md={1}>
-            <h2 onClick={() => this.props.history.push('/profile-home')} className="cursor-pointer hover-white float-right">&larr;</h2>
+            <h1
+              onClick={() => this.props.history.push(Routes.PROFILE_HOME)}
+              className="cursor-pointer hover-white float-right">&larr;</h1>
           </Col>
           <Col className="border-right">
-            <h2>Your Documents</h2>
+            <h1>Your Documents</h1>
             <br />
             <div>
               <Search filterText={this.filterText.bind(this)} />
@@ -73,6 +77,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getDocuments: () => dispatch(getDocuments()),
+  getResponses: () => dispatch(getResponses()),
 });
 
 export default connect(

@@ -5,6 +5,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import QuestionList from '../components/QuestionList';
 import Questionnaire from '../components/Questionnaire';
 import { getResponse, submitForm, getQuestionnaire } from '../actions/questionnaire';
+import { Routes } from '../utils/constants';
 
 const safelock = require('../assets/safeLock.png');
 
@@ -19,7 +20,7 @@ class EditQuestionnaireResponse extends React.Component {
       <Container className="pt-4" fluid>
         <Row>
           <Col md={1}>
-            <h1 onClick={() => this.props.history.goBack()} className="cursor-pointer hover-white float-right">&larr;</h1>
+            <h1 onClick={() => this.props.history.push(Routes.VIEW_RESPONSES)} className="cursor-pointer hover-white float-right">&larr;</h1>
           </Col>
           <Col>
             <h1>Edit Questionnaire Response&nbsp; <img src={safelock} alt="Checkmark" width="15" height="15"></img></h1>
@@ -45,13 +46,14 @@ class EditQuestionnaireResponse extends React.Component {
 const mapStateToProps = () => ({
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   getResponse: async () => {
     await dispatch(getQuestionnaire());
     await dispatch(getResponse());
   },
   onFinish: async () => {
     await dispatch(submitForm());
+    ownProps.history.push(Routes.VIEW_RESPONSES);
   },
 });
 

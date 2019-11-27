@@ -11,7 +11,7 @@ import AuthenticatedQuestionnaire from './AuthenticatedQuestionnaire';
 import ReviewPurchase from './ReviewPurchase';
 import SelectPlan from './SelectPlan';
 import { submitForm } from '../actions/questionnaire';
-
+import { Routes } from '../utils/constants';
 
 const QUESTIONNAIRE_PAGE = 'questionnaire-page';
 const CREATE_ACCOUNT_PAGE = 'create-account-page';
@@ -84,7 +84,7 @@ class Onboarding extends React.Component {
         break;
       case REVIEW_PAGE:
         currentpage = <ReviewPurchase onBack={this.decrementPage} onFinish={() => {
-          this.props.history.push('/profile-home');
+          this.props.history.push(Routes.PROFILE_HOME);
         }} />;
         break;
       default:

@@ -58,7 +58,7 @@ export function getResponsesAndLoadQuestionnaire(id) {
     }
 
 
-    const selectedResponse = questionnaireResponses.find(r => r._id === id);
+    const selectedResponse = questionnaireResponses.find((r) => r._id === id);
     await dispatch(loadQuestionnaire(selectedResponse.questionnaireId));
-  }
+  };
 }

@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-  Container, Row, Col
+  Container, Row, Col,
 } from 'react-bootstrap';
-import IconLink from './IconLink';
 
 import { connect } from 'react-redux';
 import FolderShared from '@material-ui/icons/FolderShared';
 import Edit from '@material-ui/icons/Edit';
-import QuestionAnswer from '@material-ui/icons/QuestionAnswer'
+import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
+import IconLink from './IconLink';
 
 function ProfileHome({ profile }) {
   if (!profile) return '';
