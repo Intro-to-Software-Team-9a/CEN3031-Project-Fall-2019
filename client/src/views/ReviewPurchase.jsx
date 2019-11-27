@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import TemplateList from '../components/TemplateList';
 import { doPurchase } from '../actions/purchase';
 import { formatCurrency } from '../utils/format';
-import PaypalButton1 from '../components/PaypalButton1';
+import PaypalButton1 from '../components/PaypalButton';
 
 function ReviewPurchase({ templates, doPurchase, onBack, onFinish }) {
   const totalPurchase = templates.reduce((accum, template) => accum + template.priceInCents, 0);
