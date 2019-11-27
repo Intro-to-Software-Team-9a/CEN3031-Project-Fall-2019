@@ -1,3 +1,4 @@
+/** Returns a list of labels for resposnes which appear more than once */
 export function getDuplicateLabels(responses) {
   const labelToCount = {};
 

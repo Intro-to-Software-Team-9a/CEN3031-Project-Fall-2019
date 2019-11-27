@@ -40,6 +40,7 @@ export function getDocuments() {
   };
 }
 
+/** Generates documents for a list of template ids */
 export function generateDocuments(templateIds) {
   return async (dispatch) => {
     dispatch({ type: GENERATE_DOCUMENT_START });

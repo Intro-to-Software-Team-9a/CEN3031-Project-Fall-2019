@@ -18,6 +18,7 @@ export function changeForm(fieldName, newValue) {
   });
 }
 
+/** Submit the questionnaire. */
 export function submitForm() {
   return async (dispatch, getState) => {
     const { questionnaire } = getState();
@@ -43,6 +44,7 @@ export function submitForm() {
   };
 }
 
+/** Get the most recent questionnaire from the database. */
 export function getQuestionnaire() {
   return async (dispatch) => {
     dispatch({ type: GET_QUESTIONNAIRE_START });
@@ -63,6 +65,7 @@ export function getQuestionnaire() {
   };
 }
 
+/** Get latest questionnaire response for this user. */
 export function getResponse() {
   return async (dispatch) => {
     dispatch({ type: GET_RESPONSE_START });

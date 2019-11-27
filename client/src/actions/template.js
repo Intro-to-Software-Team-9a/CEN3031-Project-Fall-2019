@@ -26,6 +26,7 @@ export function getTemplates() {
   };
 }
 
+/** Regenerates a template by id */
 export function regenerate(id) {
   return async (dispatch) => {
     await dispatch(generateDocuments([id]));

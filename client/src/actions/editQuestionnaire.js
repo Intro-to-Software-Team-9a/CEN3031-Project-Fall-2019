@@ -23,7 +23,7 @@ export const RESET_QUESTIONS = 'RESET_QUESTIONS';
 export const DELETE_QUESTION = 'DELETE_QUESTION';
 export const DELETE_SECTION = 'DELETE_SECTION';
 
-
+// helper functions
 function sanitizeResponse({ responseType, value, label }) {
   return ({
     responseType,
@@ -44,6 +44,7 @@ function sanitizeSection({ title, startIndex, isShownBeforeLogin }) {
   return ({ title, startIndex, isShownBeforeLogin });
 }
 
+/** Set the editQuestionnaire state to whatever is in the questionnaire state. */
 export function resetQuestions() {
   return async (dispatch, getState) => {
     await dispatch(getQuestionnaire());
@@ -65,12 +66,15 @@ export function resetQuestions() {
   };
 }
 
+/** Saves the editQuestionnaire as a new QuestionnaireResponse */
 export function saveQuestionnaire(onSuccess) {
   return async (dispatch, getState) => {
     const state = getState();
 
     const { responses } = state.editQuestionnaire;
 
+    // data is stored denormalized, so join
+    // N^2 is fine here since N is the number of questions (i.e., N < 100)
     const joinedQuestions = state.editQuestionnaire.questions.map(
       (question) => ({
         ...question,
@@ -90,6 +94,7 @@ export function saveQuestionnaire(onSuccess) {
       await axios.post('/api/questionnaire', { questionnaire });
       dispatch({ type: SAVE_QUESTIONNAIRE_SUCCESS });
 
+      // flush old question data from all state
       await dispatch(resetQuestions());
 
       if (!onSuccess) {
@@ -106,6 +111,8 @@ export function saveQuestionnaire(onSuccess) {
     }
   };
 }
+
+/* Helpers for generating questions in the EditableQuestionnaire */
 
 function genLabel(state) {
   const { responses } = state.editQuestionnaire;
@@ -228,6 +235,7 @@ export function deleteSection(sectionId) {
   return event;
 }
 
+/** Change type of question with type at index */
 export function changeQuestionType(index, newType) {
   return (dispatch, getState) => {
     const state = getState();
@@ -243,6 +251,8 @@ export function changeQuestionType(index, newType) {
       return;
     }
 
+    // change response types, but
+    // preserve the labels of the current question as best as possible
     if (newType === 'MULTIPLE_CHOICE') {
       event.data.newResponses = defaultMultipleChoice(state, question);
     }

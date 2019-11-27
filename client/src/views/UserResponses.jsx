@@ -11,6 +11,7 @@ import { getQuestionnaire } from '../actions/questionnaire';
 import { getResponses } from '../actions/viewResponse';
 import { Routes } from '../utils/constants';
 
+/** Displays a list of all of the user's questionnaireresponses */
 class UserResponses extends React.Component {
   componentDidMount() {
     this.props.getResponses();

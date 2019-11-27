@@ -4,9 +4,9 @@ import {
   Button, ListGroup,
 } from 'react-bootstrap';
 import GetAppIcon from '@material-ui/icons/GetApp';
-// import PrintIcon from '@material-ui/icons/Print';
 import moment from 'moment';
 
+/** Displays all generated versions of a template for a user. */
 function DocumentHistory({ activeTemplate, documents }) {
   const activeDocuments = documents
     .filter(

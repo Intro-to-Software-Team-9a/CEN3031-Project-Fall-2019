@@ -5,18 +5,19 @@ import MultipleChoiceQuestion from './MultipleChoiceQuestion';
 import ShortAnswerQuestion from './ShortAnswerQuestion';
 
 /**
- *
+ * Displays a questionnaire.
  * @param sections From Questionnaire object in DB
  * @param questions From Questionnaire object in DB
  * @param onFinish Called on button click
  * @param prompt Prompt for button
  * @param isDisabled Whether editing is allowed
  */
-export default function Questionnaire({
+export default function DisplayQuestionnaire({
   sections, questions, onFinish, prompt, isDisabled, response,
 }) {
   if (!sections || !questions) return <div></div>;
 
+  // for each section
   // return array of all questions in the section
   const sectionElements = sections.map((section) => (
     <div className="py-2" key={section._id}>

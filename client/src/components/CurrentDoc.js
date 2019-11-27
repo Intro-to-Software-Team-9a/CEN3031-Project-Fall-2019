@@ -8,6 +8,9 @@ import DocumentHistory from './DocumentHistory';
 
 import { regenerate } from '../actions/template';
 
+/**
+ * Displays a Template, potential actions, and its history.
+ */
 function CurrentDoc({
   activeTemplate, documents, responses, regenerate, isLoading,
 }) {
@@ -54,6 +57,7 @@ function CurrentDoc({
           This document is up to date with your latest info.
         </Alert>
       }
+
       <h5>Actions</h5>
       <ButtonToolbar>
         <Button
@@ -75,7 +79,6 @@ function CurrentDoc({
           Print
         </Button>
       </ButtonToolbar>
-
       <br />
 
       <h5>Document History</h5>

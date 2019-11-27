@@ -9,6 +9,10 @@ import { Routes } from '../utils/constants';
 
 const safelock = require('../assets/safeLock.png');
 
+/**
+ * Create a new questionnaire response for the user
+ * starting from the old one.
+ */
 class EditQuestionnaireResponse extends React.Component {
   componentDidMount() {
     this.props.getResponse();

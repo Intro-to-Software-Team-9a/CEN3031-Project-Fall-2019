@@ -20,7 +20,7 @@ class ViewDocuments extends React.Component {
 
   componentDidMount() {
     this.props.getDocuments();
-    this.props.getResponses();
+    this.props.getResponses(); // for 'regenerate!' alert
   }
 
   setDocument(document) {

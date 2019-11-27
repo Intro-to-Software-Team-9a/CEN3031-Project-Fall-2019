@@ -8,11 +8,14 @@ import { Routes } from '../utils/constants';
 
 const safelock = require('../assets/safeLock.png');
 
+/** Displays a questionnaire response and the questionnaire it came from. */
 class ViewResponse extends React.Component {
   async componentDidMount() {
     if (!this.props.response._id) {
+      // response doesn't exist -- load it
       await this.props.getResponsesAndLoadQuestionnaire(this.props.responseId);
     } else {
+      // otherwise just load the questionnaire associated with the response
       await this.props.loadQuestionnaire(this.props.response.questionnaireId);
     }
   }

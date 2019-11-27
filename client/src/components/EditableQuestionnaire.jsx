@@ -16,13 +16,11 @@ import {
 } from '../actions/editQuestionnaire';
 import EditableQuestion from './EditableQuestion';
 import EditableSection from './EditableSection';
+
 /**
- *
- * @param possibleResponses From Questionnaire.question object in DB
- * @param title From Questionnaire.question object in DB
- * @param onClick Callback for onclick
+ * Questionnaire that can be edited
  */
-class Questionnaire extends React.Component {
+class EditableQuestionnaire extends React.Component {
   componentDidMount() {
     this.props.resetQuestions();
   }
@@ -181,4 +179,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Questionnaire);
+)(EditableQuestionnaire);

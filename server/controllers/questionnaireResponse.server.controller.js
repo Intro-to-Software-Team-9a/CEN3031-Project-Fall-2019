@@ -3,6 +3,7 @@ const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
 const errors = require('../utils/errors');
 const QuestionTypes = require('../utils/questionTypes');
 
+// ensures that each label has a response
 function validateResponse(response, questionnaire) {
   const missingResponseLabels = [];
   questionnaire.questions.forEach(({ questionType, possibleResponses }) => {
@@ -52,6 +53,7 @@ async function create(req, res) {
     return res.send({ message: errors.other.INVALID_INPUT, missingResponseLabels });
   }
 
+  // serialize and save
   const response = new QuestionnaireResponse({
     questionnaireId: req.params.questionnaireId,
     serializedResult: JSON.stringify(req.body.questionnaireResponse),
@@ -61,6 +63,7 @@ async function create(req, res) {
   await response.save();
   return res.send({ response });
 }
+
 
 async function getById(req, res) {
   try {
@@ -77,11 +80,13 @@ async function getById(req, res) {
       return res.send({ message: errors.questionnaireResponse.NOT_FOUND });
     }
 
+    // check access
     if (questionnaireResponse.profileId !== req.session.profileId) {
       res.status(403);
       return res.send({ message: errors.questionnaireResponse.PERMISSION_DENIED });
     }
 
+    // deserialize and send
     questionnaireResponse.questionnaireResponse = JSON.parse(
       questionnaireResponse.serializedResult,
     );
@@ -106,6 +111,7 @@ async function getAll(req, res) {
       return res.send({ message: errors.questionnaireResponse.NOT_FOUND });
     }
 
+    // deserialize
     const questionnaireResponses = rawQuestionnaireResponses.map(
       (response) => ({
         _id: response._id,

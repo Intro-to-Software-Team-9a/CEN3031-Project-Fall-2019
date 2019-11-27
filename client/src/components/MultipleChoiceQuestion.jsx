@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { changeForm } from '../actions/questionnaire';
 
 /**
- *
+ * Represents a multiple choice question in the questionnaire
  * @param currentResponse current questionnaire response
  * @param question Question object in DB
  * @param onChange Callback for change event

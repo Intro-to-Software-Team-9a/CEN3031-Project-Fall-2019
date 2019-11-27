@@ -3,6 +3,14 @@ import { submitForm } from '../actions/questionnaire';
 
 import DisplayQuestionnaire from './DisplayQuestionnaire';
 
+/**
+ * ReadOnlyQuestionnare
+ *
+ * Displays the questionnaire from viewResponse
+ * using a QuestionnaireResponse object from props.
+ * 
+ * @param props.response The QuestionnaireResponse object to display.
+ */
 
 const mapStateToProps = (state, ownProps) => {
   if (!state.viewResponse.questionnaire) {
