@@ -12,8 +12,10 @@ router.route('/')
 router.route('/latest')
   .get(authenticate(), questionnaireResponse.getMostRecent);
 
+router.route('/:questionnaireResponseId')
+  .get(authenticate(), questionnaireResponse.getById);
+
 router.route('/:questionnaireId')
-  .get(authenticate(), questionnaireResponse.getById)
   .post(authenticate(), questionnaireResponse.create);
 
 module.exports = router;

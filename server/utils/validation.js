@@ -184,10 +184,40 @@ function isValidQuestionnaire(questionnaire, errorStream) {
   return true;
 }
 
+// ensures that each label has a response
+function isVaildResponse(response, questionnaire) {
+  const missingResponseLabels = [];
+  questionnaire.questions.forEach(({ questionType, possibleResponses }) => {
+    switch (questionType) {
+      case QuestionTypes.MUTLIPLE_CHOICE:
+        possibleResponses.forEach(({ label }) => {
+          if (response[label] === undefined) {
+            missingResponseLabels.push(label);
+          }
+        });
+        break;
+      case QuestionTypes.SHORT_ANSWER:
+        possibleResponses.forEach(({ label }) => {
+          if (response[label] === undefined) {
+            missingResponseLabels.push(label);
+          }
+        });
+        break;
+      default:
+    }
+  });
+
+  if (missingResponseLabels.length > 0) {
+    return ({ isOk: false, missingResponseLabels });
+  }
+  return ({ isOk: true, missingResponseLabels: [] });
+}
+
 module.exports = {
   isValidMultipleChoice,
   isValidShortAnswer,
   isSectionValid,
   areSectionsValid,
   isValidQuestionnaire,
+  isVaildResponse,
 };

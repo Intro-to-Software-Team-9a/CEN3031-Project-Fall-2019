@@ -1,36 +1,7 @@
 const Questionniare = require('../models/Questionnaire.model');
 const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
 const errors = require('../utils/errors');
-const QuestionTypes = require('../utils/questionTypes');
-
-// ensures that each label has a response
-function validateResponse(response, questionnaire) {
-  const missingResponseLabels = [];
-  questionnaire.questions.forEach(({ questionType, possibleResponses }) => {
-    switch (questionType) {
-      case QuestionTypes.MUTLIPLE_CHOICE:
-        possibleResponses.forEach(({ label }) => {
-          if (response[label] === undefined) {
-            missingResponseLabels.push(label);
-          }
-        });
-        break;
-      case QuestionTypes.SHORT_ANSWER:
-        possibleResponses.forEach(({ label }) => {
-          if (response[label] === undefined) {
-            missingResponseLabels.push(label);
-          }
-        });
-        break;
-      default:
-    }
-  });
-
-  if (missingResponseLabels.length > 0) {
-    return ({ isOk: false, missingResponseLabels });
-  }
-  return ({ isOk: true, missingResponseLabels: [] });
-}
+const validation = require('../utils/validation');
 
 
 /**
@@ -43,37 +14,42 @@ async function create(req, res) {
     return res.send({ message: errors.other.INVALID_INPUT });
   }
 
-  const questionnaire = await Questionniare.findById(req.params.questionnaireId).exec();
-  const { isOk, missingResponseLabels } = validateResponse(
-    req.body.questionnaireResponse, questionnaire,
-  );
+  try {
+    const questionnaire = await Questionniare.findById(req.params.questionnaireId).exec();
+    const { isOk, missingResponseLabels } = validation.isVaildResponse(
+      req.body.questionnaireResponse, questionnaire,
+    );
 
-  if (!isOk) {
-    res.status(400);
-    return res.send({ message: errors.other.INVALID_INPUT, missingResponseLabels });
+    if (!isOk) {
+      res.status(400);
+      return res.send({ message: errors.other.INVALID_INPUT, missingResponseLabels });
+    }
+
+    // serialize and save
+    const response = new QuestionnaireResponse({
+      questionnaireId: req.params.questionnaireId,
+      serializedResult: JSON.stringify(req.body.questionnaireResponse),
+      profileId: req.session.profileId,
+    });
+
+    await response.save();
+    return res.send({ response });
+  } catch (error) {
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
   }
-
-  // serialize and save
-  const response = new QuestionnaireResponse({
-    questionnaireId: req.params.questionnaireId,
-    serializedResult: JSON.stringify(req.body.questionnaireResponse),
-    profileId: req.session.profileId,
-  });
-
-  await response.save();
-  return res.send({ response });
 }
 
 
 async function getById(req, res) {
   try {
-    if (!req.params.questionnaireId) {
+    if (!req.params.questionnaireResponseId) {
       res.status(400);
       return res.send({ message: errors.other.INVALID_INPUT });
     }
 
     const questionnaireResponse = await QuestionnaireResponse
-      .findById(req.params.questionnaireId).exec();
+      .findById(req.params.questionnaireResponseId).exec();
 
     if (!questionnaireResponse) {
       res.status(404);
