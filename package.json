@@ -15,7 +15,8 @@
     "ci-client": "cd client && npm ci",
     "lint": "eslint --ext .js --fix server/**/*.js",
     "lint-client": "cd client && npm run lint && cd ..",
-    "test-ci": "mocha server/tests/**/*.test.js"
+    "test-ci": "mocha server/tests/**/*.test.js",
+    "build-client": "cd client && npm run build"
   },
   "repository": {
     "type": "git",
