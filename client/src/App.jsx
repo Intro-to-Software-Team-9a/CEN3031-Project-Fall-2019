@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -17,6 +17,7 @@ import Questionnaire from './views/Questionnaire';
 import ReviewPurchase from './views/ReviewPurchase';
 import ProfileHome from './views/ProfileHome';
 import NavBar from './components/NavBar';
+import EditQuestionnaire from './views/EditQuestionnaire';
 
 import { getTemplates } from './actions/template';
 import { getQuestionnaire } from './actions/questionnaire';
@@ -35,7 +36,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <NavBar />
+        <NavBar onLogout={() => this.props.history.push('/home')} />
         <Switch>
           <Route exact path="/home" component={Home} />
           <Route exact path="/login" component={Login} />
@@ -48,6 +49,7 @@ class App extends React.Component {
           <Route exact path="/questionnaire" component={Questionnaire} />
           <Route exact path="/get-started" component={Onboarding} />
           <Route exact path="/profile-home" component={ProfileHome} />
+          <Route exact path="/edit-questionnaire" component={EditQuestionnaire} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
@@ -73,4 +75,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(App);
+)(withRouter(App));

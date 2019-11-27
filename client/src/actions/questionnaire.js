@@ -6,7 +6,7 @@ export const GET_QUESTIONNAIRE_FAIL = 'GET_QUESTIONNAIRE_FAIL';
 export const SUBMIT_FORM_START = 'SUBMIT_FORM_START';
 export const SUBMIT_FORM_SUCCESS = 'SUBMIT_FORM_SUCCESS';
 export const SUBMIT_FORM_FAIL = 'SUBMIT_FORM_FAIL';
-export const CHANGE_FORM = 'CHANGE_FORM';
+export const CHANGE_FORM = 'QUESTIONNAIRE/CHANGE_FORM';
 
 export function changeForm(fieldName, newValue) {
   return ({

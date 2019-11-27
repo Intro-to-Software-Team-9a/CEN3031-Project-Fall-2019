@@ -65,7 +65,7 @@ export function doLogin({ onSuccess }) {
   };
 }
 
-export function doLogout() {
+export function doLogout(onSuccess) {
   return async (dispatch) => {
     dispatch({ type: LOGOUT_START });
 
@@ -73,6 +73,10 @@ export function doLogout() {
       await axios.post('/api/accounts/logout');
       dispatch({ type: LOGOUT_SUCCESS });
       dispatch(forgetProfile());
+
+      if (onSuccess) {
+        await onSuccess();
+      }
     } catch (error) {
       // parse HTTP message
       let { message } = error;
