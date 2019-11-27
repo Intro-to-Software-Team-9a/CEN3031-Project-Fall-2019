@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
   sessionSecret = process.env.SESSION_SECRET;
   dbUri = process.env.DB_URI;
 } else {
-  /* eslint-disable-next-line global-require */
+  /* eslint-disable-next-line global-require, import/no-unresolved */
   const config = require('./config');
   sessionSecret = config.session.secret;
   dbUri = config.db.uri;
