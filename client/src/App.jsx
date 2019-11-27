@@ -1,5 +1,7 @@
 import React from 'react';
-import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import {
+  Route, Switch, Redirect, withRouter,
+} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,13 +9,8 @@ import './globals.css';
 
 import Home from './views/Home';
 import Login from './views/Login';
-import CreateAccount from './views/CreateAccount';
-import Catalog from './views/Catalog';
-import CreateDocument from './views/CreateDocument';
-import SelectPlan from './views/SelectPlan';
 import NotFound from './views/NotFound';
 import ViewDocuments from './views/ViewDocuments';
-import ReviewPurchase from './views/ReviewPurchase';
 import ProfileHome from './views/ProfileHome';
 import NavBar from './components/NavBar';
 import EditQuestionnaire from './views/EditQuestionnaire';
