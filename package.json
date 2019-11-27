@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha server/tests/**/*.test.js",
-    "test-ci": "mocha server/tests/**/*.test.js",
     "install-all": "concurrently \"npm install\" \"cd client && npm install\"",
     "client": "cd client && npm start",
     "server": "nodemon server/server.js",
@@ -13,8 +12,10 @@
     "build": "cd client && npm build",
     "start": "NODE_ENV=production node server/server.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
+    "ci-client": "cd client && npm ci",
     "lint": "eslint --ext .js --fix server/**/*.js",
-    "lint-all": "npm run lint && cd client && npm run lint"
+    "lint-client": "cd client && npm run lint && cd ..",
+    "test-ci": "mocha server/tests/**/*.test.js"
   },
   "repository": {
     "type": "git",
