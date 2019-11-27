@@ -11,7 +11,6 @@ function PaypalButton1({ doPurchase, totalPurchase }) {
     const buttonStyles = {
         layout: 'vertical',
         shape: 'rect',
-        size: '25'
     }
     return(
         <div>
@@ -20,8 +19,6 @@ function PaypalButton1({ doPurchase, totalPurchase }) {
                 buttonStyles={buttonStyles}
                 amount={totalPurchase/100}
                 onSuccess={(details, data) => {
-                    alert("Transaction completed by " + details.payer.name.given_name);
-                    console.log(data)
                     doPurchase(data, totalPurchase/100)
                 }}
             />
@@ -35,8 +32,9 @@ const mapStateToProps = (state) => ({
   
   
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    doPurchase: (paymentId, total) => {
-        dispatch(doPurchase(paymentId, total))
+    doPurchase: async (paymentId, total) => {
+        await dispatch(doPurchase(paymentId, total))
+        ownProps.onFinish()
     },
 });
   

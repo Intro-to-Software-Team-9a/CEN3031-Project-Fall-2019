@@ -8,7 +8,7 @@ import { doPurchase } from '../actions/purchase';
 import { formatCurrency } from '../utils/format';
 import PaypalButton1 from '../components/PaypalButton1';
 
-function ReviewPurchase({ templates, doPurchase, onBack }) {
+function ReviewPurchase({ templates, doPurchase, onBack, onFinish }) {
   const totalPurchase = templates.reduce((accum, template) => accum + template.priceInCents, 0);
   return (
     <Container fluid className="pt-4">
@@ -46,7 +46,8 @@ function ReviewPurchase({ templates, doPurchase, onBack }) {
               <span className="float-right font-weight-bold">{formatCurrency(totalPurchase)}</span>
             </p>
             <PaypalButton1
-            totalPurchase={totalPurchase}
+              totalPurchase={totalPurchase}
+              onFinish = {onFinish}
             />
           </div>
         </Col>
@@ -63,8 +64,8 @@ const mapStateToProps = (state) => ({
 
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  doPurchase: (paymentId) => {
-    dispatch(doPurchase(paymentId))
+  doPurchase: async (paymentId) => {
+    await dispatch(doPurchase(paymentId))
   },
 });
 
