@@ -69,7 +69,8 @@ async function getById(req, res) {
       return res.send({ message: errors.other.INVALID_INPUT });
     }
 
-    const questionnaireResponse = await QuestionnaireResponse.findById(req.params.questionnaireId).exec();
+    const questionnaireResponse = await QuestionnaireResponse
+      .findById(req.params.questionnaireId).exec();
 
     if (!questionnaireResponse) {
       res.status(404);
@@ -81,7 +82,9 @@ async function getById(req, res) {
       return res.send({ message: errors.questionnaireResponse.PERMISSION_DENIED });
     }
 
-    questionnaireResponse.questionnaireResponse = JSON.parse(questionnaireResponse.serializedResult);
+    questionnaireResponse.questionnaireResponse = JSON.parse(
+      questionnaireResponse.serializedResult,
+    );
     delete questionnaireResponse.serializedResult;
 
     return res.send({ questionnaireResponse });
@@ -93,7 +96,6 @@ async function getById(req, res) {
 
 async function getAll(req, res) {
   try {
-
     const rawQuestionnaireResponses = await QuestionnaireResponse
       .find({ profileId: req.session.profileId })
       .sort({ createdAt: -1 })
@@ -105,18 +107,17 @@ async function getAll(req, res) {
     }
 
     const questionnaireResponses = rawQuestionnaireResponses.map(
-      response => ({
+      (response) => ({
         _id: response._id,
         questionnaireId: response.questionnaireId,
         profileId: response.profileId,
         questionnaireResponse: JSON.parse(response.serializedResult),
         createdAt: response.createdAt,
-      })
-    )
+      }),
+    );
 
     return res.send({ questionnaireResponses });
   } catch (error) {
-    console.error(error);
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }
@@ -124,7 +125,6 @@ async function getAll(req, res) {
 
 async function getMostRecent(req, res) {
   try {
-
     const questionnaireResponse = await QuestionnaireResponse
       .findOne({ profileId: req.session.profileId })
       .sort({ createdAt: -1 })

@@ -12,7 +12,7 @@ async function getById(req, res) {
     const questionnaire = await Questionnaire.findById(req.params.questionnaireId).exec();
     if (!questionnaire) {
       res.status(404);
-      return res.send({ message: errors.other.NOT_FOUND })
+      return res.send({ message: errors.other.NOT_FOUND });
     }
 
     return res.send({ questionnaire });
