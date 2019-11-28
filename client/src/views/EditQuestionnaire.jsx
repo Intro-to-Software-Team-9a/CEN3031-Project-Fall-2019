@@ -14,13 +14,12 @@ export default function EditQuestionnaireView(props) {
     <Container className="pt-4" fluid>
       <Row>
         <Col md={1}>
-        <h2 onClick={goBack} className="cursor-pointer hover-white float-right">&larr;</h2>
+          <h2 onClick={goBack} className="cursor-pointer hover-white float-right">&larr;</h2>
         </Col>
         <Col>
-          <tr>
-            <h2>Edit Questionnaire&nbsp;</h2>
-            <td valign="middle"><img src={safelock} alt="Checkmark" width="15" height="15"></img></td>
-          </tr>
+          <h2>
+            Edit Questionnaire&nbsp; <img src={safelock} alt="Checkmark" width="15" height="15"></img>
+          </h2>
         </Col>
       </Row>
       <Row>
@@ -29,7 +28,7 @@ export default function EditQuestionnaireView(props) {
           <EditableQuestionnaire
             onBack={goBack}
             onSuccess={goBack}
-            />
+          />
         </Col>
       </Row>
     </Container>

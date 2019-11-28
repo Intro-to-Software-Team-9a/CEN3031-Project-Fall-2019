@@ -11,14 +11,11 @@ export default function QuestionnaireView({ onFinish, onBack }) {
     <Container className="pt-4" fluid>
       <Row>
         <Col md={1}>
-        <h1 onClick={onBack} className="cursor-pointer hover-white float-right">&larr;</h1>
+          <h1 onClick={onBack} className="cursor-pointer hover-white float-right">&larr;</h1>
         </Col>
         <Col>
-          <tr>
-            <h1>Questionnaire&nbsp;</h1>
-            <td valign="middle"><img src={safelock}alt="Checkmark" width="15" height="15"></img></td>
-          </tr>
-          <p><i>Personal information is required for state plans.</i></p>
+          <h1>Interview Questions&nbsp; <img src={safelock} alt="Checkmark" width="15" height="15"></img></h1>
+          <p><i>Personal information is required for estate plans.</i></p>
         </Col>
       </Row>
       <Row>
@@ -27,7 +24,9 @@ export default function QuestionnaireView({ onFinish, onBack }) {
           <QuestionList />
         </Col>
         <Col className="pt-4" md={5}>
-          <Questionnaire onFinish={onFinish} />
+          <Questionnaire
+            sectionFilter={(section) => !section.isShownBeforeLogin}
+            onFinish={onFinish} />
         </Col>
       </Row>
     </Container>

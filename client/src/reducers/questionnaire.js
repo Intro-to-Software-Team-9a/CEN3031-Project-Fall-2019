@@ -8,7 +8,7 @@ import {
 import { stateStart, stateSuccess, stateFailure } from '../utils/asyncStates';
 
 const defaultState = {
-  questionnaire: undefined,
+  questionnaire: {},
   questionnaireState: stateSuccess(),
   questionnaireResponse: {},
 };
@@ -30,7 +30,7 @@ export default function questionnaireReducer(state = defaultState, action) {
       return {
         ...state,
         questionnaireState: stateFailure(action),
-        questionnaire: undefined,
+        questionnaire: {},
       };
     case CHANGE_FORM:
       const newResponse = {

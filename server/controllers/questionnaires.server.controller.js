@@ -49,9 +49,11 @@ async function getMostRecent(req, res) {
  */
 async function create(req, res) {
   try {
-    if (!req.body.questionnaire || !validation.isValidQuestionnaire(req.body.questionnaire)) {
+    const errorStream = [];
+    if (!req.body.questionnaire
+        || !validation.isValidQuestionnaire(req.body.questionnaire, errorStream)) {
       res.status(400);
-      return res.send({ message: errors.other.INVALID_INPUT });
+      return res.send({ message: errors.other.INVALID_INPUT, errors: errorStream });
     }
 
     const questionnaire = new Questionnaire(req.body.questionnaire);

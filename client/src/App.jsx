@@ -13,7 +13,6 @@ import CreateDocument from './views/CreateDocument';
 import SelectPlan from './views/SelectPlan';
 import NotFound from './views/NotFound';
 import ViewDocuments from './views/ViewDocuments';
-import Questionnaire from './views/Questionnaire';
 import ReviewPurchase from './views/ReviewPurchase';
 import ProfileHome from './views/ProfileHome';
 import NavBar from './components/NavBar';
@@ -46,7 +45,6 @@ class App extends React.Component {
           <Route exact path='/review-purchase' component = {ReviewPurchase} />
           <Route exact path="/catalog" component={Catalog} />
           <Route exact path="/create-template" component={CreateDocument} />
-          <Route exact path="/questionnaire" component={Questionnaire} />
           <Route exact path="/get-started" component={Onboarding} />
           <Route exact path="/profile-home" component={ProfileHome} />
           <Route exact path="/edit-questionnaire" component={EditQuestionnaire} />
