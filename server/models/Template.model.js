@@ -14,7 +14,7 @@ const TemplateSchema = new Schema({
   fileName: { type: String, required: true },
 
   // template binary data
-  template: { type: Buffer, required: true },
+  buffer: { type: Buffer, required: true },
 
   priceInCents: Number,
 }, { timestamps: true });

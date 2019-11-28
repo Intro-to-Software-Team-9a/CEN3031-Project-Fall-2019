@@ -1,7 +1,7 @@
 const express = require('express');
 
 const templates = require('../controllers/templates.server.controller.js');
-const { authenticateAdmin } = require('../middleware/authenticate');
+const { authenticate, authenticateAdmin } = require('../middleware/authenticate');
 
 const router = express.Router();
 
@@ -13,6 +13,9 @@ router.route('/add')
 
 router.route('/update')
   .patch(authenticateAdmin(), templates.update);
+
+router.route('/generate')
+  .get(authenticate(), templates.generate);
 
 router.route('/purchase')
   .post(templates.purchase);

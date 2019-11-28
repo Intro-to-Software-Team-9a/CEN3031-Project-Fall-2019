@@ -3,21 +3,44 @@ import { Button, ButtonToolbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import PrintIcon from '@material-ui/icons/Print';
-// import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DocumentHistory from './DocumentHistory';
+import axios from 'axios';
 
-function CurrentDoc({ activeTemplate, documents }) {
-  const activeDocuments = documents.filter(
-    (document) => document.templateId._id === activeTemplate._id,
-  );
-  if (!activeTemplate) {
-    return (
-        <div>
-          <p className="text-center text-muted">Select a document</p>
-        </div>
-    );
+class CurrentDoc extends React.Component {
+  downloadActiveTemplate(activeTemplate) {
+    axios.get("/api/templates/generate", {
+      params: {
+        templateId: activeTemplate._id,
+      }
+    }).then((res) => {
+      var bufferData = new Uint8Array(res.data.buffer.data);
+
+      // Open a file download prompt
+      var blob = new Blob([bufferData], {type: 'application/zip'} );
+      var link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "download.docx";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
   }
-  return (
+
+  render() {
+    var activeTemplate = this.props.activeTemplate;
+    var documents = this.props.documents;
+
+    const activeDocuments = documents.filter(
+      (document) => document.templateId._id === activeTemplate._id,
+    );
+    if (!activeTemplate) {
+      return (
+          <div>
+            <p className="text-center text-muted">Select a document</p>
+          </div>
+      );
+    }
+    return (
       <div>
         <h2>{activeTemplate.title}</h2>
 
@@ -29,28 +52,20 @@ function CurrentDoc({ activeTemplate, documents }) {
             variant="outline-dark"
             className="mr-2"
             style={{ minWidth: '175px' }}
-            onClick={() => window.open(`/api/pdf/${activeDocuments[activeDocuments.length - 1]._id}`, '_blank')}
+            onClick={() => this.downloadActiveTemplate(activeTemplate)}
           >
             <span className="mr-1"><GetAppIcon /></span>
             Download
-          </Button>
+            </Button>
           <Button
             variant="outline-dark"
             className="mr-2"
             style={{ minWidth: '175px' }}
-            onClick={() => window.open(`/api/pdf/${activeDocuments[activeDocuments.length - 1]._id}`, '_blank')}
+            onClick={() => this.downloadActiveTemplate(activeTemplate)}
           >
             <span className="mr-2"><PrintIcon /></span>
             Print
-          </Button>
-          {/* <Button
-            variant="outline-dark"
-            className="mr-3"
-            style={{ minWidth: '175px' }}
-            >
-              <span className="mr-2"><EditOutlinedIcon /></span>
-              Edit
-            </Button> */}
+            </Button>
         </ButtonToolbar>
 
         <br />
@@ -58,7 +73,8 @@ function CurrentDoc({ activeTemplate, documents }) {
         <h5>Document History</h5>
         <DocumentHistory />
       </div>
-  );
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({
