@@ -3,13 +3,18 @@ const errors = require('../utils/errors');
 const validation = require('../utils/validation');
 
 async function getById(req, res) {
-  if (!req.params.questionniareId) {
+  if (!req.params.questionnaireId) {
     res.status(400);
     return res.send({ message: errors.other.INVALID_INPUT });
   }
 
   try {
-    const questionnaire = await Questionnaire.findById(req.params.questionniareId).exec();
+    const questionnaire = await Questionnaire.findById(req.params.questionnaireId).exec();
+    if (!questionnaire) {
+      res.status(404);
+      return res.send({ message: errors.other.NOT_FOUND });
+    }
+
     return res.send({ questionnaire });
   } catch (error) {
     res.status(500);

@@ -73,12 +73,15 @@ export default function questionnaireReducer(state = defaultState, action) {
     questions.splice(afterIndex, 0, normalizedQuestion);
     const newResponses = responses.concat(possibleResponses);
     const newSections = sections.map((section) => {
+      // if section is after new question shift forward by 1
       if (section.startIndex > 0 && section.startIndex >= afterIndex) {
         return { ...section, startIndex: section.startIndex + 1 };
       }
       return { ...section };
     });
-    return { ...state, questions, responses: newResponses, sections: newSections };
+    return {
+      ...state, questions, responses: newResponses, sections: newSections,
+    };
   }
 
   if (action.type === ADD_NEW_SECTION) {
@@ -98,15 +101,21 @@ export default function questionnaireReducer(state = defaultState, action) {
 
   if (action.type === DELETE_QUESTION) {
     const question = questions[action.data.index];
+    // delete the responses for the question
     const newResponses = responses.filter((r) => !question.possibleResponses.includes(r._id));
+    // delete the question
     questions.splice(action.data.index, 1);
+
     const newSections = sections.map((section) => {
+      // if section is after deleted question shift backward by 1
       if (section.startIndex > action.data.index) {
         return { ...section, startIndex: section.startIndex - 1 };
       }
       return { ...section };
     });
-    return { ...state, questions, responses: newResponses, sections: newSections };
+    return {
+      ...state, questions, responses: newResponses, sections: newSections,
+    };
   }
 
   if (action.type === DELETE_SECTION) {
@@ -166,10 +175,12 @@ export default function questionnaireReducer(state = defaultState, action) {
   if (action.type === CHANGE_QUESTION_TYPE) {
     const question = questions[action.data.index];
 
+    // delete the old resposnes and add the new ones
     const newResponses = responses
       .filter((r) => !question.possibleResponses.includes(r._id))
       .concat(action.data.newResponses);
 
+    // sanitize the question
     const updatedQuestion = {
       ...question,
       questionType: action.data.newType,
@@ -209,7 +220,10 @@ export default function questionnaireReducer(state = defaultState, action) {
     const question = questions[action.data.questionIndex];
     const possibleResponses = question.possibleResponses.slice();
 
+    // add response to question
     possibleResponses.splice(action.data.responseIndex + 1, 0, action.data.response._id);
+
+    // add response to global list
     responses.push(action.data.response);
 
     const updatedQuestion = { ...question, possibleResponses };
@@ -222,7 +236,10 @@ export default function questionnaireReducer(state = defaultState, action) {
     const possibleResponses = question.possibleResponses.slice();
     const responseId = question.possibleResponses[action.data.responseIndex];
 
+    // remove response from global list
     const newResponses = responses.filter((r) => r._id !== responseId);
+
+    // remove response from question
     possibleResponses.splice(action.data.responseIndex, 1);
 
     const updatedQuestion = { ...question, possibleResponses };
@@ -271,7 +288,7 @@ export default function questionnaireReducer(state = defaultState, action) {
   }
 
   if (action.type === SWAP_QUESTIONS) {
-    // swap responses
+    // swap
     const i1 = action.data.index1;
     const i2 = action.data.index2;
     const temp = questions[i1];

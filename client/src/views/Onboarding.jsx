@@ -11,7 +11,7 @@ import AuthenticatedQuestionnaire from './AuthenticatedQuestionnaire';
 import ReviewPurchase from './ReviewPurchase';
 import SelectPlan from './SelectPlan';
 import { submitForm } from '../actions/questionnaire';
-
+import { Routes } from '../utils/constants';
 
 const QUESTIONNAIRE_PAGE = 'questionnaire-page';
 const CREATE_ACCOUNT_PAGE = 'create-account-page';
@@ -29,6 +29,7 @@ const Pages = [
   REVIEW_PAGE,
 ];
 
+/** This component holds the views in `Pages` and cycles through them in order */
 class Onboarding extends React.Component {
   constructor(props) {
     super(props);
@@ -43,9 +44,12 @@ class Onboarding extends React.Component {
   }
 
   changePage(newPage) {
+    // go back to the home page
     if (newPage < 0) {
       this.props.history.goBack();
     }
+
+    // catch edge case
     if (newPage >= Pages.length || newPage < 0) {
       return;
     }
@@ -84,7 +88,7 @@ class Onboarding extends React.Component {
         break;
       case REVIEW_PAGE:
         currentpage = <ReviewPurchase onBack={this.decrementPage} onFinish={() => {
-          this.props.history.push('/profile-home');
+          this.props.history.push(Routes.PROFILE_HOME);
         }} />;
         break;
       default:

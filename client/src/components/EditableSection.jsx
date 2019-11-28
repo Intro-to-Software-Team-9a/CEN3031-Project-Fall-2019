@@ -12,6 +12,7 @@ import {
   deleteSection, changeSectionTitle, moveSection, changeSectionShown,
 } from '../actions/editQuestionnaire';
 
+/** Section in the editable questionnaire */
 function EditableSection({
   section,
   changeSectionTitle,

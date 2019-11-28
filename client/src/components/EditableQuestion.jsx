@@ -78,6 +78,7 @@ class EditableQuestion extends React.Component {
           <Row>
             <Col>
               <h5 className="pl-1">Question</h5>
+              {/* TITLE */}
               <Form.Group>
                 <Form.Control
                   name={`${question._id}-title`}
@@ -89,7 +90,7 @@ class EditableQuestion extends React.Component {
                 />
                 <Form.Control.Feedback type="invalid">
                   Titles can't be blank.
-              </Form.Control.Feedback>
+                </Form.Control.Feedback>
               </Form.Group>
             </Col>
             <Col md={2}>
@@ -102,6 +103,7 @@ class EditableQuestion extends React.Component {
               </ButtonGroup>
             </Col>
           </Row>
+          {/* TYPE SWITCH */}
           <Nav activeKey={question.questionType}
             variant="light"
             onSelect={(key) => changeQuestionType(key)}
@@ -124,7 +126,6 @@ class EditableQuestion extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  // encode to avoid state rerender
   const question = state.editQuestionnaire.questions.find((q) => q._id === ownProps.questionId);
   return { question };
 };

@@ -2,12 +2,13 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import EditableQuestionnaire from '../components/EditableQuestionnaire';
+import { Routes } from '../utils/constants';
 
 const safelock = require('../assets/safeLock.png');
 
 export default function EditQuestionnaireView(props) {
   function goBack() {
-    props.history.push('/profile-home');
+    props.history.push(Routes.PROFILE_HOME);
   }
 
   return (

@@ -6,11 +6,14 @@ import { changeForm } from '../actions/questionnaire';
 
 /**
  *
- * @param possibleResponses From Questionnaire.question object in DB
- * @param title From Questionnaire.question object in DB
- * @param onClick Callback for onclick
+ * @param currentResponse current questionnaire response
+ * @param question Question object in DB
+ * @param onChange Callback for change event
+ * @param isDisabled Whether editing is allowed
  */
-function ShortAnswerQuestion({ question, onChange, currentResponse }) {
+function ShortAnswerQuestion({
+  question, onChange, currentResponse, isDisabled,
+}) {
   const { possibleResponses, title } = question;
   return (
 
@@ -18,6 +21,7 @@ function ShortAnswerQuestion({ question, onChange, currentResponse }) {
       <Form.Label>{title}</Form.Label>
       {possibleResponses.map((response) => (
         <Form.Control
+          disabled={isDisabled}
           key={response._id}
           type="text"
           label={response.label}
@@ -30,8 +34,7 @@ function ShortAnswerQuestion({ question, onChange, currentResponse }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  currentResponse: state.questionnaire.questionnaireResponse,
+const mapStateToProps = () => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({

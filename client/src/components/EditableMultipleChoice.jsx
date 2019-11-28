@@ -44,6 +44,7 @@ class EditableQuestion extends React.Component {
       <Form.Row key={response._id} className="py-1">
         <Col>
           <div className="d-flex">
+            {/* ACTIONS */}
             <ButtonGroup className="flex-shrink-1 mr-2">
               <Button
                 disabled={isFirst}
@@ -68,6 +69,7 @@ class EditableQuestion extends React.Component {
                 <Delete />
               </Button>
             </ButtonGroup>
+            {/* VALUE */}
             <Form.Control
               name={response._id}
               type="text"
@@ -78,6 +80,7 @@ class EditableQuestion extends React.Component {
           </div>
         </Col>
         <Col md={4}>
+          {/* LABEL */}
           <Form.Control
             name={response._id}
             type="text"
@@ -95,6 +98,7 @@ class EditableQuestion extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   const response = state.editQuestionnaire.responses.find((r) => r._id === ownProps.responseId);
+  // encode to avoid re-render
   const duplicateLabels = JSON.stringify(getDuplicateLabels(state.editQuestionnaire.responses));
   return {
     duplicateLabels,

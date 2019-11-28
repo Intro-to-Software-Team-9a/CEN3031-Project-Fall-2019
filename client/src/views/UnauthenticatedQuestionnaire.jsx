@@ -6,6 +6,7 @@ import Questionnaire from '../components/Questionnaire';
 
 const safelock = require('../assets/safeLock.png');
 
+/** Part of the questionnaire shown BEFORE the login wall */
 export default function QuestionnaireView({ onFinish, onBack }) {
   return (
     <Container className="pt-4" fluid>
