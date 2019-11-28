@@ -45,7 +45,7 @@ async function add(req, res) {
   return res.send({ message: msg });
 }
 
-/** Updates a pre-existing tmplate */
+/** Updates a pre-existing template */
 async function update(req, res) {
   if (!req.body.name) {
     res.status(400);

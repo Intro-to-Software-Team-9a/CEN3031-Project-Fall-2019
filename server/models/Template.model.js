@@ -13,8 +13,8 @@ const TemplateSchema = new Schema({
   // Name of the template file
   fileName: { type: String, required: true },
 
-  // base64-encoded byte string
-  template: { type: String, required: true },
+  // template binary data
+  template: { type: Buffer, required: true },
 
   priceInCents: Number,
 }, { timestamps: true });

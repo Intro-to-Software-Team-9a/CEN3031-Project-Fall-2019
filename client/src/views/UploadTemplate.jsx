@@ -29,20 +29,14 @@ class UploadTemplateModal extends React.Component {
     }
 
     if (file) {
-      file.arrayBuffer().then(buffer => {
-        var byteArray = new Uint8Array(buffer);
-        var byteStr = '';
+      file.arrayBuffer().then(arrayBuffer => {
+        var buffer = Buffer.from(new Uint8Array(arrayBuffer));
 
-        for (var i = 0; i < buffer.byteLength; i++) {
-          byteStr += byteArray[i];
-        }
-
-        // Todo: Move to actions/template.js
         axios.post("/api/templates/add", {
           name: name,
           price: price,
           fileName: file.name,
-          buffer: btoa(byteStr)
+          buffer: buffer
         }).then(this.props.onTemplateUpload);
       });
     }
