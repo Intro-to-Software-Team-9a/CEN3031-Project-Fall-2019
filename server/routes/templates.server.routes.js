@@ -14,9 +14,6 @@ router.route('/add')
 router.route('/update')
   .patch(authenticateAdmin(), templates.update);
 
-router.route('/generate')
-  .get(authenticate(), templates.generate);
-
 router.route('/purchase')
   .post(templates.purchase);
 

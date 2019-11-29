@@ -3,9 +3,6 @@ const Template = require('../models/Template.model');
 const Profile = require('../models/Profile.model');
 const errors = require('../utils/errors');
 
-const DocxTemplater = require('docxtemplater');
-const PizZip = require('pizzip');
-
 /** Returns a list of all templates */
 async function get(req, res) {
   try {
@@ -84,36 +81,6 @@ async function update(req, res) {
   return res.send({ message: msg });
 }
 
-/* Generates a template and serves the result. */
-async function generate(req, res) {
-  if (!req.query.templateId) {
-    res.status(400);
-    return res.send({ message: errors.other.MISSING_PARAMETER });
-  }
-
-  const template = await Template.findById(req.query.templateId);
-  var zip = new PizZip(template.buffer);
-  var doc = new DocxTemplater();
-
-  doc.loadZip(zip);
-  doc.setData({
-    name: 'Sir Robin',
-    job: 'To seek the holy grail',
-    header: 'HEADER!!'
-  });
-
-  try {
-    doc.render();
-  } catch (error) {
-    throw error;
-  }
-  var buf = doc.getZip().generate({type: "nodebuffer"});
-
-  res.status(200);
-  res.set({'Content-Type': 'application/zip', 'Content-Disposition': 'attachment; filename="docxtemplate.docx"'});
-  res.send({buffer: buf});
-}
-
 /** Adds templates to the user's account. */
 async function purchase(req, res) {
   if (!req.body || !req.body.templateIds) {
@@ -147,5 +114,4 @@ module.exports = {
   add,
   update,
   purchase,
-  generate,
 };

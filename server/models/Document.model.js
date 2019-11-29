@@ -11,8 +11,11 @@ const DocumentSchema = new Schema({
   // title of the document (from template)
   title: String,
 
-  // literal text of the document
-  text: { type: String, required: true },
+  // document file name (from template)
+  fileName: String,
+
+  // Document binary data
+  data: { type: Buffer, required: true },
 
   // ref of the owner
   profileId: { type: Schema.Types.ObjectId, ref: 'Profile', required: true },

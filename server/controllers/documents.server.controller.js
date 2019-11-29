@@ -4,7 +4,9 @@ const mongooseUtils = require('../utils/mongoose');
 const Template = require('../models/Template.model');
 const Document = require('../models/Document.model');
 const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
-const TemplateRenderer = require('../render/templateRenderer');
+const DocxTemplater = require('docxtemplater');
+const PizZip = require('pizzip');
+const moment = require('moment');
 
 async function get(req, res) {
   const profile = await Profile.findOne({ accountId: req.session.accountId }).exec();
@@ -28,60 +30,52 @@ function formatDay(day) {
   return `${day}rd`;
 }
 
-
-/**
- * Generates a Document from a Template using the most recent QuestionnaireResponse for the user.
- */
+/* Generates a Document from a Template using the most recent QuestionnaireResponse for the user. */
 async function generate(req, res) {
   if (!req.params.templateId) {
     res.status(400);
-    return res.send({ message: errors.other.INVALID_INPUT });
+    return res.send({ message: errors.other.MISSING_PARAMETER });
   }
+
+  const template = await Template.findById(req.params.templateId);
+  var zip = new PizZip(template.buffer);
+  var doc = new DocxTemplater();
+
+  const questionnaireResponse = await QuestionnaireResponse
+    .findOne({ profileId: req.session.profileId })
+    .sort({ createdAt: -1 })
+    .exec();
+
+  const data = JSON.parse(questionnaireResponse.serializedResult);
+
+  Object.assign(data, {
+    currentDay: formatDay(new Date().getDate()),
+    currentMonth: monthNames[new Date().getMonth()],
+    currentYear: new Date().getFullYear(),
+  });
+
+  doc.loadZip(zip);
+  doc.setData(data);
 
   try {
-    const { templateId } = req.params;
-    const template = await Template.findById(templateId).exec();
-    const questionnaireResponse = await QuestionnaireResponse
-      .findOne({ profileId: req.session.profileId })
-      .sort({ createdAt: -1 })
-      .exec();
-
-    if (!template || !questionnaireResponse) {
-      res.status(404);
-      return res.send({ message: errors.other.INVALID_INPUT });
-    }
-
-    const data = JSON.parse(questionnaireResponse.serializedResult);
-
-    Object.assign(data, {
-      currentDay: formatDay(new Date().getDate()),
-      currentMonth: monthNames[new Date().getMonth()],
-      currentYear: new Date().getFullYear(),
-    });
-
-    const renderedDocument = TemplateRenderer.render(
-      template.template,
-      data,
-    );
-
-    const document = new Document({
-      title: template.title,
-      text: renderedDocument,
-      profileId: req.session.profileId,
-      templateId: template,
-    });
-
-    await document.save();
-    return res.send({ document });
+    doc.render();
   } catch (error) {
-    if (mongooseUtils.getErrorType(error) === mongooseUtils.ErrorTypes.DUPLICATE_KEY) {
-      res.status(400);
-      return res.send({ message: errors.accounts.ACCOUNT_ALREADY_EXISTS });
-    }
-
-    res.status(500);
-    return res.send({ message: errors.other.UNKNOWN });
+    throw error;
   }
+
+  const renderedDocument = doc.getZip().generate({type: "nodebuffer"});
+  const documentFileName = template.fileName + '-' + moment().format('YYYY-MM-DD');
+
+  const document = new Document({
+    title: template.title,
+    fileName: documentFileName,
+    data: renderedDocument,
+    profileId: req.session.profileId,
+    templateId: template,
+  });
+
+  await document.save();
+  return res.send({ document });
 }
 
 module.exports = {
