@@ -8,12 +8,8 @@ import axios from 'axios';
 
 class CurrentDoc extends React.Component {
   downloadActiveTemplate(activeTemplate) {
-    axios.get("/api/templates/generate", {
-      params: {
-        templateId: activeTemplate._id,
-      }
-    }).then((res) => {
-      var bufferData = new Uint8Array(res.data.buffer.data);
+    axios.get(`/api/documents/generate/${activeTemplate._id}`).then((res) => {
+      var bufferData = new Uint8Array(res.data.document.data.data);
 
       // Open a file download prompt
       var blob = new Blob([bufferData], {type: 'application/zip'} );
