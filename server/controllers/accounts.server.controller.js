@@ -152,9 +152,11 @@ async function logout(req, res) {
 
 async function deleteAccount(req, res) {
 
-  const session = await mongoose.startSession();
-  session.startTransaction();
+  let session;
   try {
+    session = await mongoose.startSession();
+    session.startTransaction();
+
     const { accountId, profileId } = req.session;
 
     await Account.findByIdAndDelete(accountId, { session });
@@ -167,10 +169,11 @@ async function deleteAccount(req, res) {
 
     return res.send();
   } catch (error) {
-    console.error(error);
 
-    await session.abortTransaction();
-    session.endSession();
+    if (session) {
+      await session.abortTransaction();
+      session.endSession();
+    }
 
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
