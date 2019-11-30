@@ -49,7 +49,7 @@ class App extends React.Component {
           <Route exact path={Routes.NEW_RESPONSE} component={EditQuestionnaireResponse} />
           <Route exact path={Routes.VIEW_RESPONSES} component={UserResponses} />
           <Route exact path={Routes.VIEW_RESPONSE(':responseId')} component={ViewResponse} />
-          <Route exact path="/user-settings" component={UserSettings} />
+          <Route exact path={Routes.USER_SETTINGS} component={UserSettings} />
           <Route exact path="/">
             <Redirect to={Routes.HOME} />
           </Route>

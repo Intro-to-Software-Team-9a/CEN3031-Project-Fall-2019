@@ -12,7 +12,7 @@ async function get(req, res) {
     }
 
     // sanitize the profile and account information
-    const sanitzedProfile = { ...profile._doc };
+    const sanitzedProfile = profile.toObject();
 
     // only grab email address from the account
     sanitzedProfile.email = sanitzedProfile.accountId.email;
