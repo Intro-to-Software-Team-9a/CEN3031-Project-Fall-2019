@@ -18,8 +18,10 @@
     "react-scripts": "3.1.2",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
+    "redux-perf-middleware": "^1.2.2",
     "redux-thunk": "^2.3.0",
-    "should": "^13.2.3"
+    "should": "^13.2.3",
+    "uuid": "^3.3.3"
   },
   "eslintConfig": {
     "extends": [
@@ -31,7 +33,9 @@
       "no-underscore-dangle": "off",
       "import/no-unresolved": "off",
       "class-methods-use-this": "off",
-      "no-case-declarations": "off"
+      "no-case-declarations": "off",
+      "import/prefer-default-export": "off",
+      "no-continue": "off"
     }
   },
   "scripts": {
@@ -39,7 +43,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --fix src/**/*.js*"
+    "lint": "eslint --fix src/**/*.js* src/*.js*"
   },
   "browserslist": {
     "production": [

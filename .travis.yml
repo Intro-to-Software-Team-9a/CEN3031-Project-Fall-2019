@@ -3,3 +3,11 @@ node_js:
 - 10
 services:
   - mongodb
+install:
+- npm ci
+- npm run ci-client
+script:
+- npm run lint
+- npm run lint-client
+- npm run test-ci
+- npm run build-client

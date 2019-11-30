@@ -7,6 +7,8 @@ import questionnaire from './questionnaire';
 import templates from './templates';
 import purchase from './purchase';
 import userInfo from './userInfo'
+import editQuestionnaire from './editQuestionnaire';
+import viewResponse from './viewResponse';
 
 import { RESET_APPLICATION } from '../actions/account';
 
@@ -19,6 +21,8 @@ const appReducer = combineReducers({
   templates,
   purchase,
   userInfo,
+  editQuestionnaire,
+  viewResponse,
 });
 
 const resettableReducer = (state, action) => {

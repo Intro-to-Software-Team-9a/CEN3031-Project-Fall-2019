@@ -36,7 +36,7 @@ export function changeCreateField(fieldName, newValue) {
   };
 }
 
-
+/** Tries to log in user using data from the loginForm in Redux */
 export function doLogin({ onSuccess }) {
   return async (dispatch, getState) => {
     const { accounts } = getState();
@@ -69,14 +69,22 @@ export function doLogin({ onSuccess }) {
   };
 }
 
-export function doLogout() {
+/** Tries to log out user and then forgets their local information */
+export function doLogout(onSuccess) {
   return async (dispatch) => {
     dispatch({ type: LOGOUT_START });
 
     try {
       await axios.post('/api/accounts/logout');
       dispatch({ type: LOGOUT_SUCCESS });
+
+      // forget the user's profile info from the client
+      // for security reasons
       dispatch(forgetProfile());
+
+      if (onSuccess) {
+        await onSuccess();
+      }
     } catch (error) {
       // parse HTTP message
       let { message } = error;
@@ -88,6 +96,7 @@ export function doLogout() {
   };
 }
 
+/** Tries to create account for user using data from the createForm in Redux */
 export function doCreateAccount({ onSuccess }) {
   return async (dispatch, getState) => {
     const { accounts } = getState();
@@ -105,9 +114,14 @@ export function doCreateAccount({ onSuccess }) {
     try {
       await axios.post('/api/accounts/create', { email, password, name });
       dispatch({ type: CREATE_SUCCESS });
+
+      // delete form data (i.e., password)
       dispatch({ type: FORGET_CREATE_FORM });
+
+      // refresh profile data
       await dispatch(getProfile());
 
+      // determine if it was successful
       const { accounts, profiles } = getState();
       if (accounts.createState.isError || profiles.profileState.isError) {
         return;

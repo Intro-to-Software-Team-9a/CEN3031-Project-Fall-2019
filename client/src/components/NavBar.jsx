@@ -6,11 +6,12 @@ import { Link } from 'react-router-dom';
 import './NavBar.css';
 
 import { doLogout, resetApplication } from '../actions/account';
+import { Routes } from '../utils/constants';
 
 function NavBar({ isLoggedIn, name, doLogout }) {
   return (
     <Navbar expand="lg">
-      <LinkContainer to="/home">
+      <LinkContainer to={Routes.HOME}>
         <Navbar.Brand>
           EstatePlanR
         </Navbar.Brand>
@@ -21,15 +22,14 @@ function NavBar({ isLoggedIn, name, doLogout }) {
         <Nav className="mr-sm-2">
           {isLoggedIn
             ? <React.Fragment>
-              <LinkContainer to="/profile-home"><Nav.Link>{name}</Nav.Link></LinkContainer>
+              <LinkContainer to={Routes.PROFILE_HOME}><Nav.Link>{name}</Nav.Link></LinkContainer>
               &nbsp;&nbsp;
               <Button onClick={doLogout} variant="outline-dark">Logout</Button>
               <Link to='/user-settings'><Button className="ml-2" variant="outline-dark">Settings</Button></Link>
             </React.Fragment>
             : <React.Fragment>
-              <Link to='/login'><Button variant="outline-dark">Log In</Button></Link>
-              <Link to='/get-started'><Button className="mr-0" variant="outline-dark">Get Started</Button></Link>
-              
+              <Link to={Routes.LOGIN}><Button variant="outline-dark">Log In</Button></Link>
+              <Link to={Routes.ONBOARDING}><Button className="mr-0" variant="outline-dark">Get Started</Button></Link>
             </React.Fragment>
           }
         </Nav>

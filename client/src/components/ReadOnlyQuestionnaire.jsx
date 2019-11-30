@@ -1,15 +1,32 @@
 import { connect } from 'react-redux';
 import { submitForm } from '../actions/questionnaire';
+
 import DisplayQuestionnaire from './DisplayQuestionnaire';
 
+/**
+ * ReadOnlyQuestionnare
+ *
+ * Displays the questionnaire from viewResponse
+ * using a QuestionnaireResponse object from props.
+ * 
+ * @param props.response The QuestionnaireResponse object to display.
+ */
 
 const mapStateToProps = (state, ownProps) => {
-  const { sections, questions } = state.questionnaire.questionnaire;
+  if (!state.viewResponse.questionnaire) {
+    return ({
+      questions: [],
+      sections: [],
+      isDisabled: true,
+    });
+  }
+  const { sections, questions } = state.viewResponse.questionnaire;
 
   if (!sections || !questions) {
     return ({
       questions: [],
       sections: [],
+      isDisabled: true,
     });
   }
 
@@ -30,7 +47,8 @@ const mapStateToProps = (state, ownProps) => {
   return ({
     questions: (questions || []),
     sections: (combinedSections || []).filter(ownProps.sectionFilter || (() => true)),
-    response: state.questionnaire.questionnaireResponse,
+    isDisabled: true,
+    response: ownProps.response,
   });
 };
 
