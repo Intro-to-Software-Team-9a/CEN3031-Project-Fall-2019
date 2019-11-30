@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
-  Row, Col, ButtonToolbar, Modal, Button,
+  Row, Col, ButtonToolbar, Modal, Button, Alert,
 } from 'react-bootstrap';
 import Delete from '@material-ui/icons/Delete';
 
@@ -47,6 +47,10 @@ function PermanentActions({
                   </ul>
                   <p><b>This cannot be undone.</b></p>
                   <p>Are you sure you want to continue?</p>
+                  {isError ?
+                    <Alert variant="danger">{error}</Alert>
+                    : ''
+                  }
                 </React.Fragment>
               }
             </Modal.Body>
@@ -67,7 +71,7 @@ function PermanentActions({
           </Modal>
         </Col>
       </Row>
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 
