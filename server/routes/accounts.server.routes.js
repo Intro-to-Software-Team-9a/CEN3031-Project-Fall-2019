@@ -13,5 +13,8 @@ router.route('/logout')
 router.route('/create')
   .post(accounts.createAccount);
 
+router.route('/delete')
+  .delete(accounts.deleteAccount)
+
 
 module.exports = router;

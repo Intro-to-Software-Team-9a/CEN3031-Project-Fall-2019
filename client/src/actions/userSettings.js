@@ -17,10 +17,9 @@ function getUserInfoSuccess(userInfo) {
 export function getUserInfo() {
   return async (dispatch) => {
     dispatch({ type: GET_USER_INFO_START });
-
     try {
       const response = await axios.get('/api/user-settings');
-      dispatch(getUserInfoSuccess(response.data));
+      dispatch(getUserInfoSuccess(response.data.profile));
     } catch (error) {
       // parse HTTP message
       let { message } = error;

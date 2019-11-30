@@ -22,16 +22,17 @@ import { getTemplates } from './actions/template';
 import { getQuestionnaire } from './actions/questionnaire';
 import { getProfile } from './actions/profile';
 import { addTemplate, doPurchase } from './actions/purchase';
-import { getUserInfo } from './actions/userSettings'
 import Onboarding from './views/Onboarding';
+import UserSettings from './views/UserSettings';
 
 
 class App extends React.Component {
   async componentDidMount() {
-    this.props.getProfile();
-    this.props.getQuestionnaire();
-    this.props.getUserInfo();
-    await this.props.getTemplates();
+    await Promise.all([
+      this.props.getProfile(),
+      this.props.getQuestionnaire(),
+      this.props.getTemplates(),
+    ]);
   }
 
   render() {
@@ -50,6 +51,7 @@ class App extends React.Component {
           <Route exact path="/questionnaire" component={Questionnaire} />
           <Route exact path="/get-started" component={Onboarding} />
           <Route exact path="/profile-home" component={ProfileHome} />
+          <Route exact path="/user-settings" component={UserSettings} />
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
@@ -70,7 +72,6 @@ const mapDispatchToProps = (dispatch) => ({
   getTemplates: () => dispatch(getTemplates()),
   doPurchase: () => dispatch(doPurchase()),
   addTemplate: (template) => dispatch(addTemplate(template)),
-  getUserInfo: () => dispatch(getUserInfo()),
 });
 
 export default connect(

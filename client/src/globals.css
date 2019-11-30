@@ -20,7 +20,11 @@ button, p, span, label, li {
 }
 
 .cursor-pointer {
-    cursor: pointer;
+    cursor: pointer !important;
+}
+
+.cursor-default {
+    cursor: default !important;
 }
 
 html {

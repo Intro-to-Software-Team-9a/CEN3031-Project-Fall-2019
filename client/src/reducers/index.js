@@ -6,8 +6,11 @@ import documents from './documents';
 import questionnaire from './questionnaire';
 import templates from './templates';
 import purchase from './purchase';
+import userInfo from './userInfo'
 
-export default combineReducers({
+import { RESET_APPLICATION } from '../actions/account';
+
+const appReducer = combineReducers({
   count,
   accounts,
   profiles,
@@ -15,4 +18,15 @@ export default combineReducers({
   questionnaire,
   templates,
   purchase,
+  userInfo,
 });
+
+const resettableReducer = (state, action) => {
+  if (action.type === RESET_APPLICATION) {
+    // delete state, causing reset to default value
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+}
+export default resettableReducer;

@@ -12,6 +12,10 @@ import {
   CREATE_SUCCESS,
   FORGET_CREATE_FORM,
   FORGET_LOGIN_FORM,
+  DELETE_ACCOUNT_START,
+  DELETE_ACCOUNT_SUCCESS,
+  DELETE_ACCOUNT_FAIL,
+  RESET_APPLICATION,
 } from '../actions/account';
 
 import { stateStart, stateSuccess, stateFailure } from '../utils/asyncStates';
@@ -30,10 +34,20 @@ const defaultState = {
   loginState: stateSuccess(),
   logoutState: stateSuccess(),
   createState: stateSuccess(),
+  deleteAccountState: stateSuccess(),
+  isAccountDeleted: false,
 };
 
 export default function accountReducer(state = defaultState, action) {
   switch (action.type) {
+    case DELETE_ACCOUNT_START: 
+      return { ...state, deleteAccountState: stateStart() };
+    case DELETE_ACCOUNT_SUCCESS:
+      return { ...state, deleteAccountState: stateSuccess(), isAccountDeleted: true };
+    case DELETE_ACCOUNT_FAIL:
+      return { ...state, deleteAccountState: stateFailure(action), isAccountDeleted: false };
+    case RESET_APPLICATION:
+      return { ...state, isAccountDeleted: false };
     case CHANGE_LOGIN_FIELD:
       return {
         ...state,

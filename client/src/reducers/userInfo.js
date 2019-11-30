@@ -22,7 +22,7 @@ export default function userInfoReducer(state = defaultState, action) {
       return {
         ...state,
         userInfoState: stateSuccess(),
-        userInfo: action.data.profile,
+        userInfo: action.data.userInfo,
       };
     case GET_USER_INFO_FAIL:
       return {

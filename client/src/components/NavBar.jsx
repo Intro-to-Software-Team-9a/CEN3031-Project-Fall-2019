@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
 
-import { doLogout } from '../actions/account';
+import { doLogout, resetApplication } from '../actions/account';
 
 function NavBar({ isLoggedIn, name, doLogout }) {
   return (
@@ -24,10 +24,12 @@ function NavBar({ isLoggedIn, name, doLogout }) {
               <LinkContainer to="/profile-home"><Nav.Link>{name}</Nav.Link></LinkContainer>
               &nbsp;&nbsp;
               <Button onClick={doLogout} variant="outline-dark">Logout</Button>
+              <Link to='/user-settings'><Button className="ml-2" variant="outline-dark">Settings</Button></Link>
             </React.Fragment>
             : <React.Fragment>
               <Link to='/login'><Button variant="outline-dark">Log In</Button></Link>
               <Link to='/get-started'><Button className="mr-0" variant="outline-dark">Get Started</Button></Link>
+              
             </React.Fragment>
           }
         </Nav>
@@ -47,7 +49,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  doLogout: () => dispatch(doLogout()),
+  doLogout: async () => {
+    await dispatch(doLogout());
+    dispatch(resetApplication());
+  },
 });
 
 export default connect(
