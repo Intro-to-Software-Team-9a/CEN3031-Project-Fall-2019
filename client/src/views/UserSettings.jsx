@@ -4,6 +4,7 @@ import { Row, Container, Col } from 'react-bootstrap';
 import Settings from '../components/Settings';
 import UserInfo from '../components/UserInfo'
 import PermanentActions from '../components/PermanentActions';
+import { Routes } from '../utils/constants';
 
 class UserSettings extends React.Component {
   constructor(props) {
@@ -13,11 +14,11 @@ class UserSettings extends React.Component {
   }
 
   redirectToHome() {
-    this.props.history.push('/home');
+    this.props.history.push(Routes.HOME);
   }
 
   onBack() {
-    this.props.history.push('/profile-home');
+    this.props.history.push(Routes.PROFILE_HOME);
   }
 
   render() {
