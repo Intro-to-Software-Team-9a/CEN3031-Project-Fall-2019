@@ -48,13 +48,17 @@ async function getById(req, res) {
       return res.send({ message: errors.other.INVALID_INPUT });
     }
 
-    const questionnaireResponse = await QuestionnaireResponse
-      .findById(req.params.questionnaireResponseId).exec();
+    const mongooseObject = await QuestionnaireResponse
+      .findById(req.params.questionnaireResponseId)
+      .exec();
 
-    if (!questionnaireResponse) {
+    if (!mongooseObject) {
       res.status(404);
       return res.send({ message: errors.questionnaireResponse.NOT_FOUND });
     }
+
+    // convert to object
+    const questionnaireResponse = mongooseObject.toObject();
 
     // check access
     if (questionnaireResponse.profileId !== req.session.profileId) {

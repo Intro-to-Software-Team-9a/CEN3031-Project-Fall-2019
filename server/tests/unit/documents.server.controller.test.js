@@ -46,7 +46,7 @@ describe('Documents Controller', () => {
       Template.findById = stubExec(async () => ({ ...mockData.template1, _id: templateId }));
       Document.prototype.save = sinon.stub().resolves();
       QuestionnaireResponse.findOne = () => ({
-        sort: stubExec(async () => ({ ...mockData.questionnaireResponse1 })),
+        sort: stubExec(async () => mockData.questionnaireResponse1),
       });
 
       // reset globals
