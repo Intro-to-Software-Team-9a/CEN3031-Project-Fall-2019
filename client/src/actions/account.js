@@ -136,3 +136,47 @@ export function doCreateAccount({ onSuccess }) {
     }
   };
 }
+
+export function doChangePassword({ onSuccess }) {
+  return async (dispatch, getState) => {
+    const { accounts } = getState();
+
+    const {
+      currentpassword, password, confirmpassword,
+    } = accounts.createForm;
+    dispatch({ type: CREATE_START });
+
+    if (password !== confirmpassword) {
+      dispatch({ type: CREATE_FAIL, data: { message: 'Passwords do not match.' } });
+      return;
+    }
+
+    try {
+      await axios.post('/api/accounts/password', { currentpassword, password });
+      dispatch({ type: CREATE_SUCCESS });
+
+      // delete form data (i.e., password)
+      dispatch({ type: FORGET_CREATE_FORM });
+
+      // refresh profile data
+      await dispatch(getProfile());
+
+      // determine if it was successful
+      const { accounts, profiles } = getState();
+      if (accounts.createState.isError || profiles.profileState.isError) {
+        return;
+      }
+      if (!onSuccess) {
+        return;
+      }
+      await onSuccess();
+    } catch (error) {
+      // parse HTTP message
+      let { message } = error;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
+      dispatch({ type: CREATE_FAIL, data: { message } });
+    }
+  };
+}

@@ -43,6 +43,11 @@ function ProfileHome({ profile }) {
             title="Edit the Questionnaire"
             icon={<Edit style={{ fontSize: 40 }} />}
           />
+          <IconLink
+            link="/change-password"
+            title="CHANGE PASSWORD"
+            icon={<Edit style={{ fontSize: 40 }} />}
+          />
         </Col>
       </Row>
     </Container >

@@ -146,8 +146,44 @@ async function logout(req, res) {
   });
 }
 
+/**
+ * @param currentpassword {String}
+ * @param password {String}
+ */
+async function changePassword(req, res) {
+  if (!req.body || !req.body.currentpassword || !req.body.password) {
+    res.status(400);
+    return res.send({ message: errors.accounts.MISSING_CREDENTIALS });
+  }
+
+  try {
+    const { currentpassword, password } = req.body;
+    const account = await Account.findOne(req.session.accountId).exec();
+    
+    if (!account) {
+      res.status(404);
+      return res.send({ message: errors.accounts.ACCOUNT_DOESNT_EXIST });
+    }
+    
+    const doesMatch = await bcrypt.compare(password, account.passwordHash);
+    if (!doesMatch) {
+      res.status(401);
+      return res.send({ message: errors.accounts.WRONG_CREDENTIALS });
+    }
+
+    const hash = await bcrypt.hash(password, saltRounds);
+    account.passwordHash = hash;
+    return res.send();
+  }
+  catch (e) {
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
+  }
+}
+
 module.exports = {
   login,
   logout,
   createAccount,
+  changePassword,
 };

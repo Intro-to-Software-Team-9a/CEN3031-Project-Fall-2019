@@ -9,6 +9,7 @@ import './globals.css';
 
 import Home from './views/Home';
 import Login from './views/Login';
+import ChangePassword from '/views/ChangePassword';
 import NotFound from './views/NotFound';
 import ViewDocuments from './views/ViewDocuments';
 import ProfileHome from './views/ProfileHome';
@@ -38,6 +39,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path={Routes.HOME} component={Home} />
           <Route exact path={Routes.LOGIN} component={Login} />
+          <Route exact path={Routes.CHANGE_PASSWORD} component={ChangePassword} />
           <Route exact path={Routes.VIEW_DOCUMENTS} component={ViewDocuments} />
           <Route exact path={Routes.ONBOARDING} component={Onboarding} />
           <Route exact path={Routes.PROFILE_HOME} component={ProfileHome} />
