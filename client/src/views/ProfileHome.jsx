@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import FolderShared from '@material-ui/icons/FolderShared';
 import Edit from '@material-ui/icons/Edit';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
+import Settings from '@material-ui/icons/SettingsSharp';
 import IconLink from './IconLink';
 
 function ProfileHome({ profile }) {
@@ -42,6 +43,11 @@ function ProfileHome({ profile }) {
             link="/edit-questionnaire"
             title="Edit the Questionnaire"
             icon={<Edit style={{ fontSize: 40 }} />}
+          />
+          <IconLink
+            link="/user-settings"
+            title="Manage your Account"
+            icon={<Settings style={{ fontSize: 40 }} />}
           />
         </Col>
       </Row>
