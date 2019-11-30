@@ -1,21 +1,20 @@
 import React from 'react';
-import { Row, Col, Container, Button, ListGroup, ButtonToolbar } from 'react-bootstrap';
+import {
+  Row, Col, ListGroup, ButtonToolbar,
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Edit from '@material-ui/icons/Edit';
 import Email from '@material-ui/icons/Email';
-import Delete from '@material-ui/icons/Delete';
 
 import LargeButton from './LargeButton';
-import axios from 'axios';
 
 
 function UserInformation({ userInfo }) {
-
   if (!userInfo) {
     return (
       <div></div>
-    )
+    );
   }
   const formattedDate = moment(userInfo.createdAt).format('MMMM Do YYYY, h:mm:ss a');
 
@@ -24,10 +23,6 @@ function UserInformation({ userInfo }) {
     { value: userInfo.email, label: 'Email' },
     { value: formattedDate, label: 'Account Created' },
   ];
-
-  async function deleteAccount() {
-    await axios.delete('/api/accounts/delete').then(console.log);
-  }
 
   return (
     <React.Fragment>
@@ -68,10 +63,8 @@ function UserInformation({ userInfo }) {
 }
 
 
-
-
 const mapStateToProps = (state) => ({
-  userInfo: state.userInfo.userInfo
+  userInfo: state.userInfo.userInfo,
 });
 
 

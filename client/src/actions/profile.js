@@ -32,7 +32,6 @@ export function getProfile() {
 
       // fetch additional info for settings
       await dispatch(getUserInfo());
-
     } catch (error) {
       // parse HTTP message
       let { message } = error;

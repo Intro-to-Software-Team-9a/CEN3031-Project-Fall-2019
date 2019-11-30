@@ -40,7 +40,7 @@ const defaultState = {
 
 export default function accountReducer(state = defaultState, action) {
   switch (action.type) {
-    case DELETE_ACCOUNT_START: 
+    case DELETE_ACCOUNT_START:
       return { ...state, deleteAccountState: stateStart() };
     case DELETE_ACCOUNT_SUCCESS:
       return { ...state, deleteAccountState: stateSuccess(), isAccountDeleted: true };

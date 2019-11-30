@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 
+const mongoose = require('mongoose');
 const publicConfig = require('../config/config.public');
 const mongooseUtils = require('../utils/mongoose');
 const errors = require('../utils/errors');
@@ -9,7 +10,6 @@ const Profile = require('../models/Profile.model');
 const Document = require('../models/Document.model');
 const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
 
-const mongoose = require('mongoose');
 
 const { saltRounds } = publicConfig.password;
 
@@ -151,7 +151,6 @@ async function logout(req, res) {
 }
 
 async function deleteAccount(req, res) {
-
   let session;
   try {
     session = await mongoose.startSession();
@@ -169,7 +168,6 @@ async function deleteAccount(req, res) {
 
     return res.send();
   } catch (error) {
-
     if (session) {
       await session.abortTransaction();
       session.endSession();

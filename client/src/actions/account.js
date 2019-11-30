@@ -171,5 +171,5 @@ export function resetApplication() {
       dispatch(getQuestionnaire()),
       dispatch(getTemplates()),
     ]);
-  }
+  };
 }

@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, ButtonToolbar, Modal, Button } from 'react-bootstrap';
+import {
+  Row, Col, ButtonToolbar, Modal, Button,
+} from 'react-bootstrap';
 import Delete from '@material-ui/icons/Delete';
 
 import LargeButton from './LargeButton';
-import axios from 'axios';
 import { deleteAccount, resetApplication } from '../actions/account';
 
 
-function PermanentActions({ deleteAccount, isWaiting, isError, error, isAccountDeleted, resetApplication }) {
-
+function PermanentActions({
+  deleteAccount, isWaiting, isError, error, isAccountDeleted, resetApplication,
+}) {
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
   const openModal = () => setShowModal(true);
@@ -33,11 +35,11 @@ function PermanentActions({ deleteAccount, isWaiting, isError, error, isAccountD
             </Modal.Header>
             {}
             <Modal.Body>
-              {isAccountDeleted ?
-                <p>Your account and all associated data were successfully deleted.</p>
-                :
-                <React.Fragment>
-                  <p>This will permanently delete all of your account information and associated data, including</p>
+              {isAccountDeleted
+                ? <p>Your account and all associated data were successfully deleted.</p>
+                : <React.Fragment>
+                  <p>This will permanently delete all of your
+                    account information and associated data, including</p>
                   <ul>
                     <li>Name, email, and profile information</li>
                     <li>Questionnaire Responses</li>
@@ -50,10 +52,9 @@ function PermanentActions({ deleteAccount, isWaiting, isError, error, isAccountD
             </Modal.Body>
             <Modal.Footer>
               {
-                isAccountDeleted ?
-                  <Button variant="outline-dark" onClick={resetApplication}>Continue</Button>
-                  :
-                  <React.Fragment>
+                isAccountDeleted
+                  ? <Button variant="outline-dark" onClick={resetApplication}>Continue</Button>
+                  : <React.Fragment>
                     <Button variant="outline-dark" onClick={closeModal}>
                       No, cancel
                     </Button>
@@ -83,9 +84,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     dispatch(resetApplication());
     ownProps.onSuccessfulDelete();
   },
-})
+});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(PermanentActions);

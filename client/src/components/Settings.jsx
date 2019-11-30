@@ -1,13 +1,12 @@
 import React from 'react';
-import { Row, Col, Container} from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 
 class Settings extends React.Component {
-
   render() {
     return (
 
         <Container fluid>
-        <Row> 
+        <Row>
             <Col md={1} className="pb-4 pt-4">
                 <h2>&larr;</h2>
             </Col>
@@ -16,7 +15,7 @@ class Settings extends React.Component {
             </Col>
         </Row>
       </Container >
-      
+
     );
   }
 }

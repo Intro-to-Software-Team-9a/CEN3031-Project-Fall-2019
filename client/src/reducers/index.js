@@ -6,7 +6,7 @@ import documents from './documents';
 import questionnaire from './questionnaire';
 import templates from './templates';
 import purchase from './purchase';
-import userInfo from './userInfo'
+import userInfo from './userInfo';
 import editQuestionnaire from './editQuestionnaire';
 import viewResponse from './viewResponse';
 
@@ -26,11 +26,12 @@ const appReducer = combineReducers({
 });
 
 const resettableReducer = (state, action) => {
+  let newState = state;
   if (action.type === RESET_APPLICATION) {
     // delete state, causing reset to default value
-    state = undefined;
+    newState = undefined;
   }
 
-  return appReducer(state, action);
-}
+  return appReducer(newState, action);
+};
 export default resettableReducer;

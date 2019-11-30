@@ -10,10 +10,10 @@ async function get(req, res) {
       res.status(404);
       return res.send({ message: errors.profile.NOT_FOUND });
     }
-    
+
     // sanitize the profile and account information
     const sanitzedProfile = { ...profile._doc };
-    
+
     // only grab email address from the account
     sanitzedProfile.email = sanitzedProfile.accountId.email;
 

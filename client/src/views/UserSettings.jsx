@@ -1,8 +1,7 @@
 
 import React from 'react';
 import { Row, Container, Col } from 'react-bootstrap';
-import Settings from '../components/Settings';
-import UserInfo from '../components/UserInfo'
+import UserInfo from '../components/UserInfo';
 import PermanentActions from '../components/PermanentActions';
 import { Routes } from '../utils/constants';
 
@@ -48,4 +47,3 @@ class UserSettings extends React.Component {
 
 
 export default UserSettings;
-
