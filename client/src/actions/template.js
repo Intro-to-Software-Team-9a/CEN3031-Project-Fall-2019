@@ -31,7 +31,7 @@ export function getTemplates() {
 }
 
 export function uploadTemplate() {
-  return async(dispatch) => {
+  return async (dispatch) => {
     dispatch({ type: UPLOAD_TEMPLATE_START });
     try {
       await axios.post('/api/templates/add');
@@ -44,7 +44,7 @@ export function uploadTemplate() {
       }
       dispatch({ type: UPLOAD_TEMPLATE_FAIL, data: { message } });
     }
-  }
+  };
 }
 
 /** Regenerates a template by id */

@@ -7,8 +7,8 @@ import { Routes } from '../utils/constants';
 
 class Login extends React.Component {
   onLogin() {
-    var history = this.props.history;
-    var profile = this.props.profile;
+    const { history } = this.props;
+    const { profile } = this.props;
 
     if (!this.props.profile) {
       history.push(Routes.HOME);
@@ -38,9 +38,9 @@ class Login extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  profile: state.profiles.profile
+  profile: state.profiles.profile,
 });
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
 )(Login);

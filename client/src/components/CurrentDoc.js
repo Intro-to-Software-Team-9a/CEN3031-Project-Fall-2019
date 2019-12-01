@@ -1,22 +1,17 @@
 import React from 'react';
 import { Button, ButtonToolbar, Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import PrintIcon from '@material-ui/icons/Print';
+import AutoRenew from '@material-ui/icons/Autorenew';
+
 import DocumentHistory from './DocumentHistory';
-import axios from 'axios';
 import { getDocuments } from '../actions/document';
 import { regenerate } from '../actions/template';
 
 class CurrentDoc extends React.Component {
-  generateDocument(activeTemplate) {
-    axios.get(`/api/documents/generate/${activeTemplate._id}`).then(() => {
-      this.props.getDocuments();
-    });
-  }
-
   render() {
-    const { activeTemplate, documents, responses, regenerate, isLoading } = this.props;
+    const {
+      activeTemplate, documents, responses, regenerate, isLoading,
+    } = this.props;
 
     if (isLoading) {
       return (
@@ -26,7 +21,7 @@ class CurrentDoc extends React.Component {
       );
     }
     const activeDocuments = documents.filter(
-      (document) => document.templateId._id === activeTemplate._id,
+      (document) => document.templateTypeId === activeTemplate._id,
     );
 
     const canRegenerate = responses.some((response) => {
@@ -47,18 +42,18 @@ class CurrentDoc extends React.Component {
     return (
       <div>
         <h2>{activeTemplate.title}</h2>
-      <h5>Status</h5>
-      {canRegenerate
-        ? <Alert variant="primary" style={{ maxWidth: '500px' }}>
-          This document can be updated with newer information about you.
+        <h5>Status</h5>
+        {canRegenerate
+          ? <Alert variant="primary" style={{ maxWidth: '500px' }}>
+            This document can be updated with newer information about you.
           Click <Alert.Link
-            onClick={() => regenerate(activeTemplate._id)}
-          >here</Alert.Link> to regenerate it.
+              onClick={() => regenerate(activeTemplate._id)}
+            >here</Alert.Link> to regenerate it.
         </Alert>
-        : <Alert variant="success" style={{ maxWidth: '500px' }}>
-          This document is up to date with your latest info.
+          : <Alert variant="success" style={{ maxWidth: '500px' }}>
+            This document is up to date with your latest info.
         </Alert>
-      }
+        }
 
         <h5>Actions</h5>
         <ButtonToolbar>
@@ -66,19 +61,10 @@ class CurrentDoc extends React.Component {
             variant="outline-dark"
             className="mr-2"
             style={{ minWidth: '175px' }}
-            onClick={() => this.generateDocument(activeTemplate)}
+            onClick={() => regenerate(activeTemplate._id)}
           >
-            <span className="mr-1"><GetAppIcon /></span>
-            Generate
-            </Button>
-          <Button
-            variant="outline-dark"
-            className="mr-2"
-            style={{ minWidth: '175px' }}
-            onClick={() => this.generateDocument(activeTemplate)}
-          >
-            <span className="mr-2"><PrintIcon /></span>
-            Print
+            <span className="mr-2"><AutoRenew /></span>
+            Regenerate
             </Button>
         </ButtonToolbar>
 

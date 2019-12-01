@@ -52,8 +52,14 @@ async function run() {
   await template1.save();
   await template2.save();
 
-  const questionnaire1 = new Questionniare(mockdata.questionnaire1);
+  const account2 = new Account(mockdata.account2);
+  const profile2 = new Profile(mockdata.profile2);
+  profile2.accountId = account2;
 
+  await account2.save();
+  await profile2.save();
+
+  const questionnaire1 = new Questionniare(mockdata.questionnaire1);
   await questionnaire1.save();
 }
 

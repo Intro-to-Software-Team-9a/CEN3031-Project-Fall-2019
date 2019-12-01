@@ -5,46 +5,44 @@ import axios from 'axios';
 import './UploadTemplate.css';
 import { Input } from '@material-ui/core';
 
-class UploadTemplateModal extends React.Component {  
-
+class UploadTemplateModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currFileName: null
-    }
+      currFileName: null,
+    };
   }
 
   onFileUpload(e) {
     e.preventDefault();
 
-    var formData = new FormData(e.target);
+    const formData = new FormData(e.target);
 
-    var name = formData.get('templateName');
-    var price = formData.get('templatePrice');
-    var file = formData.get('templateFile');
+    let name = formData.get('templateName');
+    const price = formData.get('templatePrice');
+    const file = formData.get('templateFile');
 
-    var currTemplate = this.props.template;
+    const currTemplate = this.props.template;
     if (currTemplate) {
       name = currTemplate.title;
     }
 
     if (file) {
-      file.arrayBuffer().then(arrayBuffer => {
-        var buffer = Buffer.from(arrayBuffer);
+      file.arrayBuffer().then((arrayBuffer) => {
+        const buffer = Buffer.from(arrayBuffer);
 
-        axios.post("/api/templates/add", {
+        axios.post('/api/templates/add', {
           title: name,
-          price: price,
+          price,
           fileName: file.name,
-          data: buffer
+          data: buffer,
         }).then(this.props.onTemplateUpload);
       });
-    }
-    else {
-        axios.patch("/api/templates/update", {
-          title: name,
-          price: price
-        }).then(this.props.onTemplateUpload);
+    } else {
+      axios.patch('/api/templates/update', {
+        title: name,
+        price,
+      }).then(this.props.onTemplateUpload);
     }
   }
 
@@ -53,11 +51,11 @@ class UploadTemplateModal extends React.Component {
   }
 
   render() {
-    var fileName = this.state.currFileName;
-    var selectedFile = fileName == null ? (<span>Choose file</span>) : (<span>{fileName}</span>);
-    var currTemplate = this.props.template;
+    const fileName = this.state.currFileName;
+    const selectedFile = fileName == null ? (<span>Choose file</span>) : (<span>{fileName}</span>);
+    const currTemplate = this.props.template;
 
-    var modalTitle = currTemplate == null ? 'Create New Form Template' : ('Edit Form: ' + currTemplate.title);
+    const modalTitle = currTemplate == null ? 'Create New Form Template' : (`Edit Form: ${currTemplate.title}`);
 
     return (
       <Modal {...this.props} size="lg" centered>
@@ -68,8 +66,8 @@ class UploadTemplateModal extends React.Component {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={this.onFileUpload.bind(this)}>
-            { currTemplate == null &&
-              <Form.Group>
+            { currTemplate == null
+              && <Form.Group>
                 <Form.Label htmlFor="templateNameInput">Template Name</Form.Label>
                 <Form.Control size="md" type="text" id="templateNameInput" name="templateName"/>
               </Form.Group>

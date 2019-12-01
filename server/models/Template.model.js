@@ -7,7 +7,7 @@ const { Schema } = mongoose;
  */
 
 const TemplateSchema = new Schema({
-  // ref of the questionnaire
+  // ref of the template type
   templateTypeId: { type: Schema.Types.ObjectId, ref: 'TemplateType', required: true },
 
   // template binary data

@@ -26,6 +26,19 @@ module.exports = {
     plan: Plans.NO_PLAN,
     ownedTemplateTypes: [],
   }),
+  account2: new Account({
+    email: 'test2@gmail.com',
+    passwordHash: '$2b$10$tOKa531X/IaHZncPznfUYu3es/D9MeK.JqbFZ3UJ0TS/5OEX6mUXa',
+  }),
+  profile2: new Profile({
+    name: 'Example User',
+    role: {
+      isUser: true,
+      isAdmin: true,
+    },
+    plan: Plans.NO_PLAN,
+    ownedTemplateTypes: [],
+  }),
   document1: new Document({
     data: Buffer.from('Hello, my name is Example User'),
   }),
