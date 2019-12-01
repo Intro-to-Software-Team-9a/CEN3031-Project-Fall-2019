@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { generateDocuments, getDocuments } from './document';
 
 export const GET_TEMPLATES_START = 'GET_TEMPLATES_START';
 export const GET_TEMPLATES_SUCCESS = 'GET_TEMPLATES_SUCCESS';
@@ -44,4 +45,12 @@ export function uploadTemplate() {
       dispatch({ type: UPLOAD_TEMPLATE_FAIL, data: { message } });
     }
   }
+}
+
+/** Regenerates a template by id */
+export function regenerate(id) {
+  return async (dispatch) => {
+    await dispatch(generateDocuments([id]));
+    await dispatch(getDocuments());
+  };
 }

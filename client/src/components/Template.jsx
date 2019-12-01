@@ -3,20 +3,21 @@ import { Card, ListGroup } from 'react-bootstrap';
 import { formatCurrency } from '../utils/format';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import './Template.css';
+import docIcon from '../assets/docIcon.svg';
 
+/** Displays a Template for purchase and other purposes. */
 export default function Template({ template, onClick }) {
   return (
-    <Card style={{width: '10rem'}} className="hover-outline d-inline-block m-2" key={template._id} onClick={onClick}>
-      <Card.Header className="templateCardHeader">
-        {template.title}
-      </Card.Header>
-      <Card.Body className="templateCardBody">
-        <DescriptionOutlinedIcon className="templateIcon" color="primary" style={{ fontSize: 120 }}/>
-        <ListGroup variant="flush">
-          <ListGroup.Item className="templateCardListItem">{template.fileName}</ListGroup.Item>
-          <ListGroup.Item className="templateCardListItem">{formatCurrency(template.priceInCents)}</ListGroup.Item>
-        </ListGroup>
-      </Card.Body>
-    </Card>
+    <div className="hover-outline d-inline-block m-2" key={template._id} onClick={onClick} style={{ width: '8rem' }}>
+
+      <Card>
+        <Card.Img variant="top" src={docIcon} />
+
+        <center className="pt-2">
+          <p className="font-weight-bold mb-0">{template.title}</p>
+          <p className="mt-1">{formatCurrency(template.priceInCents)}</p>
+        </center>
+      </Card>
+    </div>
   );
 }

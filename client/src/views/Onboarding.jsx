@@ -2,16 +2,20 @@ import React from 'react';
 import {
   Container, Row, Col,
 } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
 import Catalog from './Catalog';
 import CreateAccount from './CreateAccount';
-import Questionnaire from './Questionnaire';
+import UnauthenticatedQuestionnaire from './UnauthenticatedQuestionnaire';
+import AuthenticatedQuestionnaire from './AuthenticatedQuestionnaire';
 import ReviewPurchase from './ReviewPurchase';
 import SelectPlan from './SelectPlan';
-
+import { submitForm } from '../actions/questionnaire';
+import { Routes } from '../utils/constants';
 
 const QUESTIONNAIRE_PAGE = 'questionnaire-page';
 const CREATE_ACCOUNT_PAGE = 'create-account-page';
+const AUTHENTICATED_QUESTIONNAIRE_PAGE = 'authenticated-questionnaire-page';
 const SELECT_PLAN_PAGE = 'select-plan-page';
 const CART_PAGE = 'cart-page';
 const REVIEW_PAGE = 'review-page';
@@ -19,11 +23,13 @@ const REVIEW_PAGE = 'review-page';
 const Pages = [
   QUESTIONNAIRE_PAGE,
   CREATE_ACCOUNT_PAGE,
+  AUTHENTICATED_QUESTIONNAIRE_PAGE,
   SELECT_PLAN_PAGE,
   CART_PAGE,
   REVIEW_PAGE,
 ];
 
+/** This component holds the views in `Pages` and cycles through them in order */
 class Onboarding extends React.Component {
   constructor(props) {
     super(props);
@@ -38,6 +44,12 @@ class Onboarding extends React.Component {
   }
 
   changePage(newPage) {
+    // go back to the home page
+    if (newPage < 0) {
+      this.props.history.goBack();
+    }
+
+    // catch edge case
     if (newPage >= Pages.length || newPage < 0) {
       return;
     }
@@ -53,10 +65,20 @@ class Onboarding extends React.Component {
 
     switch (this.state.pageName) {
       case QUESTIONNAIRE_PAGE:
-        currentpage = <Questionnaire onBack={this.decrementPage} onFinish={this.incrementPage} />;
+        currentpage = <UnauthenticatedQuestionnaire
+          onBack={this.decrementPage}
+          onFinish={this.incrementPage} />;
         break;
       case CREATE_ACCOUNT_PAGE:
         currentpage = <CreateAccount onBack={this.decrementPage} onFinish={this.incrementPage} />;
+        break;
+      case AUTHENTICATED_QUESTIONNAIRE_PAGE:
+        currentpage = <AuthenticatedQuestionnaire
+          onBack={this.decrementPage}
+          onFinish={() => {
+            this.props.submitForm();
+            this.incrementPage();
+          }} />;
         break;
       case SELECT_PLAN_PAGE:
         currentpage = <SelectPlan onFinish={this.incrementPage} />;
@@ -66,7 +88,7 @@ class Onboarding extends React.Component {
         break;
       case REVIEW_PAGE:
         currentpage = <ReviewPurchase onBack={this.decrementPage} onFinish={() => {
-          this.props.history.push('/profile-home');
+          this.props.history.push(Routes.PROFILE_HOME);
         }} />;
         break;
       default:
@@ -83,4 +105,14 @@ class Onboarding extends React.Component {
     );
   }
 }
-export default Onboarding;
+
+const mapStateToProps = () => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+  submitForm: () => dispatch(submitForm()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Onboarding);

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import LoginForm from '../components/LoginForm.jsx';
+import { Routes } from '../utils/constants';
 
 class Login extends React.Component {
   onLogin() {
@@ -13,7 +14,7 @@ class Login extends React.Component {
       history.push('/admin');
     }
     else {
-      history.push('/profile-home');
+      history.push(Routes.PROFILE_HOME);
     }
   }
 

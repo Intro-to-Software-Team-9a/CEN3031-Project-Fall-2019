@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import {
+  Container, Row, Col, Button,
+} from 'react-bootstrap';
 
 import { selectPlan } from '../actions/selectplan';
 
@@ -16,18 +18,18 @@ function SelectPlan({ onPlanSelect, onFinish }) {
         <h1>Select Plan</h1>
         <Row>
           <Col className="col-4 pt-4">
-            <div class="card">
-              <h2 class="card-header">Simple</h2>
-              <div class="card-body">
-                <ul class="list-group">
-                  <li class="list-group-item">Item 1</li>
-                  <li class="list-group-item">Item 2</li>
-                  <li class="list-group-item">Item 3</li>
-                  <li class="list-group-item">Item 4</li>
-                  <li class="list-group-item">Item 5</li>
+            <div className="card">
+              <h2 className="card-header">Simple</h2>
+              <div className="card-body">
+                <ul className="list-group">
+                  <li className="list-group-item">Item 1</li>
+                  <li className="list-group-item">Item 2</li>
+                  <li className="list-group-item">Item 3</li>
+                  <li className="list-group-item">Item 4</li>
+                  <li className="list-group-item">Item 5</li>
                 </ul>
               </div>
-              <div class="card-footer d-flex justify-content-between">
+              <div className="card-footer d-flex justify-content-between">
                 <span className="planPrice">$50</span>
                 <Button variant="outline-dark mr-0"
                   onClick={() => onClick('BASIC_PLAN')}>
@@ -37,18 +39,18 @@ function SelectPlan({ onPlanSelect, onFinish }) {
             </div>
           </Col>
           <Col className="col-4 pt-4">
-            <div class="card">
-              <h2 class="card-header">Advanced</h2>
-              <div class="card-body">
-                <ul class="list-group">
-                  <li class="list-group-item">Item 1</li>
-                  <li class="list-group-item">Item 2</li>
-                  <li class="list-group-item">Item 3</li>
-                  <li class="list-group-item">Item 4</li>
-                  <li class="list-group-item">Item 5</li>
+            <div className="card">
+              <h2 className="card-header">Advanced</h2>
+              <div className="card-body">
+                <ul className="list-group">
+                  <li className="list-group-item">Item 1</li>
+                  <li className="list-group-item">Item 2</li>
+                  <li className="list-group-item">Item 3</li>
+                  <li className="list-group-item">Item 4</li>
+                  <li className="list-group-item">Item 5</li>
                 </ul>
               </div>
-              <div class="card-footer d-flex justify-content-between">
+              <div className="card-footer d-flex justify-content-between">
                 <span className="planPrice">$50</span>
                 <Button variant="outline-dark mr-0"
                   onClick={() => onClick('ADVANCED_PLAN')}>
@@ -58,18 +60,18 @@ function SelectPlan({ onPlanSelect, onFinish }) {
             </div>
           </Col>
           <Col className="col-4 pt-4">
-            <div class="card">
-              <h2 class="card-header">Comprehensive</h2>
-              <div class="card-body">
-                <ul class="list-group">
-                  <li class="list-group-item">Item 1</li>
-                  <li class="list-group-item">Item 2</li>
-                  <li class="list-group-item">Item 3</li>
-                  <li class="list-group-item">Item 4</li>
-                  <li class="list-group-item">Item 5</li>
+            <div className="card">
+              <h2 className="card-header">Comprehensive</h2>
+              <div className="card-body">
+                <ul className="list-group">
+                  <li className="list-group-item">Item 1</li>
+                  <li className="list-group-item">Item 2</li>
+                  <li className="list-group-item">Item 3</li>
+                  <li className="list-group-item">Item 4</li>
+                  <li className="list-group-item">Item 5</li>
                 </ul>
               </div>
-              <div class="card-footer d-flex justify-content-between">
+              <div className="card-footer d-flex justify-content-between">
                 <span className="planPrice">$50</span>
                 <Button variant="outline-dark mr-0"
                   onClick={() => onClick('COMPREHENSIVE_PLAN')}>

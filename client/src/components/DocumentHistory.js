@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  Button, ButtonToolbar, Container, Col, Row,
+  Button, ListGroup,
 } from 'react-bootstrap';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import moment from 'moment';
@@ -53,6 +53,7 @@ class DocumentHistory extends React.Component {
     );
   }
 }
+
 const mapStateToProps = (state) => ({
   activeTemplate: state.documents.activeTemplate,
   documents: state.documents.documents,

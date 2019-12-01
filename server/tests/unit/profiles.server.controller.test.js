@@ -33,11 +33,7 @@ describe('Profiles Controller', () => {
 
     beforeEach(() => {
       Profile.findById = stubExec(
-        async () => ({
-          templates: [
-            mockData.profile1,
-          ],
-        }),
+        sinon.stub().resolves(new Profile(mockData.profile1)),
       );
 
       // reset globals
