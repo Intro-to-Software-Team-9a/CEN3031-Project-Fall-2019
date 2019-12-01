@@ -10,7 +10,7 @@ class UploadTemplateModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      curFileName: null
+      currFileName: null
     }
   }
 
@@ -23,9 +23,9 @@ class UploadTemplateModal extends React.Component {
     var price = formData.get('templatePrice');
     var file = formData.get('templateFile');
 
-    var curTemplate = this.props.template;
-    if (curTemplate) {
-      name = curTemplate.title;
+    var currTemplate = this.props.template;
+    if (currTemplate) {
+      name = currTemplate.title;
     }
 
     if (file) {
@@ -49,15 +49,15 @@ class UploadTemplateModal extends React.Component {
   }
 
   onFileSelect(e) {
-    this.setState({ curFileName: e.target.files[0].name });
+    this.setState({ currFileName: e.target.files[0].name });
   }
 
   render() {
-    var fileName = this.state.curFileName;
+    var fileName = this.state.currFileName;
     var selectedFile = fileName == null ? (<span>Choose file</span>) : (<span>{fileName}</span>);
-    var curTemplate = this.props.template;
+    var currTemplate = this.props.template;
 
-    var modalTitle = curTemplate == null ? 'Create New Form Template' : ('Edit Form: ' + curTemplate.title);
+    var modalTitle = currTemplate == null ? 'Create New Form Template' : ('Edit Form: ' + currTemplate.title);
 
     return (
       <Modal {...this.props} size="lg" centered>
@@ -68,7 +68,7 @@ class UploadTemplateModal extends React.Component {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={this.onFileUpload.bind(this)}>
-            { curTemplate == null &&
+            { currTemplate == null &&
               <Form.Group>
                 <Form.Label htmlFor="templateNameInput">Template Name</Form.Label>
                 <Form.Control size="md" type="text" id="templateNameInput" name="templateName"/>
