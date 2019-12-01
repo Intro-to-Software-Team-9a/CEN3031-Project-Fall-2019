@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
 
-import { doLogout } from '../actions/account';
+import { doLogout, resetApplication } from '../actions/account';
 import { Routes } from '../utils/constants';
 
 function NavBar({ isLoggedIn, name, doLogout }) {
@@ -25,6 +25,7 @@ function NavBar({ isLoggedIn, name, doLogout }) {
               <LinkContainer to={Routes.PROFILE_HOME}><Nav.Link>{name}</Nav.Link></LinkContainer>
               &nbsp;&nbsp;
               <Button onClick={doLogout} variant="outline-dark">Logout</Button>
+              <Link to='/user-settings'><Button className="ml-2" variant="outline-dark">Settings</Button></Link>
             </React.Fragment>
             : <React.Fragment>
               <Link to={Routes.LOGIN}><Button variant="outline-dark">Log In</Button></Link>
@@ -47,8 +48,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  doLogout: () => dispatch(doLogout(ownProps.onLogout)),
+const mapDispatchToProps = (dispatch) => ({
+  doLogout: async () => {
+    await dispatch(doLogout());
+    dispatch(resetApplication());
+  },
 });
 
 export default connect(
