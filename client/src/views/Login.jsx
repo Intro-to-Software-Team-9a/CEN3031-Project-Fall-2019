@@ -10,6 +10,11 @@ class Login extends React.Component {
     var history = this.props.history;
     var profile = this.props.profile;
 
+    if (!this.props.profile) {
+      history.push(Routes.HOME);
+      return;
+    }
+
     if (profile.role.isAdmin) {
       history.push('/admin');
     }
