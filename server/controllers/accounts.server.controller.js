@@ -155,24 +155,29 @@ async function changePassword(req, res) {
     res.status(400);
     return res.send({ message: errors.accounts.MISSING_CREDENTIALS });
   }
-
+  console.log("here")
   try {
     const { currentpassword, password } = req.body;
-    const account = await Account.findOne(req.session.accountId).exec();
-    
+    const account = await Account.findById(req.session.accountId).exec();
     if (!account) {
       res.status(404);
-      return res.send({ message: errors.accounts.ACCOUNT_DOESNT_EXIST });
+      return res.send({ message: errors.accounts.NOT_LOGGED_IN });
     }
     
-    const doesMatch = await bcrypt.compare(password, account.passwordHash);
+    const doesMatch = await bcrypt.compare(currentpassword, account.passwordHash);
     if (!doesMatch) {
       res.status(401);
-      return res.send({ message: errors.accounts.WRONG_CREDENTIALS });
+      return res.send({ message: errors.accounts.WRONG_PASSWORD });
+    }
+    
+    if (!isPasswordOk(password)) {
+      res.status(400);
+      return res.send({ message: errors.accounts.PASSWORD_NOT_OK });
     }
 
     const hash = await bcrypt.hash(password, saltRounds);
     account.passwordHash = hash;
+    await account.save();
     return res.send();
   }
   catch (e) {

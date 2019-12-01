@@ -150,7 +150,7 @@ export function doChangePassword({ onSuccess }) {
       dispatch({ type: CREATE_FAIL, data: { message: 'Passwords do not match.' } });
       return;
     }
-
+    console.log('about to post')
     try {
       await axios.post('/api/accounts/password', { currentpassword, password });
       dispatch({ type: CREATE_SUCCESS });

@@ -13,7 +13,7 @@ router.route('/logout')
 router.route('/create')
   .post(accounts.createAccount);
 
-router.route('/passord')
+router.route('/password')
   .post(accounts.changePassword);
 
 

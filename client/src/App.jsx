@@ -9,7 +9,7 @@ import './globals.css';
 
 import Home from './views/Home';
 import Login from './views/Login';
-import ChangePassword from '/views/ChangePassword';
+import ChangePassword from './views/ChangePassword';
 import NotFound from './views/NotFound';
 import ViewDocuments from './views/ViewDocuments';
 import ProfileHome from './views/ProfileHome';
