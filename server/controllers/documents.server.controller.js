@@ -23,7 +23,6 @@ async function get(req, res) {
     const document = rawDocument.toObject();
 
     document.templateTypeId = document.templateId.templateTypeId;
-    delete document.templateId;
 
     return document;
   });
