@@ -17,6 +17,7 @@ const { saltRounds } = publicConfig.password;
 async function addToSession(account, profile, req) {
   req.session.accountId = account._id;
   req.session.profileId = profile._id;
+  req.session.isAdmin = profile.role.isAdmin;
 }
 
 /**

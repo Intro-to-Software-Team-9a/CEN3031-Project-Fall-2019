@@ -33,9 +33,9 @@ const mapStateToProps = (state) => {
     };
   }
 
-  const ownedTemplates = allTemplates.filter((t) => profile.ownedTemplates.includes(t._id));
+  const ownedTemplateTypes = allTemplates.filter((t) => profile.ownedTemplateTypes.includes(t._id));
   return {
-    templates: ownedTemplates,
+    templates: ownedTemplateTypes,
   };
 };
 

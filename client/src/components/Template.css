@@ -1,0 +1,17 @@
+.templateIcon {
+  color: blue;
+}
+
+.templateCardBody {
+  padding: 0; 
+  text-align: center;
+}
+
+.templateCardHeader, .templateCardFooter {
+  padding: 0.25rem 0;
+  text-align: center;
+}
+
+.templateCardListItem {
+  padding: 0.1rem 0rem;
+}

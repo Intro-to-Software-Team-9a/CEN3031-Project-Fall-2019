@@ -1,90 +1,80 @@
 import React from 'react';
 import { Button, ButtonToolbar, Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import PrintIcon from '@material-ui/icons/Print';
-// import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import DocumentHistory from './DocumentHistory';
+import AutoRenew from '@material-ui/icons/Autorenew';
 
+import DocumentHistory from './DocumentHistory';
+import { getDocuments } from '../actions/document';
 import { regenerate } from '../actions/template';
 
-/**
- * Displays a Template, potential actions, and its history.
- */
-function CurrentDoc({
-  activeTemplate, documents, responses, regenerate, isLoading,
-}) {
-  if (isLoading) {
-    return (
-      <div>
-        Loading...
-      </div>
-    );
-  }
-  const activeDocuments = documents.filter(
-    (document) => document.templateId._id === activeTemplate._id,
-  );
-  if (!activeTemplate) {
-    return (
-      <div>
-        <p className="text-center text-muted">Select a document</p>
-      </div>
-    );
-  }
+class CurrentDoc extends React.Component {
+  render() {
+    const {
+      activeTemplate, documents, responses, regenerate, isLoading,
+    } = this.props;
 
-  // if there is a response that is newer than all versions of
-  // the selected template, then they can regenerate
-  const canRegenerate = responses.some((response) => {
-    if (activeDocuments.every((doc) => doc.createdAt < response.createdAt)) {
-      return true;
+    if (isLoading) {
+      return (
+        <div>
+          Loading...
+      </div>
+      );
     }
-    return false;
-  });
-  return (
-    <div>
-      <h2>{activeTemplate.title}</h2>
-      <br />
-      <h5>Status</h5>
-      {canRegenerate
-        ? <Alert variant="primary" style={{ maxWidth: '500px' }}>
-          This document can be updated with newer information about you.
+    const activeDocuments = documents.filter(
+      (document) => document.templateTypeId === activeTemplate._id,
+    );
 
-          Click <Alert.Link
-            onClick={() => regenerate(activeTemplate._id)}
-          >here</Alert.Link> to regenerate it.
-        </Alert>
-        : <Alert variant="success" style={{ maxWidth: '500px' }}>
-          This document is up to date with your latest info.
-        </Alert>
+    const canRegenerate = responses.some((response) => {
+      if (activeDocuments.every((doc) => doc.createdAt < response.createdAt)) {
+        return true;
       }
+      return false;
+    });
 
-      <h5>Actions</h5>
-      <ButtonToolbar>
-        <Button
-          variant="outline-dark"
-          className="mr-2"
-          style={{ minWidth: '175px' }}
-          onClick={() => window.open(`/api/pdf/${activeDocuments[activeDocuments.length - 1]._id}`, '_blank')}
-        >
-          <span className="mr-1"><GetAppIcon /></span>
-          Download
-          </Button>
-        <Button
-          variant="outline-dark"
-          className="mr-2"
-          style={{ minWidth: '175px' }}
-          onClick={() => window.open(`/api/pdf/${activeDocuments[activeDocuments.length - 1]._id}`, '_blank')}
-        >
-          <span className="mr-2"><PrintIcon /></span>
-          Print
-        </Button>
-      </ButtonToolbar>
-      <br />
+    if (!activeTemplate) {
+      return (
+        <div>
+          <p className="text-center text-muted">Select a document</p>
+        </div>
+      );
+    }
 
-      <h5>Document History</h5>
-      <DocumentHistory />
-    </div>
-  );
+    return (
+      <div>
+        <h2>{activeTemplate.title}</h2>
+        <h5>Status</h5>
+        {canRegenerate
+          ? <Alert variant="primary" style={{ maxWidth: '500px' }}>
+            This document can be updated with newer information about you.
+          Click <Alert.Link
+              onClick={() => regenerate(activeTemplate._id)}
+            >here</Alert.Link> to regenerate it.
+        </Alert>
+          : <Alert variant="success" style={{ maxWidth: '500px' }}>
+            This document is up to date with your latest info.
+        </Alert>
+        }
+
+        <h5>Actions</h5>
+        <ButtonToolbar>
+          <Button
+            variant="outline-dark"
+            className="mr-2"
+            style={{ minWidth: '175px' }}
+            onClick={() => regenerate(activeTemplate._id)}
+          >
+            <span className="mr-2"><AutoRenew /></span>
+            Regenerate
+            </Button>
+        </ButtonToolbar>
+
+        <br />
+
+        <h5>Document History</h5>
+        <DocumentHistory />
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({
@@ -98,7 +88,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   regenerate: (templateId) => dispatch(regenerate(templateId)),
+  getDocuments: () => dispatch(getDocuments()),
 });
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
