@@ -12,9 +12,10 @@ import { Form, Button, Alert } from 'react-bootstrap';
  * @param changeField a function called on field change `(fieldName, newValue)`.
  * Intended to dispatch a redux event.
  * @param state an `asyncState` as defined in "utils/asyncStates"
+ * @param hideSubmitButton whether to hide the "submit" button
  */
 export default function AbstractForm({
-  fields, data, onSubmit, changeField, state,
+  fields, data, onSubmit, changeField, state, hideSubmitButton
 }) {
   // create each field in the form from the `fields` prop
   const formFields = fields.map(({ type, name, label }) => (
@@ -36,7 +37,7 @@ export default function AbstractForm({
             {state.error}
           </Alert>
           : ''}
-        <Button variant="outline-dark" type="submit">Submit</Button>
+        {hideSubmitButton ? '' : <Button variant="outline-dark" type="submit">Submit</Button>}
       </Form>
     </div>
   );

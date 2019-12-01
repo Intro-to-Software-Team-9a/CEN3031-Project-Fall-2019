@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { changeCreateField, doChangePassword } from '../actions/account';
+import { doChangePassword, changeChangePasswordField } from '../actions/account';
 
 // this component wraps AbstractForm
 import AbstractForm from './AbstractForm.jsx';
@@ -14,9 +14,10 @@ const fields = [
 
 // create necessary props for AbstractForm
 const mapStateToProps = (state) => ({
-  data: state.accounts.createForm,
-  state: state.accounts.createState,
+  data: state.accounts.changePasswordForm,
+  state: state.accounts.changePasswordState,
   fields,
+  hideSubmitButton: true,
 });
 
 
@@ -26,7 +27,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     e.preventDefault();
     await dispatch(doChangePassword({ onSuccess: ownProps.onFinish }));
   },
-  changeField: (fieldName, newValue) => dispatch(changeCreateField(fieldName, newValue)),
+  changeField: (fieldName, newValue) => dispatch(changeChangePasswordField(fieldName, newValue)),
 });
 
 
