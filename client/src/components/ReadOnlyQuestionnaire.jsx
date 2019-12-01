@@ -8,7 +8,7 @@ import DisplayQuestionnaire from './DisplayQuestionnaire';
  *
  * Displays the questionnaire from viewResponse
  * using a QuestionnaireResponse object from props.
- * 
+ *
  * @param props.response The QuestionnaireResponse object to display.
  */
 

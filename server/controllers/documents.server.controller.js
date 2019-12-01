@@ -13,7 +13,21 @@ async function get(req, res) {
     return res.status(404).send({ message: errors.profile.NOT_FOUND });
   }
 
-  const documents = await Document.find({ profileId: profile._id }).sort({ createdAt: 'desc' });
+  const rawDocuments = await Document.find({ profileId: profile._id })
+    .populate('templateId')
+    .sort({ createdAt: 'desc' });
+
+
+  // join on templateId and then grab only templateTypeId
+  const documents = rawDocuments.map((rawDocument) => {
+    const document = rawDocument.toObject();
+
+    document.templateTypeId = document.templateId.templateTypeId;
+    delete document.templateId;
+
+    return document;
+  });
+
   return res.send({ documents });
 }
 
@@ -67,7 +81,9 @@ async function generate(req, res) {
       currentYear: new Date().getFullYear(),
     });
 
-    const document = await Templating.generateDocumentFromData(template, templateType, data);
+    const document = await Templating.generateDocumentFromData(
+      template, templateType, data, req.session.profileId,
+    );
     await document.save();
 
     return res.send({ document });
