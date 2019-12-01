@@ -7,6 +7,7 @@ const Account = require('../../models/Account.model');
 const Profile = require('../../models/Profile.model');
 const Document = require('../../models/Document.model');
 const Template = require('../../models/Template.model');
+const TemplateType = require('../../models/TemplateType.model');
 const mockdata = require('../helpers/mockdata');
 const config = require('../helpers/config');
 
@@ -52,12 +53,12 @@ describe('Model Integration Tests', () => {
     });
   });
 
-  describe('Foriegn Keys for Models', () => {
+  describe.only('Foreign Keys for Models', () => {
     it('allows documents to be saved in any order', async () => {
       const account1 = new Account(mockdata.account1);
       const document1 = new Document(mockdata.document1);
       const profile1 = new Profile(mockdata.profile1);
-      const templateType1 = new templateType1(mockdata.templateType1);
+      const templateType1 = new TemplateType(mockdata.templateType1);
       const template1 = new Template(mockdata.template1);
 
       await assert.rejects(profile1.save(), 'should throw exception due to missing account');

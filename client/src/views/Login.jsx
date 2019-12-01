@@ -17,10 +17,10 @@ class Login extends React.Component {
 
     if (profile.role.isAdmin) {
       history.push('/admin');
+      return;
     }
-    else {
-      history.push(Routes.PROFILE_HOME);
-    }
+
+    history.push(Routes.PROFILE_HOME);
   }
 
   render() {

@@ -3,7 +3,6 @@
 const sinon = require('sinon');
 const assert = require('assert');
 
-const Template = require('../../models/Template.model');
 const TemplateType = require('../../models/TemplateType.model');
 const mockData = require('../helpers/mockdata');
 

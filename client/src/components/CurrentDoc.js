@@ -10,7 +10,7 @@ import { regenerate } from '../actions/template';
 
 class CurrentDoc extends React.Component {
   generateDocument(activeTemplate) {
-    axios.get(`/api/documents/generate/${activeTemplate._id}`).then((res) => {
+    axios.get(`/api/documents/generate/${activeTemplate._id}`).then(() => {
       this.props.getDocuments();
     });
   }

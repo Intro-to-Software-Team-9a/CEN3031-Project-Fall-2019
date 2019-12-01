@@ -1,7 +1,6 @@
 import React from 'react';
-import { Card, ListGroup } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { formatCurrency } from '../utils/format';
-import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import './Template.css';
 import docIcon from '../assets/docIcon.svg';
 
