@@ -1,11 +1,15 @@
 const bcrypt = require('bcrypt');
 const validator = require('validator');
 
+const mongoose = require('mongoose');
 const publicConfig = require('../config/config.public');
 const mongooseUtils = require('../utils/mongoose');
 const errors = require('../utils/errors');
 const Account = require('../models/Account.model');
 const Profile = require('../models/Profile.model');
+const Document = require('../models/Document.model');
+const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
+
 
 const { saltRounds } = publicConfig.password;
 
@@ -147,8 +151,37 @@ async function logout(req, res) {
   });
 }
 
+async function deleteAccount(req, res) {
+  let session;
+  try {
+    session = await mongoose.startSession();
+    session.startTransaction();
+
+    const { accountId, profileId } = req.session;
+
+    await Account.findByIdAndDelete(accountId, { session });
+    await Profile.findByIdAndDelete(profileId, { session });
+    await QuestionnaireResponse.deleteMany({ profileId }, { session });
+    await Document.deleteMany({ profileId }, { session });
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return res.send();
+  } catch (error) {
+    if (session) {
+      await session.abortTransaction();
+      session.endSession();
+    }
+
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
+  }
+}
+
 module.exports = {
   login,
   logout,
   createAccount,
+  deleteAccount,
 };

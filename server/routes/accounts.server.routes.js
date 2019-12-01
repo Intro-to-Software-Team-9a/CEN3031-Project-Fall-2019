@@ -1,6 +1,7 @@
 const express = require('express');
 
 const accounts = require('../controllers/accounts.server.controller.js');
+const { authenticate } = require('../middleware/authenticate');
 
 const router = express.Router();
 
@@ -12,6 +13,9 @@ router.route('/logout')
 
 router.route('/create')
   .post(accounts.createAccount);
+
+router.route('/delete')
+  .delete(authenticate(), accounts.deleteAccount);
 
 
 module.exports = router;

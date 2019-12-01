@@ -6,9 +6,12 @@ const assert = require('assert');
 const bcrypt = require('bcrypt');
 const Account = require('../../models/Account.model');
 const Profile = require('../../models/Profile.model');
+const Document = require('../../models/Document.model');
+const QuestionnaireResponse = require('../../models/QuestionnaireResponse.model');
 const mongooseUtils = require('../../utils/mongoose');
 const { stubExec } = require('../helpers/utils');
 const mockData = require('../helpers/mockdata');
+const mongoose = require('mongoose');
 
 const accounts = require('../../controllers/accounts.server.controller');
 
@@ -227,4 +230,70 @@ describe('Accounts Controller', () => {
       assert.ok(!req.session.accountId);
     });
   });
+
+  describe('deleteAccount', () => {
+    // "globals" for login tests
+    let req;
+    let res;
+    let session;
+
+    const mockSession = () => ({
+      startTransaction: sinon.stub().returns(),
+      commitTransaction: sinon.stub().resolves(),
+      abortTransaction: sinon.stub().resolves(),
+      endSession: sinon.stub().resolves(),
+    });
+
+    beforeEach(() => {
+      // reset globals
+      req = mockRequest();
+      res = mockResponse();
+      session = mockSession();
+
+      req.session.accountId = 'myId'; // assume logged in
+      req.session.profileId = 'profileId';
+
+      Account.findByIdAndDelete = sinon.stub().resolves();
+      Profile.findByIdAndDelete = sinon.stub().resolves();
+      QuestionnaireResponse.deleteMany = sinon.stub().resolves();
+      Document.deleteMany = sinon.stub().resolves();
+      mongoose.startSession = sinon.stub().resolves(session);
+    });
+
+    it('should return 200 if session if account was successfully deleted', async () => {
+      await accounts.deleteAccount(req, res);
+      assert.ok(res.status.notCalled);
+    });
+
+    it('should commit transaction if session if account was successfully deleted', async () => {
+      await accounts.deleteAccount(req, res);
+      assert.ok(session.commitTransaction.called);
+    });
+
+    it('should return 500 if mongoose cannot start session', async () => {
+      mongoose.startSession = sinon.stub().rejects(new Error('cant start session'));
+
+      await accounts.deleteAccount(req, res);
+      assert.ok(res.status.calledWith(500));
+    });
+
+    it('should return 500 if mongoose rejects', async () => {
+      QuestionnaireResponse.deleteMany  = sinon.stub().rejects(new Error('error'));
+
+      await accounts.deleteAccount(req, res);
+      assert.ok(res.status.calledWith(500));
+    });
+
+    it('should abort transaction if mongoose rejects', async () => {
+      // arrange
+      QuestionnaireResponse.deleteMany  = sinon.stub().rejects(new Error('error'));
+
+      // act
+      await accounts.deleteAccount(req, res);
+
+      // assert
+      assert.ok(session.abortTransaction.called)
+    });
+  });
+
 });

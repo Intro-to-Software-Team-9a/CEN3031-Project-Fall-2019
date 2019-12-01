@@ -8,4 +8,5 @@ export const Routes = {
   NEW_RESPONSE: '/edit-response',
   VIEW_RESPONSES: '/view-responses',
   VIEW_RESPONSE: (id) => `/view-response/${id}`,
+  USER_SETTINGS: '/user-settings',
 };

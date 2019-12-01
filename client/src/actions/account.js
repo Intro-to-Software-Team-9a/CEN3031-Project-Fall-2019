@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 import { getProfile, forgetProfile } from './profile';
+import { getQuestionnaire } from './questionnaire';
+import { getTemplates } from './template';
 
 export const CHANGE_LOGIN_FIELD = 'CHANGE_LOGIN_FIELD';
 export const CHANGE_CREATE_FIELD = 'CHANGE_CREATE_FIELD';
@@ -15,7 +17,10 @@ export const CREATE_SUCCESS = 'CREATE_SUCCESS';
 export const CREATE_FAIL = 'CREATE_FAIL';
 export const FORGET_LOGIN_FORM = 'FORGET_LOGIN_FORM';
 export const FORGET_CREATE_FORM = 'FORGET_CREATE_FORM';
-
+export const DELETE_ACCOUNT_START = 'DELETE_ACCOUNT_START';
+export const DELETE_ACCOUNT_SUCCESS = 'DELETE_ACCOUNT_SUCCESS';
+export const DELETE_ACCOUNT_FAIL = 'DELETE_ACCOUNT_FAIL';
+export const RESET_APPLICATION = 'RESET_APPLICATION';
 
 export function changeLoginField(fieldName, newValue) {
   return {
@@ -133,5 +138,38 @@ export function doCreateAccount({ onSuccess }) {
       }
       dispatch({ type: CREATE_FAIL, data: { message } });
     }
+  };
+}
+
+export function deleteAccount() {
+  return async (dispatch) => {
+    dispatch({ type: DELETE_ACCOUNT_START });
+
+    try {
+      await axios.delete('/api/accounts/delete');
+      dispatch({ type: DELETE_ACCOUNT_SUCCESS });
+      dispatch(doLogout());
+    } catch (error) {
+      // parse HTTP message
+      let { message } = error;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
+      dispatch({ type: DELETE_ACCOUNT_FAIL, data: { message } });
+    }
+  };
+}
+
+/** After account deletion, remove all personal data from redux */
+export function resetApplication() {
+  return async (dispatch) => {
+    dispatch({ type: RESET_APPLICATION });
+
+    // re-grab all the data
+    await Promise.all([
+      dispatch(getProfile()),
+      dispatch(getQuestionnaire()),
+      dispatch(getTemplates()),
+    ]);
   };
 }

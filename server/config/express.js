@@ -12,6 +12,7 @@ const pdfRouter = require('../routes/pdf.server.routes');
 const documentsRouter = require('../routes/documents.server.routes');
 const questionnaireRouter = require('../routes/questionnaires.server.routes');
 const questionnaireResponseRouter = require('../routes/questionnaireResponse.server.routes');
+const userSettingsRouter = require('../routes/userSettings.server.routes');
 
 /* eslint-disable-next-line no-console */
 console.log(process.env.NODE_ENV);
@@ -69,6 +70,7 @@ module.exports.init = async () => {
   app.use('/api/documents', documentsRouter);
   app.use('/api/questionnaire', questionnaireRouter);
   app.use('/api/questionnaireResponse', questionnaireResponseRouter);
+  app.use('/api/user-settings', userSettingsRouter);
 
   if (process.env.NODE_ENV === 'production') {
   // Serve any static files

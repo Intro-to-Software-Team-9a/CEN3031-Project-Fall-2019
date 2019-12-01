@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { getUserInfo } from './userSettings';
+
 export const GET_PROFILE_START = 'GET_PROFILE_START';
 export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
 export const GET_PROFILE_FAIL = 'GET_PROFILE_FAIL';
@@ -27,6 +29,9 @@ export function getProfile() {
     try {
       const response = await axios.get('/api/profiles');
       dispatch(getProfileSuccess(response.data.profile));
+
+      // fetch additional info for settings
+      await dispatch(getUserInfo());
     } catch (error) {
       // parse HTTP message
       let { message } = error;

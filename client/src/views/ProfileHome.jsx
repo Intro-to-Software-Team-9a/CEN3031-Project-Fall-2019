@@ -7,7 +7,9 @@ import { connect } from 'react-redux';
 import FolderShared from '@material-ui/icons/FolderShared';
 import Edit from '@material-ui/icons/Edit';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
+import Settings from '@material-ui/icons/SettingsSharp';
 import IconLink from './IconLink';
+import { Routes } from '../utils/constants';
 
 function ProfileHome({ profile }) {
   if (!profile) return '';
@@ -29,19 +31,24 @@ function ProfileHome({ profile }) {
           <br />
           <div className="spacing"></div>
           <IconLink
-            link="view-documents"
+            link={Routes.VIEW_DOCUMENTS}
             title="View Your Documents"
             icon={<FolderShared style={{ fontSize: 40 }} />}
           />
           <IconLink
-            link="/view-responses"
+            link={Routes.VIEW_RESPONSES}
             title="View/Edit Responses"
             icon={<QuestionAnswer style={{ fontSize: 40 }} />}
           />
           <IconLink
-            link="/edit-questionnaire"
+            link={Routes.EDIT_QUESTIONNAIRE}
             title="Edit the Questionnaire"
             icon={<Edit style={{ fontSize: 40 }} />}
+          />
+          <IconLink
+            link={Routes.USER_SETTINGS}
+            title="Manage your Account"
+            icon={<Settings style={{ fontSize: 40 }} />}
           />
         </Col>
       </Row>

@@ -25,14 +25,18 @@ import { getQuestionnaire } from './actions/questionnaire';
 import { getProfile } from './actions/profile';
 import { addTemplate, doPurchase } from './actions/purchase';
 import Onboarding from './views/Onboarding';
+import UserSettings from './views/UserSettings';
+
 import EditQuestionnaireResponse from './views/EditQuestionnaireResponse';
 import ViewResponse from './views/ViewResponse';
 
 class App extends React.Component {
   async componentDidMount() {
-    this.props.getProfile();
-    this.props.getQuestionnaire();
-    await this.props.getTemplates();
+    await Promise.all([
+      this.props.getProfile(),
+      this.props.getQuestionnaire(),
+      this.props.getTemplates(),
+    ]);
   }
 
   render() {
@@ -49,6 +53,7 @@ class App extends React.Component {
           <Route exact path={Routes.NEW_RESPONSE} component={EditQuestionnaireResponse} />
           <Route exact path={Routes.VIEW_RESPONSES} component={UserResponses} />
           <Route exact path={Routes.VIEW_RESPONSE(':responseId')} component={ViewResponse} />
+          <Route exact path={Routes.USER_SETTINGS} component={UserSettings} />
           <Route exact path="/upload-template" component={UploadTemplate} />
           <Route exact path="/admin" component={AdminHome} />
           <Route exact path="/admin/templates" component={ManageTemplates} />

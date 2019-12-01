@@ -18,6 +18,26 @@ function stubExec(execFn) {
   });
 }
 
+
+/**
+ * Wrapper to stub .populate() function of Model.findOne, etc.
+ *
+ * Usage:
+ * ```
+ * // resolve with something
+ * MyModel.findOne = stubPopulate(sinon.stub().resolves(myThing))
+ *
+ * // reject with something
+ * MyModel.findOne = stubPopulate(sinon.stub().rejects(myError))
+ * ```
+ */
+function stubPopulate(populateFn) {
+  return sinon.stub().returns({
+    populate: populateFn,
+  });
+}
+
 module.exports = {
   stubExec,
+  stubPopulate,
 };
