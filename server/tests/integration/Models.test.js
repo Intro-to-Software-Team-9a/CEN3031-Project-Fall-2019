@@ -53,7 +53,7 @@ describe('Model Integration Tests', () => {
     });
   });
 
-  describe.only('Foreign Keys for Models', () => {
+  describe('Foreign Keys for Models', () => {
     it('allows documents to be saved in any order', async () => {
       const account1 = new Account(mockdata.account1);
       const document1 = new Document(mockdata.document1);
