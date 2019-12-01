@@ -2,6 +2,7 @@ const Profile = require('../models/Profile.model');
 const errors = require('../utils/errors');
 const mongooseUtils = require('../utils/mongoose');
 const Template = require('../models/Template.model');
+const TemplateType = require('../models/TemplateType.model');
 const Document = require('../models/Document.model');
 const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
 const DocxTemplater = require('docxtemplater');
@@ -15,8 +16,13 @@ async function get(req, res) {
     return res.status(404).send({ message: errors.profile.NOT_FOUND });
   }
 
-  const documents = await Document.find({ profileId: profile._id }).populate(['templateId']);
+  const documents = await Document.find({ profileId: profile._id }).sort({createdAt: 'desc'});
   return res.send({ documents });
+}
+
+async function getDocument(req, res) {
+  const document = await Document.findById(req.params.documentId);
+  return res.send({document});
 }
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -32,13 +38,15 @@ function formatDay(day) {
 
 /* Generates a Document from a Template using the most recent QuestionnaireResponse for the user. */
 async function generate(req, res) {
-  if (!req.params.templateId) {
+  if (!req.params.templateTypeId) {
     res.status(400);
     return res.send({ message: errors.other.MISSING_PARAMETER });
   }
 
-  const template = await Template.findById(req.params.templateId);
-  var zip = new PizZip(template.buffer);
+  const template = await Template.findOne({templateTypeId: req.params.templateTypeId});
+  const templateType = await TemplateType.findOne({_id: req.params.templateTypeId});
+
+  var zip = new PizZip(template.data);
   var doc = new DocxTemplater();
 
   const questionnaireResponse = await QuestionnaireResponse
@@ -64,10 +72,11 @@ async function generate(req, res) {
   }
 
   const renderedDocument = doc.getZip().generate({type: "nodebuffer"});
-  const documentFileName = template.fileName + '-' + moment().format('YYYY-MM-DD');
+  const fileNameParts = templateType.fileName.split(".");
+  const documentFileName = fileNameParts[0] + '-' + moment().format('YYYY-MM-DD') + '.' + fileNameParts[1];
 
   const document = new Document({
-    title: template.title,
+    title: templateType.title,
     fileName: documentFileName,
     data: renderedDocument,
     profileId: req.session.profileId,
@@ -81,4 +90,5 @@ async function generate(req, res) {
 module.exports = {
   generate,
   get,
+  getDocument,
 };

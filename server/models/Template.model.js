@@ -7,16 +7,11 @@ const { Schema } = mongoose;
  */
 
 const TemplateSchema = new Schema({
-  // title of the document
-  title: { type: String, required: true },
-
-  // Name of the template file
-  fileName: { type: String, required: true },
+  // ref of the questionnaire
+  templateTypeId: { type: Schema.Types.ObjectId, ref: 'TemplateType', required: true },
 
   // template binary data
-  buffer: { type: Buffer, required: true },
-
-  priceInCents: Number,
+  data: { type: Buffer, required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Template', TemplateSchema);

@@ -16,25 +16,24 @@ module.exports = {
       isAdmin: false,
     },
     plan: Plans.NO_PLAN,
-    ownedTemplates: [],
+    ownedTemplateTypes: [],
   },
   document1: {
-    text: 'Hello, my name is Example User',
+    data: Buffer.from('Hello, my name is Example User'),
   },
   document2: {
-    text: 'This is another version of template1',
+    data: Buffer.from('This is another version of template1'),
   },
-  template1: {
+  templateType1: {
     title: 'Introduction',
-    template: 'Hello, my name is {{ name }}',
     fileName: 'intro.docx',
     priceInCents: 1000,
   },
+  template1: {
+    data: Buffer.from("afdskfjsa"),
+  },
   template2: {
-    title: 'Living Will',
-    template: livingWillTemplate,
-    fileName: 'living_will.docx',
-    priceInCents: 2000,
+    data: Buffer.from("sdfasdf"),
   },
   questionnaire1: {
     questions: [

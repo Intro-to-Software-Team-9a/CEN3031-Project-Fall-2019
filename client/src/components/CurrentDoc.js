@@ -5,30 +5,19 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import PrintIcon from '@material-ui/icons/Print';
 import DocumentHistory from './DocumentHistory';
 import axios from 'axios';
+import { getDocuments } from '../actions/document';
+
 
 class CurrentDoc extends React.Component {
-  downloadActiveTemplate(activeTemplate) {
+  generateDocument(activeTemplate) {
     axios.get(`/api/documents/generate/${activeTemplate._id}`).then((res) => {
-      var bufferData = new Uint8Array(res.data.document.data.data);
-
-      // Open a file download prompt
-      var blob = new Blob([bufferData], {type: 'application/zip'} );
-      var link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = "download.docx";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      this.props.getDocuments();
     });
   }
 
   render() {
     var activeTemplate = this.props.activeTemplate;
-    var documents = this.props.documents;
 
-    const activeDocuments = documents.filter(
-      (document) => document.templateId._id === activeTemplate._id,
-    );
     if (!activeTemplate) {
       return (
           <div>
@@ -48,16 +37,16 @@ class CurrentDoc extends React.Component {
             variant="outline-dark"
             className="mr-2"
             style={{ minWidth: '175px' }}
-            onClick={() => this.downloadActiveTemplate(activeTemplate)}
+            onClick={() => this.generateDocument(activeTemplate)}
           >
             <span className="mr-1"><GetAppIcon /></span>
-            Download
+            Generate
             </Button>
           <Button
             variant="outline-dark"
             className="mr-2"
             style={{ minWidth: '175px' }}
-            onClick={() => this.downloadActiveTemplate(activeTemplate)}
+            onClick={() => this.generateDocument(activeTemplate)}
           >
             <span className="mr-2"><PrintIcon /></span>
             Print
@@ -77,4 +66,9 @@ const mapStateToProps = (state) => ({
   activeTemplate: state.documents.activeTemplate,
   documents: state.documents.documents || [],
 });
-export default connect(mapStateToProps)(CurrentDoc);
+
+const mapDispatchToProps = (dispatch) => ({
+  getDocuments: () => dispatch(getDocuments()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentDoc);

@@ -33,16 +33,16 @@ class UploadTemplateModal extends React.Component {
         var buffer = Buffer.from(arrayBuffer);
 
         axios.post("/api/templates/add", {
-          name: name,
+          title: name,
           price: price,
           fileName: file.name,
-          buffer: buffer
+          data: buffer
         }).then(this.props.onTemplateUpload);
       });
     }
     else {
         axios.patch("/api/templates/update", {
-          name: name,
+          title: name,
           price: price
         }).then(this.props.onTemplateUpload);
     }

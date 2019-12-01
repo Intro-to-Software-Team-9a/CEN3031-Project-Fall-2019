@@ -29,15 +29,15 @@ export function doPurchase({ onSuccess }) {
     dispatch({ type: DO_PURCHASE_START });
 
     try {
-      const templateIds = state.purchase.cart.templates.map((template) => template._id);
-      await axios.post('/api/templates/purchase', { templateIds });
+      const templateTypeIds = state.purchase.cart.templates.map((templateType) => templateType._id);
+      await axios.post('/api/templates/purchase', { templateTypeIds });
       dispatch({ type: DO_PURCHASE_SUCCESS });
 
       // refresh profile
       await dispatch(getProfile());
 
       // generate all documents
-      await dispatch(generateDocuments(templateIds));
+      await dispatch(generateDocuments(templateTypeIds));
 
       // call onSuccess if no error occurred
       state = getState();

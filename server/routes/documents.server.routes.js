@@ -8,7 +8,10 @@ const router = express.Router();
 router.route('/')
   .get(authenticate(), documents.get);
 
-router.route('/generate/:templateId')
+router.route('/:documentId')
+  .get(authenticate(), documents.getDocument)
+
+router.route('/generate/:templateTypeId')
   .get(authenticate(), documents.generate);
 
 module.exports = router;
