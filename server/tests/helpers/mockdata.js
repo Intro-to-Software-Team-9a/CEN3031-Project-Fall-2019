@@ -2,14 +2,21 @@ const QuestionTypes = require('../../utils/questionTypes');
 const Plans = require('../../utils/plans');
 const livingWillTemplate = require('./livingWillTemplate');
 
+const Account = require('../../models/Account.model');
+const Profile = require('../../models/Profile.model');
+const Document = require('../../models/Document.model');
+const Template = require('../../models/Template.model');
+const Questionnaire = require('../../models/Questionnaire.model');
+const QuestionnaireResponse = require('../../models/QuestionnaireResponse.model');
+
 // mock data for testing purposes
 
 module.exports = {
-  account1: {
+  account1: new Account({
     email: 'test@gmail.com',
     passwordHash: '$2b$10$tOKa531X/IaHZncPznfUYu3es/D9MeK.JqbFZ3UJ0TS/5OEX6mUXa',
-  },
-  profile1: {
+  }),
+  profile1: new Profile({
     name: 'Example User',
     role: {
       isUser: true,
@@ -17,24 +24,24 @@ module.exports = {
     },
     plan: Plans.NO_PLAN,
     ownedTemplates: [],
-  },
-  document1: {
+  }),
+  document1: new Document({
     text: 'Hello, my name is Example User',
-  },
-  document2: {
+  }),
+  document2: new Document({
     text: 'This is another version of template1',
-  },
-  template1: {
+  }),
+  template1: new Template({
     title: 'Introduction',
     template: 'Hello, my name is {{ name }}',
     priceInCents: 1000,
-  },
-  template2: {
+  }),
+  template2: new Template({
     title: 'Living Will',
     template: livingWillTemplate,
     priceInCents: 2000,
-  },
-  questionnaire1: {
+  }),
+  questionnaire1: new Questionnaire({
     sections: [
       {
         title: 'General Information',
@@ -113,8 +120,8 @@ module.exports = {
         ],
       },
     ],
-  },
-  questionnaireResponse1: {
+  }),
+  questionnaireResponse1: new QuestionnaireResponse({
     serializedResult: JSON.stringify({
       name: 'Brian',
       quest: 'I seek the grail.',
@@ -122,5 +129,5 @@ module.exports = {
       dogs: false,
     }),
     profileId: 'id-1',
-  },
+  }),
 };

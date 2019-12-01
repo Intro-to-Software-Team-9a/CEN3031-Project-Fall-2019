@@ -43,10 +43,14 @@ describe('Documents Controller', () => {
 
     beforeEach(() => {
       // stub models to stop database access
-      Template.findById = stubExec(async () => ({ ...mockData.template1, _id: templateId }));
+      Template.findById = stubExec(sinon.stub().resolves(
+        new Template({ ...mockData.template1.toObject(), _id: templateId })
+      ));
       Document.prototype.save = sinon.stub().resolves();
       QuestionnaireResponse.findOne = () => ({
-        sort: stubExec(async () => ({ ...mockData.questionnaireResponse1 })),
+        sort: stubExec(sinon.stub().resolves(
+          new QuestionnaireResponse(mockData.questionnaireResponse1)
+        )),
       });
 
       // reset globals

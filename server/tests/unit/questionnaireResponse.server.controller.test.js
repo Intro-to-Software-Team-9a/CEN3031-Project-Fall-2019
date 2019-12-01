@@ -44,7 +44,9 @@ describe('Questionnaire Responses Controller', () => {
     });
 
     beforeEach(() => {
-      Questionnaire.findById = stubExec(sinon.stub().resolves(mockData.questionnaire1));
+      Questionnaire.findById = stubExec(sinon.stub().resolves(
+        new Questionnaire(mockData.questionnaire1)
+      ));
       QuestionnaireResponse.prototype.save = sinon.stub().resolves();
       validation.isVaildResponse = sinon.stub().returns(({ isOk: true, missingResponseLabels: [] }));
 
@@ -93,19 +95,34 @@ describe('Questionnaire Responses Controller', () => {
 
 
     beforeEach(() => {
-      QuestionnaireResponse.findById = stubExec(sinon.stub().resolves(mockData.questionnaireResponse1));
+      QuestionnaireResponse.findById = stubExec(sinon.stub().resolves(
+        new QuestionnaireResponse(mockData.questionnaireResponse1)
+      ));
 
       // reset globals
       req = mockRequest();
       res = mockResponse();
 
       req.params.questionnaireResponseId = '1';
-      req.session.profileId = 'id-1';
+      req.session.profileId = mockData.questionnaireResponse1.profileId;
     });
 
     it('should return 200 if mongoose resolves', async () => {
       await questionnaireResponses.getById(req, res);
       assert.ok(!res.status.called);
+    });
+
+    it('should parse serializedResult', async () => {
+      await questionnaireResponses.getById(req, res);
+
+      const returnCall = res.send.getCalls()[0];
+      const { questionnaireResponse } = returnCall.args[0];
+
+      // should not exist
+      assert.ok(!questionnaireResponse.serializedResult);
+
+      // should exist
+      assert.ok(questionnaireResponse.questionnaireResponse);
     });
 
     it('should return 400 if id not provided in params', async () => {

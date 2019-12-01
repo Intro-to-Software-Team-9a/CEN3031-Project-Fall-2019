@@ -36,11 +36,11 @@ describe('Accounts Controller', () => {
       // stub .findOne() to stop database access
       // should return an account with an _id
       Account.findOne = stubExec(
-        async () => ({ ...mockData.account1, _id: '1' }),
+        sinon.stub().resolves(new Account({ ...mockData.account1.toObject(), _id: '1' })),
       );
 
       Profile.findOne = stubExec(
-        async () => ({ ...mockData.profile1, _id: '1' }),
+        sinon.stub().resolves(new Account({ ...mockData.profile1.toObject(), _id: '1' })),
       );
 
       // reset globals
