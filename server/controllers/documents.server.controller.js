@@ -1,13 +1,12 @@
+const DocxTemplater = require('docxtemplater');
+const PizZip = require('pizzip');
+const moment = require('moment');
 const Profile = require('../models/Profile.model');
 const errors = require('../utils/errors');
-const mongooseUtils = require('../utils/mongoose');
 const Template = require('../models/Template.model');
 const TemplateType = require('../models/TemplateType.model');
 const Document = require('../models/Document.model');
 const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
-const DocxTemplater = require('docxtemplater');
-const PizZip = require('pizzip');
-const moment = require('moment');
 
 async function get(req, res) {
   const profile = await Profile.findOne({ accountId: req.session.accountId }).exec();
@@ -16,13 +15,13 @@ async function get(req, res) {
     return res.status(404).send({ message: errors.profile.NOT_FOUND });
   }
 
-  const documents = await Document.find({ profileId: profile._id }).sort({createdAt: 'desc'});
+  const documents = await Document.find({ profileId: profile._id }).sort({ createdAt: 'desc' });
   return res.send({ documents });
 }
 
 async function getDocument(req, res) {
   const document = await Document.findById(req.params.documentId);
-  return res.send({document});
+  return res.send({ document });
 }
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -43,11 +42,11 @@ async function generate(req, res) {
     return res.send({ message: errors.other.MISSING_PARAMETER });
   }
 
-  const template = await Template.findOne({templateTypeId: req.params.templateTypeId});
-  const templateType = await TemplateType.findOne({_id: req.params.templateTypeId});
+  const template = await Template.findOne({ templateTypeId: req.params.templateTypeId });
+  const templateType = await TemplateType.findOne({ _id: req.params.templateTypeId });
 
-  var zip = new PizZip(template.data);
-  var doc = new DocxTemplater();
+  const zip = new PizZip(template.data);
+  const doc = new DocxTemplater();
 
   const questionnaireResponse = await QuestionnaireResponse
     .findOne({ profileId: req.session.profileId })
@@ -64,16 +63,11 @@ async function generate(req, res) {
 
   doc.loadZip(zip);
   doc.setData(data);
+  doc.render();
 
-  try {
-    doc.render();
-  } catch (error) {
-    throw error;
-  }
-
-  const renderedDocument = doc.getZip().generate({type: "nodebuffer"});
-  const fileNameParts = templateType.fileName.split(".");
-  const documentFileName = fileNameParts[0] + '-' + moment().format('YYYY-MM-DD') + '.' + fileNameParts[1];
+  const renderedDocument = doc.getZip().generate({ type: 'nodebuffer' });
+  const fileNameParts = templateType.fileName.split('.');
+  const documentFileName = `${fileNameParts[0]}-${moment().format('YYYY-MM-DD')}.${fileNameParts[1]}`;
 
   const document = new Document({
     title: templateType.title,

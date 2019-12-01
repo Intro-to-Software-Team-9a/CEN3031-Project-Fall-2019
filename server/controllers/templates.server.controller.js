@@ -22,15 +22,15 @@ async function add(req, res) {
     return res.send({ message: errors.other.MISSING_PARAMETER });
   }
 
-  var templateType = new TemplateType();
+  const templateType = new TemplateType();
 
   templateType.title = req.body.title;
   templateType.fileName = req.body.fileName;
   templateType.priceInCents = req.body.price;
 
   await templateType.save();
-  
-  var template = new Template();
+
+  const template = new Template();
   template.data = req.body.data;
   template.templateTypeId = templateType;
   await template.save();
@@ -84,7 +84,11 @@ async function purchase(req, res) {
 
   // todo: check if templateids is an array
   const purchasedTemplates = await TemplateType.find({
-    _id: { $in: req.body.templateTypeIds.map((templateTypeId) => mongoose.Types.ObjectId(templateTypeId)) },
+    _id: {
+      $in: req.body.templateTypeIds.map(
+        (templateTypeId) => mongoose.Types.ObjectId(templateTypeId),
+      ),
+    },
   }).exec();
 
   const profile = await Profile.findOne({ accountId: req.session.accountId }).exec();

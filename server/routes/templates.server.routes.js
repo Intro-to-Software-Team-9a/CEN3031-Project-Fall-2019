@@ -1,7 +1,7 @@
 const express = require('express');
 
 const templates = require('../controllers/templates.server.controller.js');
-const { authenticate, authenticateAdmin } = require('../middleware/authenticate');
+const { authenticateAdmin } = require('../middleware/authenticate');
 
 const router = express.Router();
 
