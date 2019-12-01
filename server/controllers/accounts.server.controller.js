@@ -190,7 +190,7 @@ async function changePassword(req, res) {
  * @param email {String}
  * @param password {String}
  */
-async function changePassword(req, res) {
+async function changeEmail(req, res) {
   if (!req.body || !req.body.email || !req.body.password) {
     res.status(400);
     return res.send({ message: errors.accounts.MISSING_CREDENTIALS });

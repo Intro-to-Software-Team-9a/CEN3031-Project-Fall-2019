@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 
-import ChangePasswordForm from '../components/ChangeEmailForm.jsx';
+import ChangeEmailForm from '../components/ChangeEmailForm.jsx';
 import { Routes } from '../utils/constants';
 
 export default function ChangeEmail({ history }) {
