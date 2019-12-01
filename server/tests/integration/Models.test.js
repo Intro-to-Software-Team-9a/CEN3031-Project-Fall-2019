@@ -57,20 +57,23 @@ describe('Model Integration Tests', () => {
       const account1 = new Account(mockdata.account1);
       const document1 = new Document(mockdata.document1);
       const profile1 = new Profile(mockdata.profile1);
+      const templateType1 = new templateType1(mockdata.templateType1);
       const template1 = new Template(mockdata.template1);
 
       await assert.rejects(profile1.save(), 'should throw exception due to missing account');
 
       // add foreign keys
+      template1.templateTypeId = templateType1;
       profile1.accountId = account1;
       document1.profileId = profile1;
       document1.templateId = template1;
 
       // save should work
+      await templateType1.save();
       await profile1.save();
       await account1.save();
-      await document1.save();
       await template1.save();
+      await document1.save();
 
       // populate should work
       await Account.findById(account1._id).exec();

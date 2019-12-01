@@ -38,7 +38,7 @@ module.exports = {
     priceInCents: 1000,
   }),
   template1: new Template({
-    data: Buffer.from("afdskfjsa"),
+    data: Buffer.from("YWZkc2tmanNh"),
   }),
   template2: new Template({
     data: Buffer.from("sdfasdf"),

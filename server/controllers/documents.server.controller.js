@@ -1,12 +1,10 @@
-const DocxTemplater = require('docxtemplater');
-const PizZip = require('pizzip');
-const moment = require('moment');
 const Profile = require('../models/Profile.model');
 const errors = require('../utils/errors');
 const Template = require('../models/Template.model');
 const TemplateType = require('../models/TemplateType.model');
 const Document = require('../models/Document.model');
 const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
+const Templating = require('../utils/templating');
 
 async function get(req, res) {
   const profile = await Profile.findOne({ accountId: req.session.accountId }).exec();
@@ -42,43 +40,41 @@ async function generate(req, res) {
     return res.send({ message: errors.other.MISSING_PARAMETER });
   }
 
-  const template = await Template.findOne({ templateTypeId: req.params.templateTypeId });
-  const templateType = await TemplateType.findOne({ _id: req.params.templateTypeId });
+  try {
+    const template = await Template.findOne({ templateTypeId: req.params.templateTypeId });
+    const templateType = await TemplateType.findOne({ _id: req.params.templateTypeId });
 
-  const zip = new PizZip(template.data);
-  const doc = new DocxTemplater();
+    if (!template || !templateType) {
+      res.status(404);
+      return res.send({ message: errors.other.NOT_FOUND });
+    }
 
-  const questionnaireResponse = await QuestionnaireResponse
-    .findOne({ profileId: req.session.profileId })
-    .sort({ createdAt: -1 })
-    .exec();
+    const questionnaireResponse = await QuestionnaireResponse
+      .findOne({ profileId: req.session.profileId })
+      .sort({ createdAt: -1 })
+      .exec();
 
-  const data = JSON.parse(questionnaireResponse.serializedResult);
+    if (!questionnaireResponse) {
+      res.status(500);
+      return res.send({ message: errors.other.UNKNOWN });
+    }
 
-  Object.assign(data, {
-    currentDay: formatDay(new Date().getDate()),
-    currentMonth: monthNames[new Date().getMonth()],
-    currentYear: new Date().getFullYear(),
-  });
+    const data = JSON.parse(questionnaireResponse.serializedResult);
 
-  doc.loadZip(zip);
-  doc.setData(data);
-  doc.render();
+    Object.assign(data, {
+      currentDay: formatDay(new Date().getDate()),
+      currentMonth: monthNames[new Date().getMonth()],
+      currentYear: new Date().getFullYear(),
+    }); 
 
-  const renderedDocument = doc.getZip().generate({ type: 'nodebuffer' });
-  const fileNameParts = templateType.fileName.split('.');
-  const documentFileName = `${fileNameParts[0]}-${moment().format('YYYY-MM-DD')}.${fileNameParts[1]}`;
+    const document = await Templating.generateDocumentFromData(template, templateType, data);
+    await document.save();
 
-  const document = new Document({
-    title: templateType.title,
-    fileName: documentFileName,
-    data: renderedDocument,
-    profileId: req.session.profileId,
-    templateId: template,
-  });
-
-  await document.save();
-  return res.send({ document });
+    return res.send({ document });
+  } catch (e) {
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
+  }
 }
 
 module.exports = {

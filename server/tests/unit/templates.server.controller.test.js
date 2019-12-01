@@ -4,6 +4,7 @@ const sinon = require('sinon');
 const assert = require('assert');
 
 const Template = require('../../models/Template.model');
+const TemplateType = require('../../models/TemplateType.model');
 const mockData = require('../helpers/mockdata');
 
 const templates = require('../../controllers/templates.server.controller');
@@ -47,10 +48,10 @@ describe('Templates Controller', () => {
     let res;
 
     beforeEach(() => {
-      Template.find = stubExec(
+      TemplateType.find = stubExec(
         async () => ({
           templates: [
-            mockData.template1,
+            mockData.templateType1,
           ],
         }),
       );
@@ -66,7 +67,7 @@ describe('Templates Controller', () => {
     });
 
     it('should return 500 if mongoose rejects', async () => {
-      Template.find = stubExec(sinon.stub().rejects());
+      TemplateType.find = stubExec(sinon.stub().rejects());
 
       await templates.get(req, res);
       assert.ok(res.status.calledWith(500));
