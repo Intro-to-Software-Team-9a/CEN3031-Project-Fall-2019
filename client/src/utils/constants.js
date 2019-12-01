@@ -8,5 +8,6 @@ export const Routes = {
   NEW_RESPONSE: '/edit-response',
   VIEW_RESPONSES: '/view-responses',
   CHANGE_PASSWORD: '/change-password',
+  CHANGE_EMAIL: '/change-email',
   VIEW_RESPONSE: (id) => `/view-response/${id}`,
 };

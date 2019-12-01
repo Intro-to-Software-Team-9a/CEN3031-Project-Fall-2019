@@ -45,7 +45,12 @@ function ProfileHome({ profile }) {
           />
           <IconLink
             link="/change-password"
-            title="CHANGE PASSWORD"
+            title="CHANGE PASSWORD TEST BUTTON"
+            icon={<Edit style={{ fontSize: 40 }} />}
+          />
+          <IconLink
+            link="/change-email"
+            title="CHANGE EMAIL TEST BUTTON"
             icon={<Edit style={{ fontSize: 40 }} />}
           />
         </Col>

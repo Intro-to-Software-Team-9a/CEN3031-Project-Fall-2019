@@ -16,5 +16,8 @@ router.route('/create')
 router.route('/password')
   .post(accounts.changePassword);
 
+router.route('/email')
+  .post(accounts.changeEmail);
+
 
 module.exports = router;

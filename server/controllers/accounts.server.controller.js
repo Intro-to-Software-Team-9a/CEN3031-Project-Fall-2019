@@ -153,9 +153,9 @@ async function logout(req, res) {
 async function changePassword(req, res) {
   if (!req.body || !req.body.currentpassword || !req.body.password) {
     res.status(400);
-    return res.send({ message: errors.accounts.MISSING_CREDENTIALS });
+    return res.send({ message: errors.accounts.MISSING_PASSWORDS });
   }
-  console.log("here")
+  
   try {
     const { currentpassword, password } = req.body;
     const account = await Account.findById(req.session.accountId).exec();
@@ -186,9 +186,49 @@ async function changePassword(req, res) {
   }
 }
 
+/**
+ * @param email {String}
+ * @param password {String}
+ */
+async function changePassword(req, res) {
+  if (!req.body || !req.body.email || !req.body.password) {
+    res.status(400);
+    return res.send({ message: errors.accounts.MISSING_CREDENTIALS });
+  }
+
+  if (!validator.isEmail(req.body.email)) {
+    res.status(400);
+    return res.send({ message: errors.accounts.INVALID_EMAIL });
+  }
+
+  try {
+    const { email, password } = req.body;
+    const account = await Account.findById(req.session.accountId).exec();
+    if (!account) {
+      res.status(404);
+      return res.send({ message: errors.accounts.NOT_LOGGED_IN });
+    }
+    
+    const doesMatch = await bcrypt.compare(password, account.passwordHash);
+    if (!doesMatch) {
+      res.status(401);
+      return res.send({ message: errors.accounts.WRONG_PASSWORD });
+    }
+
+    account.email = email;
+    await account.save();
+    return res.send();
+  }
+  catch (e) {
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
+  }
+}
+
 module.exports = {
   login,
   logout,
   createAccount,
   changePassword,
+  changeEmail,
 };
