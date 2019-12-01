@@ -19,7 +19,7 @@ async function generateDocumentFromData(template, templateType, questionnaireDat
     title: templateType.title,
     fileName: documentFileName,
     data: renderedDocument,
-    profileId: profileId,
+    profileId,
     templateId: template,
   });
   return document;
@@ -27,4 +27,4 @@ async function generateDocumentFromData(template, templateType, questionnaireDat
 
 module.exports = {
   generateDocumentFromData,
-}
+};

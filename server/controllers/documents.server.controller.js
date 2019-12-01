@@ -65,7 +65,7 @@ async function generate(req, res) {
       currentDay: formatDay(new Date().getDate()),
       currentMonth: monthNames[new Date().getMonth()],
       currentYear: new Date().getFullYear(),
-    }); 
+    });
 
     const document = await Templating.generateDocumentFromData(template, templateType, data);
     await document.save();
