@@ -185,6 +185,7 @@ async function changePassword(req, res) {
     return res.send();
   }
   catch (e) {
+    console.error(e);
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }
@@ -207,6 +208,7 @@ async function changeEmail(req, res) {
 
   try {
     const { email, password } = req.body;
+
     const account = await Account.findById(req.session.accountId).exec();
     if (!account) {
       res.status(404);
@@ -224,6 +226,7 @@ async function changeEmail(req, res) {
     return res.send();
   }
   catch (e) {
+    console.error(e);
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }
