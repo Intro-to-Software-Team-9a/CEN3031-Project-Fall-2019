@@ -20,8 +20,8 @@ const ProfileSchema = new Schema({
     isAdmin: Boolean,
   },
 
-  // all templates owned by the user
-  ownedTemplates: [{ type: Schema.Types.ObjectId, ref: 'Template' }],
+  // all templates types owned by the user
+  ownedTemplateTypes: [{ type: Schema.Types.ObjectId, ref: 'TemplateType' }],
 
   plan: String,
 }, { timestamps: true });

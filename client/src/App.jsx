@@ -12,6 +12,10 @@ import Login from './views/Login';
 import NotFound from './views/NotFound';
 import ViewDocuments from './views/ViewDocuments';
 import ProfileHome from './views/ProfileHome';
+import UploadTemplate from './views/UploadTemplate';
+import AdminHome from './views/admin/AdminHome';
+import ManageTemplates from './views/admin/ManageTemplates';
+
 import NavBar from './components/NavBar';
 import EditQuestionnaire from './views/EditQuestionnaire';
 import UserResponses from './views/UserResponses';
@@ -50,6 +54,9 @@ class App extends React.Component {
           <Route exact path={Routes.VIEW_RESPONSES} component={UserResponses} />
           <Route exact path={Routes.VIEW_RESPONSE(':responseId')} component={ViewResponse} />
           <Route exact path={Routes.USER_SETTINGS} component={UserSettings} />
+          <Route exact path="/upload-template" component={UploadTemplate} />
+          <Route exact path="/admin" component={AdminHome} />
+          <Route exact path="/admin/templates" component={ManageTemplates} />
           <Route exact path="/">
             <Redirect to={Routes.HOME} />
           </Route>

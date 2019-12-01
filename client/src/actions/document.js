@@ -40,14 +40,13 @@ export function getDocuments() {
   };
 }
 
-/** Generates documents for a list of template ids */
-export function generateDocuments(templateIds) {
+export function generateDocuments(templateTypeIds) {
   return async (dispatch) => {
     dispatch({ type: GENERATE_DOCUMENT_START });
 
     try {
       // generate all the documents
-      await Promise.all(templateIds.map((templateId) => axios.get(`/api/documents/generate/${templateId}`)));
+      await Promise.all(templateTypeIds.map((templateTypeId) => axios.get(`/api/documents/generate/${templateTypeId}`)));
 
       dispatch({ type: GENERATE_DOCUMENT_SUCCESS });
     } catch (error) {

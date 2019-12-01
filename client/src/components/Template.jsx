@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import { formatCurrency } from '../utils/format';
+import './Template.css';
 import docIcon from '../assets/docIcon.svg';
 
 /** Displays a Template for purchase and other purposes. */
