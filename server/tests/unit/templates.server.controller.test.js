@@ -5,12 +5,37 @@ const assert = require('assert');
 
 const Template = require('../../models/Template.model');
 const mockData = require('../helpers/mockdata');
+const Profile = require('../../models/Profile.model');
 
 const templates = require('../../controllers/templates.server.controller');
+const livingWillTemplate = require('../helpers/livingWillTemplate');
+
+
+const testOrder = {
+  orderId: '1',
+  total: 1000,
+};
+
+const wrongTestOrder = {
+  orderId: '1',
+  total: 4000,
+};
+
+const templateIDS = {
+  ids: ['5dd7808ba5cc0f35f0098b6e', '5dd7808ba5cc0f35f0098b6f'],
+};
+const fullTemplates = {
+  template1: {
+    title: 'Introduction',
+    template: 'Hello, my name is {{ name }}',
+    priceInCents: 1000,
+  },
+};
 
 function mockRequest() {
   return {
     session: {},
+    body: {},
   };
 }
 
@@ -69,6 +94,51 @@ describe('Templates Controller', () => {
       Template.find = stubExec(sinon.stub().rejects());
 
       await templates.get(req, res);
+      assert.ok(res.status.calledWith(500));
+    });
+  });
+
+  describe('Paypal API', () => {
+    let req;
+    let res;
+    beforeEach(() => {
+      // stub out paypal api
+      Profile.findById = sinon.stub().resolves(mockData.profile1);
+      Template.find = stubExec(
+        async () => ([mockData.template1]),
+      );
+      // setup request
+      // setup response
+      req = mockRequest();
+      res = mockResponse();
+      req.session.profileId = '1';
+      req.body.orderId = testOrder.orderId;
+      req.body.templateIds = templateIDS.ids;
+    });
+
+    it('should return 200 and success if order id resolves', async () => {
+      templates.getPaypalOrderById = sinon.stub().resolves(testOrder);
+      await templates.purchase(req, res);
+      assert.ok(!res.status.called);
+    });
+
+    it('should return 400 if order amount does not match order amount from api', async () => {
+      // some type of attack
+      templates.getPaypalOrderById = sinon.stub().resolves(wrongTestOrder);
+      await templates.purchase(req, res);
+      assert.ok(res.status.calledWith(400));
+    });
+
+    it('should return 404 and fail if order id does not resolve', async () => {
+      // wrong order id paypal api can not find it
+      templates.getPaypalOrderById = sinon.stub().resolves(null);
+      await templates.purchase(req, res);
+      assert.ok(res.status.calledWith(404));
+    });
+
+    it('should return 500 if paypal api throws an exception', async () => {
+      templates.getPaypalOrderById = sinon.stub().rejects(new Error('Paypal error'));
+      await templates.purchase(req, res);
       assert.ok(res.status.calledWith(500));
     });
   });

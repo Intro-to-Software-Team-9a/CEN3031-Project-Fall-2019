@@ -1,11 +1,23 @@
 const mongoose = require('mongoose');
+const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
 const Template = require('../models/Template.model');
 const Profile = require('../models/Profile.model');
 const errors = require('../utils/errors');
 
 const paypalClient = require('./paypalClient');
-const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
 /** Returns a list of all templates */
+
+async function getPaypalOrderById(orderId) {
+  const request = new checkoutNodeJssdk.orders.OrdersGetRequest(orderId);
+  let order;
+  try {
+    order = await paypalClient.client().execute(request);
+  } catch (err) {
+    return null;
+  }
+  return order;
+}
+
 async function get(req, res) {
   try {
     const templates = await Template.find().exec();
@@ -28,23 +40,20 @@ async function purchase(req, res) {
   purchasedTemplates.map((x) => {total += x.priceInCents/100})
 
   //PAYPAL
-  const request = new checkoutNodeJssdk.orders.OrdersGetRequest(req.body.orderID);
-  let order;
-  try {
-    order = await paypalClient.client().execute(request);
-  } catch (err) {
-    // 4. Handle any errors from the call
-    console.error(err);
-    return res.send(500);
+  const order = await getPaypalOrderById(req.body.orderID);
+  console.log(order)
+  if (order === null) {
+    console.log("404 ERROR")
+    return res.send(404);
   }
+
   // 5. Validate the transaction details are as expected
   if (parseFloat(order.result.purchase_units[0].amount.value) !== total) {
-    console.log('FAILURE');
+    console.log('400 ERROR');
     return res.send(400);
   }
   // 7. Return a successful response to the client
   console.log('PAYPAL SUCCESS');
-  //return res.send(200);
 
   if (!req.body || !req.body.templateIds) {
     res.status(400);
