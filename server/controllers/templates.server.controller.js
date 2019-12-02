@@ -42,35 +42,36 @@ async function add(req, res) {
 
 /** Updates a pre-existing template */
 async function update(req, res) {
-  if (!req.body.name) {
+  if (!req.body.templateTypeId || (!req.body.title && !req.body.data && !req.body.price)) {
     res.status(400);
     return res.send({ message: errors.other.MISSING_PARAMETER });
   }
 
-  const templateTitle = req.body.name;
+  const templateType = await TemplateType.findById(req.body.templateTypeId).exec();
 
-  let template = await Template.findOne({
-    title: templateTitle,
-  }).exec();
-
-  let msg = 'TEMPLATE_UPDATE';
-
-  if (!template) {
-    template = new Template();
-    template.title = req.body.name;
-    msg = 'TEMPLATE_CREATE';
+  if (!templateType) {
+    res.status(400);
+    return res.send({ message: errors.other.NOT_FOUND });
   }
 
-  if (req.body.buffer) {
-    template.fileName = req.body.fileName;
-    template.buffer = req.body.buffer;
+  const msg = 'TEMPLATE_UPDATE';
+
+  if (req.body.data != null) {
+    const template = new Template();
+    template.data = req.body.data;
+    template.templateTypeId = templateType;
+    await template.save();
   }
 
   if (req.body.price) {
-    template.priceInCents = req.body.price;
+    templateType.priceInCents = req.body.price;
   }
 
-  await template.save();
+  if (req.body.title) {
+    templateType.title = req.body.title;
+  }
+
+  await templateType.save();
 
   res.status(200);
   return res.send({ message: msg });
