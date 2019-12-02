@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import './UploadTemplate.css';
 import { Input } from '@material-ui/core';
-import { EXITED } from 'react-transition-group/Transition';
 
 class UploadTemplateModal extends React.Component {
   constructor(props) {
