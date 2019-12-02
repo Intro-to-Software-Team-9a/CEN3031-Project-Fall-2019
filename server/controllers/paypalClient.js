@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable linebreak-style */
+
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
 
 function environment() {
@@ -16,6 +17,7 @@ function client() {
   return new checkoutNodeJssdk.core.PayPalHttpClient(environment());
 }
 
+//Taken from https://developer.paypal.com/docs/checkout/integrate/#6-verify-the-transaction
 async function prettyPrint(jsonData, pre = '') {
   let pretty = '';
   function capitalize(string) {
