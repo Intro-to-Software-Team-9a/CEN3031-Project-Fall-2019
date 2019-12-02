@@ -100,15 +100,15 @@ describe('Templates Controller', () => {
       Profile.findById = stubExec(sinon.stub().resolves(mockData.profile1));
       Profile.findOne = stubExec(sinon.stub().resolves(mockData.profile1));
       paypalLib.getPaypalOrderById = sinon.stub().resolves(testOrder);
-      Template.find = stubExec(
-        async () => ([mockData.template1]),
+      TemplateType.find = stubExec(
+        async () => ([mockData.templateType1]),
       );
       // setup request
       // setup response
       req = mockRequest();
       res = mockResponse();
       req.body.accountId = '1';
-      req.body.templateIds = templateIDS.ids;
+      req.body.templateTypeIds = templateIDS.ids;
     });
 
     it('should return 200 and success if order id resolves', async () => {
