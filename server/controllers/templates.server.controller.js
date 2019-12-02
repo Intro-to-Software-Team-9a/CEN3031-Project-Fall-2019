@@ -97,7 +97,6 @@ async function purchase(req, res) {
     purchasedTemplates.forEach((x) => { total += x.priceInCents / 100; });
 
     // PAYPAL
-    console.log(req.body.orderId)
     const order = await paypalLib.getPaypalOrderById(req.body.orderID);
     if (order === null) {
       res.status(404);
@@ -110,7 +109,6 @@ async function purchase(req, res) {
       return res.send(400);
     }
     // 7. Return a successful response to the client
-    console.log("PAYPAL");
     res.status(200);
 
     const profile = await Profile.findOne({ accountId: req.session.accountId }).exec();
