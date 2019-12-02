@@ -22,15 +22,19 @@ export function removeTemplate(template) {
   };
 }
 
-export function doPurchase({ onSuccess }) {
+export function doPurchase(order) {
   return async (dispatch, getState) => {
     let state = getState();
+  
+    const orderID = order.orderID;
+    //order = { orderID: order.orderID, payerID: order.payerID, total: total};
+    //await axios.post(`/api/paypal/paypalVerification/`, order)
 
     dispatch({ type: DO_PURCHASE_START });
 
     try {
       const templateTypeIds = state.purchase.cart.templates.map((templateType) => templateType._id);
-      await axios.post('/api/templates/purchase', { templateTypeIds });
+      await axios.post('/api/templates/purchase', { templateTypeIds, orderID });
       dispatch({ type: DO_PURCHASE_SUCCESS });
 
       // refresh profile
@@ -44,7 +48,6 @@ export function doPurchase({ onSuccess }) {
       if (state.purchase.purchaseState.isError || state.profiles.profileState.isError) {
         return;
       }
-      await onSuccess();
     } catch (error) {
       // parse HTTP message
       let { message } = error;

@@ -44,14 +44,14 @@ describe('Documents Controller', () => {
 
     beforeEach(() => {
       // stub models to stop database access
-      Template.findOne = sinon.stub().resolves({ ...mockData.template1.toObject(), templateTypeId: templateTypeId });
+      Template.findOne = sinon.stub().resolves({ ...mockData.template1.toObject(), templateTypeId });
       TemplateType.findOne = sinon.stub().resolves({ ...mockData.templateType1.toObject(), _id: templateTypeId });
       Templating.generateDocumentFromData = sinon.stub().resolves(new Document(mockData.document1));
 
       Document.prototype.save = sinon.stub().resolves();
       QuestionnaireResponse.findOne = () => ({
         sort: stubExec(sinon.stub().resolves(
-          new QuestionnaireResponse(mockData.questionnaireResponse1)
+          new QuestionnaireResponse(mockData.questionnaireResponse1),
         )),
       });
 
@@ -89,7 +89,7 @@ describe('Documents Controller', () => {
     it('should return 500 if there is no questionnaireResponse for the user', async () => {
       // throw error
       QuestionnaireResponse.findOne = sinon.stub().returns({
-        sort: stubExec(sinon.stub().resolves(null))
+        sort: stubExec(sinon.stub().resolves(null)),
       });
 
       await documents.generate(req, res);

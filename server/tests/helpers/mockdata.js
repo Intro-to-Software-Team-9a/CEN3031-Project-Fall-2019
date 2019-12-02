@@ -51,10 +51,10 @@ module.exports = {
     priceInCents: 1000,
   }),
   template1: new Template({
-    data: Buffer.from("YWZkc2tmanNh"),
+    data: Buffer.from('YWZkc2tmanNh'),
   }),
   template2: new Template({
-    data: Buffer.from("sdfasdf"),
+    data: Buffer.from('sdfasdf'),
   }),
   questionnaire1: new Questionnaire({
     sections: [

@@ -1,0 +1,17 @@
+Steps to paypal integration:
+1. Create developer account in order to get the client ID and make test business and user accounts. Will also be
+provided the secret key here. Has tools for checking integration including API calls for testing and production
+servers. The client ID will be included in the environment and called in the index.html and PaypalButton component.
+2. Added the paypal smart button to the website using a library for react integration.
+Documentation: https://www.npmjs.com/package/react-paypal-button-v2. Contains all the same functionality as regular
+paypal integration. Paypal Button Styles: https://developer.paypal.com/docs/archive/checkout/how-to/customize-button/
+3. Transaction is setup with the total price of the objects selected and user is sent to paypal website to sign up,
+then while still in paypal popup user is prompted to execute the payment with the "Buy Now" button. We then get a payment
+success or failure response on our side containing an order ID and payer ID.
+4. Verification is done with the response the server gave us. The order ID from the response is passed to the backend
+where it is used to get a report of the transaction including the price. This price is then compared to the total price
+of the documents purchased which are passed in as ID's and loaded from the database in order to not permit any tampering
+from the client side.
+5. Change the testing credentials to actual credentials provided in the business acount and test a transaction in order
+to verify everything is in order.
+

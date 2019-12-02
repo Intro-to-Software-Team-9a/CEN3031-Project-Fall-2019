@@ -27,7 +27,6 @@ function mockResponse() {
 
 
 describe('Questionnaire Responses Controller', () => {
-
   describe('create', () => {
     // "globals" for login tests
     let req;
@@ -45,7 +44,7 @@ describe('Questionnaire Responses Controller', () => {
 
     beforeEach(() => {
       Questionnaire.findById = stubExec(sinon.stub().resolves(
-        new Questionnaire(mockData.questionnaire1)
+        new Questionnaire(mockData.questionnaire1),
       ));
       QuestionnaireResponse.prototype.save = sinon.stub().resolves();
       validation.isVaildResponse = sinon.stub().returns(({ isOk: true, missingResponseLabels: [] }));
@@ -96,7 +95,7 @@ describe('Questionnaire Responses Controller', () => {
 
     beforeEach(() => {
       QuestionnaireResponse.findById = stubExec(sinon.stub().resolves(
-        new QuestionnaireResponse(mockData.questionnaireResponse1)
+        new QuestionnaireResponse(mockData.questionnaireResponse1),
       ));
 
       // reset globals

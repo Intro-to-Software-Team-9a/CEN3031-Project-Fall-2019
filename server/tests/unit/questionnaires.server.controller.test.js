@@ -25,7 +25,6 @@ function mockResponse() {
 
 
 describe('Questionnaires Controller', () => {
-
   describe('create', () => {
     // "globals" for login tests
     let req;
