@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Container, Row, Col, Button,
+  Container, Row, Col,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import TemplateList from '../components/TemplateList';
@@ -8,7 +8,7 @@ import { doPurchase } from '../actions/purchase';
 import { formatCurrency } from '../utils/format';
 import PaypalButton1 from '../components/PaypalButton';
 
-function ReviewPurchase({ templates, doPurchase, onBack, onFinish }) {
+function ReviewPurchase({ templates, onBack, onFinish }) {
   const totalPurchase = templates.reduce((accum, template) => accum + template.priceInCents, 0);
   return (
     <Container fluid className="pt-4">
@@ -63,7 +63,7 @@ const mapStateToProps = (state) => ({
 });
 
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
   doPurchase: async (paymentId) => {
     await dispatch(doPurchase(paymentId))
   },

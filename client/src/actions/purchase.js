@@ -22,7 +22,7 @@ export function removeTemplate(template) {
   };
 }
 
-export function doPurchase(order, total) {
+export function doPurchase(order) {
   return async (dispatch, getState) => {
     let state = getState();
   
