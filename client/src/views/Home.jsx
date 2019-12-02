@@ -3,8 +3,9 @@ import { Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
-function Home() {
+import { Routes } from '../utils/constants';
 
+function Home() {
   return (
     <Container className="pt-4">
       <div className="spacing"></div>
@@ -18,8 +19,8 @@ function Home() {
         <li>Print and store your documents</li>
       </ul>
       <br />
-      <Link to="/get-started"><Button variant="outline-dark">Get Started</Button></Link>
-      <Link to="/catalog"><Button variant="outline-dark">See All Documents</Button></Link>
+      <Link to={Routes.ONBOARDING}><Button variant="outline-dark">Get Started</Button></Link>
+      {/* <Link to="/catalog"><Button variant="outline-dark">See All Documents</Button></Link> */}
     </Container>
   );
 }

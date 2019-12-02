@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Container, Row, Col,
+  Container, Row, Col, Button,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import TemplateList from '../components/TemplateList';
@@ -34,7 +34,7 @@ function ReviewPurchase({ templates, doPurchase, onBack, onFinish }) {
         <Col md={2}>
           <h5>Purchase Info</h5>
           <div>
-            {templates.map(template => (
+            {templates.map((template) => (
               <p>
                 {template.title}
                 <span className="float-right">{formatCurrency(template.priceInCents)}</span>

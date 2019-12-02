@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Card } from 'react-bootstrap';
 import { changeActiveTemplate } from '../actions/document';
 import Template from './Template';
 
@@ -11,7 +10,12 @@ function DocumentList({
     const documentList = templates.filter(
       (template) => template.title.toLowerCase().indexOf(filterText.toLowerCase()) >= 0,
     )
-      .map((template) => <Template onClick={() => changeActiveTemplate(template)} template={template} />);
+      .map((template) => (
+        <Template
+          onClick={() => changeActiveTemplate(template)}
+          template={template}
+        />
+      ));
     return <div>{documentList}</div>;
   }
 
@@ -22,16 +26,16 @@ function DocumentList({
 }
 const mapStateToProps = (state) => {
   const allTemplates = state.templates.templates;
-  const profile = state.profiles.profile;
+  const { profile } = state.profiles;
   if (!profile) {
     return {
       templates: [],
     };
   }
 
-  const ownedTemplates = allTemplates.filter(t => profile.ownedTemplates.includes(t._id));
+  const ownedTemplateTypes = allTemplates.filter((t) => profile.ownedTemplateTypes.includes(t._id));
   return {
-    templates: ownedTemplates,
+    templates: ownedTemplateTypes,
   };
 };
 

@@ -15,7 +15,6 @@ const defaultState = {
   activeTemplate: undefined, // selected document from documents page
   documentState: stateSuccess(),
   generateState: stateSuccess(),
-  templates: [],
 };
 
 
@@ -28,17 +27,10 @@ export default function profileReducer(state = defaultState, action) {
       };
     case GET_DOCUMENTS_SUCCESS: {
       // get list of unique templates
-      const templates = [];
-      action.data.documents.forEach((document) => {
-        if (!templates.map((template) => template._id).includes(document.templateId._id)) {
-          templates.push(document.templateId);
-        }
-      });
       return {
         ...state,
         documentState: { isWaiting: false, isError: false, error: '' },
         documents: action.data.documents,
-        templates,
       };
     }
     case GET_DOCUMENTS_FAIL:

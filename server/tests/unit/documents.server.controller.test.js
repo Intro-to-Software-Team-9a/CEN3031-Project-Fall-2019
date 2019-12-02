@@ -4,22 +4,23 @@ const sinon = require('sinon');
 const assert = require('assert');
 
 const Template = require('../../models/Template.model');
+const TemplateType = require('../../models/TemplateType.model');
 const Document = require('../../models/Document.model');
 const QuestionnaireResponse = require('../../models/QuestionnaireResponse.model');
 const { stubExec } = require('../helpers/utils');
 const mockData = require('../helpers/mockdata');
 const mongooseUtils = require('../../utils/mongoose');
 const documents = require('../../controllers/documents.server.controller');
-const TemplateRenderer = require('../../render/templateRenderer');
+const Templating = require('../../utils/templating');
 
-const templateId = 'template-id';
+const templateTypeId = 'template-type-id';
 const profileId = 'profile-id';
 const accountId = 'account-id';
 
 function mockRequest() {
   return {
     params: {
-      templateId,
+      templateTypeId,
     },
     session: {
       profileId,
@@ -43,18 +44,20 @@ describe('Documents Controller', () => {
 
     beforeEach(() => {
       // stub models to stop database access
-      Template.findById = stubExec(async () => ({ ...mockData.template1, _id: templateId }));
+      Template.findOne = sinon.stub().resolves({ ...mockData.template1.toObject(), templateTypeId });
+      TemplateType.findOne = sinon.stub().resolves({ ...mockData.templateType1.toObject(), _id: templateTypeId });
+      Templating.generateDocumentFromData = sinon.stub().resolves(new Document(mockData.document1));
+
       Document.prototype.save = sinon.stub().resolves();
       QuestionnaireResponse.findOne = () => ({
-        sort: stubExec(async () => ({ ...mockData.questionnaireResponse1 })),
+        sort: stubExec(sinon.stub().resolves(
+          new QuestionnaireResponse(mockData.questionnaireResponse1),
+        )),
       });
 
       // reset globals
       req = mockRequest();
       res = mockResponse();
-
-      // stub renderer
-      TemplateRenderer.render = sinon.stub().returns(mockData.document1.text);
     });
 
     it('should return 200 if mongoose resolves', async () => {
@@ -67,37 +70,59 @@ describe('Documents Controller', () => {
       assert.ok(Document.prototype.save.called);
     });
 
-    it('should use TemplateRenderer to generate document', async () => {
-      await documents.generate(req, res);
-      const sentDocument = res.send.getCalls()[0].args[0].document;
-      assert.equal(sentDocument.text, mockData.document1.text);
-    });
-
-    it('should return 400 if mongoose rejects during find', async () => {
+    it('should return 400 if templateTypeId not provided', async () => {
       // throw error
-      Template.findById = stubExec(sinon.stub().rejects(new Error()));
-      mongooseUtils.getErrorType = sinon.stub()
-        .returns(mongooseUtils.ErrorTypes.DUPLICATE_KEY);
+      delete req.params.templateTypeId;
 
       await documents.generate(req, res);
       assert.ok(res.status.calledWith(400));
     });
 
-    it('should return 400 if mongoose rejects during save', async () => {
+    it('should return 404 if templateTypeId does not exist', async () => {
+      // throw error
+      Template.findOne = sinon.stub().resolves(null);
+
+      await documents.generate(req, res);
+      assert.ok(res.status.calledWith(404));
+    });
+
+    it('should return 500 if there is no questionnaireResponse for the user', async () => {
+      // throw error
+      QuestionnaireResponse.findOne = sinon.stub().returns({
+        sort: stubExec(sinon.stub().resolves(null)),
+      });
+
+      await documents.generate(req, res);
+      assert.ok(res.status.calledWith(500));
+    });
+
+    it('should return 500 if mongoose rejects during find', async () => {
+      // throw error
+      TemplateType.findOne = sinon.stub().rejects(new Error());
+
+      await documents.generate(req, res);
+      assert.ok(res.status.calledWith(500));
+    });
+
+    it('should return 500 if Templating rejects', async () => {
+      // throw error
+      Templating.generateDocumentFromData = sinon.stub().rejects(new Error());
+
+      await documents.generate(req, res);
+      assert.ok(res.status.calledWith(500));
+    });
+
+    it('should return 500 if mongoose rejects during save', async () => {
       // throw error
       Document.prototype.save = sinon.stub().rejects(new Error());
-      mongooseUtils.getErrorType = sinon.stub()
-        .returns(mongooseUtils.ErrorTypes.DUPLICATE_KEY);
 
       await documents.generate(req, res);
-      assert.ok(res.status.calledWith(400));
+      assert.ok(res.status.calledWith(500));
     });
 
     it('should return 500 on other error', async () => {
       // throw error
       Document.prototype.save = sinon.stub().rejects(new Error());
-      mongooseUtils.getErrorType = sinon.stub()
-        .returns(mongooseUtils.ErrorTypes.UNKNOWN);
 
       await documents.generate(req, res);
       assert.ok(res.status.calledWith(500));
