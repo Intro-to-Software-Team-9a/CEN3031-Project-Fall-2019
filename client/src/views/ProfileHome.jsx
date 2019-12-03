@@ -52,10 +52,6 @@ function ProfileHome({ profile }) {
             title="Manage your Account"
             icon={<Settings style={{ fontSize: 40 }} />}
           />
-            link={Routes.USER_SETTINGS}
-            title="Manage your Account"
-            icon={<Settings style={{ fontSize: 40 }} />}
-          />
           {
             profile.role.isAdmin &&
             <div>

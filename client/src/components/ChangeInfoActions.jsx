@@ -49,7 +49,7 @@ function ChangeInfoActions({
     <React.Fragment>
       <Row className="mt-4">
         <Col>
-          <h5>Permanent Actions</h5>
+          <h5>Actions</h5>
           <ButtonToolbar>
             <TwoPhaseModal
               buttonIcon={<Email />}

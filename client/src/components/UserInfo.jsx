@@ -44,21 +44,6 @@ function UserInformation({ userInfo }) {
           </ListGroup>
         </Col>
       </Row>
-      <Row className="mt-4">
-        <Col>
-          <h5>Actions</h5>
-          <ButtonToolbar>
-            <LargeButton
-              icon={<Edit />}
-              text="Change Password"
-            />
-            <LargeButton
-              icon={<Email />}
-              text="Change Email"
-            />
-          </ButtonToolbar>
-        </Col>
-      </Row>
     </React.Fragment>
   );
 }
