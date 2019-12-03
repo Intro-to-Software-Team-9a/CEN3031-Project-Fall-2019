@@ -108,7 +108,7 @@ async function purchase(req, res) {
       return res.send(404);
     }
 
-    const priceInCents = 100 * parseFloat(order.result.purchase_units[0].amount.value) 
+    const priceInCents = 100 * parseFloat(order.result.purchase_units[0].amount.value);
 
     // 5. Validate the transaction details are as expected
     if (priceInCents !== total) {
