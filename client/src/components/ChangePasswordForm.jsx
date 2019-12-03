@@ -4,7 +4,7 @@ import { doChangePassword, changeChangePasswordField } from '../actions/account'
 // this component wraps AbstractForm
 import AbstractForm from './AbstractForm.jsx';
 
-// stores name, email, password, and confirm-password
+// fields for the form
 const fields = [
   { type: 'password', name: 'currentpassword', label: 'Current Password' },
   { type: 'password', name: 'password', label: 'New Password' },

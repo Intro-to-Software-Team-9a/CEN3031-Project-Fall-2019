@@ -4,7 +4,7 @@ import { changeChangeEmailField } from '../actions/account';
 // this component wraps AbstractForm
 import AbstractForm from './AbstractForm.jsx';
 
-// stores name, email, password, and confirm-password
+// fields for the form
 const fields = [
   { type: 'password', name: 'password', label: 'Confirm Password' },
   { type: 'email', name: 'email', label: 'New Email' },
