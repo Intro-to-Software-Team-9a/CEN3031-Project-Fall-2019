@@ -82,6 +82,7 @@ class ManageTemplates extends React.Component {
               </ButtonToolbar>
               <UploadTemplateModal
                 show={this.state.showModal}
+                showModalFunc={this.showModal.bind(this)}
                 onHide={() => this.showModal(false)}
                 template={this.state.selectedTemplate}
                 onTemplateUpload={this.onTemplateUpload.bind(this)} />

@@ -31,7 +31,10 @@ class UploadTemplateModal extends React.Component {
           price,
           fileName: file.name,
           data: Buffer.from(arrayBuffer),
-        }).then(this.props.onTemplateUpload);
+        }).then(() => {
+          this.props.onTemplateUpload();
+          this.props.showModalFunc(false);
+        });
       });
     } else {
       const buffer = file ? Buffer.from(await file.arrayBuffer()) : null;
@@ -39,9 +42,12 @@ class UploadTemplateModal extends React.Component {
       axios.patch('/api/templates/update', {
         templateTypeId: currTemplate._id,
         title: name,
-        data: buffer.length === 0 ? undefined : buffer,
+        data: (buffer === null || buffer.length === 0) ? undefined : buffer,
         price,
-      }).then(this.props.onTemplateUpload);
+      }).then(() => {
+        this.props.onTemplateUpload();
+        this.props.showModalFunc(false);
+      });
     }
   }
 
