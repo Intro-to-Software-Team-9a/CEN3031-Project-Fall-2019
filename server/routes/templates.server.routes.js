@@ -11,6 +11,9 @@ router.route('/')
 router.route('/add')
   .post(authenticateAdmin(), templates.add);
 
+router.route('/generate-and-download/:templateTypeId/response/:responseId')
+  .get(authenticateAdmin(), templates.generateAndDownload);
+
 router.route('/update')
   .patch(authenticateAdmin(), templates.update);
 

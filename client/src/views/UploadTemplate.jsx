@@ -39,7 +39,7 @@ class UploadTemplateModal extends React.Component {
       axios.patch('/api/templates/update', {
         templateTypeId: currTemplate._id,
         title: name,
-        data: buffer,
+        data: buffer.length === 0 ? undefined : buffer,
         price,
       }).then(this.props.onTemplateUpload);
     }

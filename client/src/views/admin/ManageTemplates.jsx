@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-  Row, Col, Button, Container,
+  Row, Col, Button, Container, ButtonToolbar,
 } from 'react-bootstrap';
 import { getTemplates } from '../../actions/template';
 import Template from '../../components/Template';
@@ -56,6 +56,7 @@ class ManageTemplates extends React.Component {
       <div className="min-vh-100 bg-light">
         <div className="spacing"></div>
         <Container className="pt-4" fluid>
+
           <Row className="pt-4">
             <Col sm={1}>
               <h1 onClick={this.goBack.bind(this)} className="cursor-pointer hover-white float-right">&larr;</h1>
@@ -64,6 +65,29 @@ class ManageTemplates extends React.Component {
               <h1>Manage Templates</h1>
             </Col>
           </Row>
+
+          <Row className="pt-4">
+            <Col className="d-none d-xl-block" xl={1}></Col>
+            <Col sm={11}>
+              <ButtonToolbar>
+                <Button
+                  variant="secondary"
+                  onClick={() => this.onTemplateClick(null)}>Add Template</Button>
+                <Button
+                  variant="secondary"
+                  className="ml-1"
+                  onClick={() => this.props.history.push(Routes.TEST_TEMPLATES)}>
+                  Test A Template
+              </Button>
+              </ButtonToolbar>
+              <UploadTemplateModal
+                show={this.state.showModal}
+                onHide={() => this.showModal(false)}
+                template={this.state.selectedTemplate}
+                onTemplateUpload={this.onTemplateUpload.bind(this)} />
+            </Col>
+          </Row>
+
           <Row className="pt-4">
             <Col className="d-none d-xl-block" xl={1}></Col>
             <Col sm={11}>
@@ -72,19 +96,8 @@ class ManageTemplates extends React.Component {
               </div>
             </Col>
           </Row>
-          <Row className="pt-4">
-            <Col className="d-none d-xl-block" xl={1}></Col>
-            <Col sm={11}>
-              <Button variant="secondary" onClick={() => this.onTemplateClick(null)}>Add Template</Button>
-              <UploadTemplateModal
-                show={this.state.showModal}
-                onHide={() => this.showModal(false)}
-                template={this.state.selectedTemplate}
-                onTemplateUpload={this.onTemplateUpload.bind(this)} />
-            </Col>
-          </Row>
         </Container>
-      </div >
+      </div>
     );
   }
 }
