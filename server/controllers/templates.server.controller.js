@@ -4,6 +4,9 @@ const TemplateType = require('../models/TemplateType.model');
 const Profile = require('../models/Profile.model');
 const errors = require('../utils/errors');
 const paypalLib = require('./paypalLib');
+const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
+const Templating = require('../utils/templating');
+const { formatDay, monthNames } = require('../utils/format');
 
 /** Returns a list of all current templates. */
 async function get(req, res) {
@@ -56,7 +59,8 @@ async function update(req, res) {
 
   const msg = 'TEMPLATE_UPDATE';
 
-  if (req.body.data != null) {
+
+  if (req.body.data) {
     const template = new Template();
     template.data = req.body.data;
     template.templateTypeId = templateType;
@@ -140,9 +144,57 @@ async function purchase(req, res) {
   }
 }
 
+/* Generates a Document from a Template using the most recent QuestionnaireResponse for the user. */
+async function generateAndDownload(req, res) {
+  if (!req.params.templateTypeId) {
+    res.status(400);
+    return res.send({ message: errors.other.MISSING_PARAMETER });
+  }
+
+  try {
+    const template = await Template
+      .findOne({ templateTypeId: req.params.templateTypeId })
+      .sort({ createdAt: -1 })
+      .exec();
+    const templateType = await TemplateType.findOne({ _id: req.params.templateTypeId });
+
+    if (!template || !templateType) {
+      res.status(404);
+      return res.send({ message: errors.other.NOT_FOUND });
+    }
+
+    const questionnaireResponse = await QuestionnaireResponse
+      .findById(req.params.responseId)
+      .exec();
+
+    if (!questionnaireResponse) {
+      res.status(404);
+      return res.send({ message: errors.other.UNKNOWN });
+    }
+
+    const data = JSON.parse(questionnaireResponse.serializedResult);
+
+    Object.assign(data, {
+      currentDay: formatDay(new Date().getDate()),
+      currentMonth: monthNames[new Date().getMonth()],
+      currentYear: new Date().getFullYear(),
+    });
+
+    const document = await Templating.generateDocumentFromData(
+      template, templateType, data, req.session.profileId,
+    );
+
+    return res.send({ document });
+  } catch (e) {
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
+  }
+}
+
 module.exports = {
   get,
   add,
   update,
   purchase,
+  generateAndDownload,
 };

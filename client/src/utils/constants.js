@@ -12,5 +12,5 @@ export const Routes = {
   VIEW_RESPONSE: (id) => `/view-response/${id}`,
   USER_SETTINGS: '/user-settings',
   MANAGE_TEMPLATES: '/manage-templates',
-
+  TEST_TEMPLATES: '/test-templates',
 };

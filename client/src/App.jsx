@@ -28,6 +28,7 @@ import UserSettings from './views/UserSettings';
 
 import EditQuestionnaireResponse from './views/EditQuestionnaireResponse';
 import ViewResponse from './views/ViewResponse';
+import TestTemplates from './views/admin/TestTemplates';
 
 class App extends React.Component {
   async componentDidMount() {
@@ -55,6 +56,7 @@ class App extends React.Component {
           <Route exact path={Routes.USER_SETTINGS} component={UserSettings} />
           <Route exact path="/upload-template" component={UploadTemplate} />
           <Route exact path={Routes.MANAGE_TEMPLATES} component={ManageTemplates} />
+          <Route exact path={Routes.TEST_TEMPLATES} component={TestTemplates} />
           <Route exact path="/">
             <Redirect to={Routes.HOME} />
           </Route>

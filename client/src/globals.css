@@ -60,6 +60,10 @@ li {
   animation: fadein 0.2s;
 }
 
+.bg-light-grey { 
+  background: #ddd !important;
+}
+
 
 /* https://stackoverflow.com/questions/11679567/using-css-for-a-fade-in-effect-on-page-load */
 

@@ -5,6 +5,7 @@ const TemplateType = require('../models/TemplateType.model');
 const Document = require('../models/Document.model');
 const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
 const Templating = require('../utils/templating');
+const { formatDay, monthNames } = require('../utils/format');
 
 async function get(req, res) {
   const profile = await Profile.findOne({ accountId: req.session.accountId }).exec();
@@ -36,16 +37,6 @@ async function getDocument(req, res) {
   return res.send({ document });
 }
 
-const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-// TODO: replace with moment.js
-/** Formats day of month (e.g., 13, 31) into correct format '13th', '31st' */
-function formatDay(day) {
-  if (day % 10 === 1) return `${day}st`;
-  if (day < 20 && day > 10) return `${day}th`;
-  if (day % 10 === 2) return `${day}nd`;
-  return `${day}rd`;
-}
 
 /* Generates a Document from a Template using the most recent QuestionnaireResponse for the user. */
 async function generate(req, res) {
@@ -55,7 +46,10 @@ async function generate(req, res) {
   }
 
   try {
-    const template = await Template.findOne({ templateTypeId: req.params.templateTypeId });
+    const template = await Template
+      .findOne({ templateTypeId: req.params.templateTypeId })
+      .sort({ createdAt: -1 })
+      .exec();
     const templateType = await TemplateType.findOne({ _id: req.params.templateTypeId });
 
     if (!template || !templateType) {
