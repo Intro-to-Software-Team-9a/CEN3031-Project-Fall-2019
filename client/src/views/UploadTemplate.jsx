@@ -34,7 +34,7 @@ class UploadTemplateModal extends React.Component {
         }).then(this.props.onTemplateUpload);
       });
     } else {
-      var buffer = file ? Buffer.from(await file.arrayBuffer()) : null;
+      const buffer = file ? Buffer.from(await file.arrayBuffer()) : null;
 
       axios.patch('/api/templates/update', {
         templateTypeId: currTemplate._id,

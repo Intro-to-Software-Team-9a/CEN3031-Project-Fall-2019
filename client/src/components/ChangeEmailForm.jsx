@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { doChangeEmail, changeChangeEmailField } from '../actions/account';
+import { changeChangeEmailField } from '../actions/account';
 
 // this component wraps AbstractForm
 import AbstractForm from './AbstractForm.jsx';
@@ -21,7 +21,7 @@ const mapStateToProps = (state) => ({
 
 
 // create action-dispatchers for AbstractForm
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
   changeField: (fieldName, newValue) => dispatch(changeChangeEmailField(fieldName, newValue)),
 });
 

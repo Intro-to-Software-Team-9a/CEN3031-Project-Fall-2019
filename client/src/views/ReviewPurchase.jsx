@@ -65,7 +65,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   doPurchase: async (paymentId) => {
-    await dispatch(doPurchase(paymentId))
+    await dispatch(doPurchase(paymentId));
   },
 });
 

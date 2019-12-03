@@ -2,7 +2,7 @@
 import React from 'react';
 import { Row, Container, Col } from 'react-bootstrap';
 import UserInfo from '../components/UserInfo';
-import ChangeInfoActions from '../components/ChangeInfoActions'
+import ChangeInfoActions from '../components/ChangeInfoActions';
 import PermanentActions from '../components/PermanentActions';
 import { Routes } from '../utils/constants';
 

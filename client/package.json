@@ -64,7 +64,8 @@
     ]
   },
   "devDependencies": {
-    "eslint-config-airbnb-base": "^14.0.0"
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint": "^6.6.0"
   },
   "proxy": "http://127.0.0.1:5000"
 }

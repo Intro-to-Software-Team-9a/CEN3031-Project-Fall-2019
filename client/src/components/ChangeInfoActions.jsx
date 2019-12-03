@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import {
-  Row, Col, ButtonToolbar, Modal, Button, Alert,
+  Row, Col, ButtonToolbar, Button,
 } from 'react-bootstrap';
 
 import Edit from '@material-ui/icons/Edit';
@@ -13,9 +13,8 @@ import { doChangeEmail, doChangePassword } from '../actions/account';
 
 
 function ChangeInfoActions({
-  isWaiting, onSubmitChangeEmail, onSubmitChangePassword
+  isWaiting, onSubmitChangeEmail, onSubmitChangePassword,
 }) {
-
   const [isEmailUpdated, setIsEmailUpdated] = useState(false);
   const [isPasswordUpdated, setIsPasswordUpdated] = useState(false);
 
@@ -85,7 +84,7 @@ const mapStateToProps = (state) => ({
   isAccountDeleted: state.accounts.isAccountDeleted,
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
   onSubmitChangeEmail: async (onSuccess) => {
     await dispatch(doChangeEmail({ onSuccess }));
   },

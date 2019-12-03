@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
 import {
-  Row, Col, ButtonToolbar, Modal, Button, Alert,
+  Modal, Button,
 } from 'react-bootstrap';
-import Delete from '@material-ui/icons/Delete';
 
 import LargeButton from './LargeButton';
-import { deleteAccount, resetApplication } from '../actions/account';
 
 
 /**
@@ -20,7 +17,14 @@ import { deleteAccount, resetApplication } from '../actions/account';
  * @param title
  */
 function TwoPhaseModal({
-  showFirstPage, firstPageBody, firstPageActions, secondPageBody, secondPageCallback, buttonIcon, buttonText, title
+  showFirstPage,
+  firstPageBody,
+  firstPageActions,
+  secondPageBody,
+  secondPageCallback,
+  buttonIcon,
+  buttonText,
+  title,
 }) {
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
@@ -59,7 +63,7 @@ function TwoPhaseModal({
           }
         </Modal.Footer>
       </Modal>
-    </React.Fragment >
+    </React.Fragment>
   );
 }
 export default TwoPhaseModal;

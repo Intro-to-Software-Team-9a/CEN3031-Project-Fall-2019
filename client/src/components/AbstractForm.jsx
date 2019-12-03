@@ -15,7 +15,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
  * @param hideSubmitButton whether to hide the "submit" button
  */
 export default function AbstractForm({
-  fields, data, onSubmit, changeField, state, hideSubmitButton
+  fields, data, onSubmit, changeField, state, hideSubmitButton,
 }) {
   // create each field in the form from the `fields` prop
   const formFields = fields.map(({ type, name, label }) => (

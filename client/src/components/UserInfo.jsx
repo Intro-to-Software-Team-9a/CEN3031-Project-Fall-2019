@@ -1,14 +1,9 @@
 import React from 'react';
 import {
-  Row, Col, ListGroup, ButtonToolbar,
+  Row, Col, ListGroup,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import moment from 'moment';
-
-import Edit from '@material-ui/icons/Edit';
-import Email from '@material-ui/icons/Email';
-
-import LargeButton from './LargeButton';
 
 
 function UserInformation({ userInfo }) {

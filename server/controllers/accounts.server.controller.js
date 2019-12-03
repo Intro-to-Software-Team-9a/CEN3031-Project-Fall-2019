@@ -159,7 +159,7 @@ async function changePassword(req, res) {
     res.status(400);
     return res.send({ message: errors.accounts.MISSING_PASSWORDS });
   }
-  
+
   try {
     const { currentpassword, password } = req.body;
     const account = await Account.findById(req.session.accountId).exec();
@@ -167,13 +167,13 @@ async function changePassword(req, res) {
       res.status(404);
       return res.send({ message: errors.accounts.NOT_LOGGED_IN });
     }
-    
+
     const doesMatch = await bcrypt.compare(currentpassword, account.passwordHash);
     if (!doesMatch) {
       res.status(401);
       return res.send({ message: errors.accounts.WRONG_PASSWORD });
     }
-    
+
     if (!isPasswordOk(password)) {
       res.status(400);
       return res.send({ message: errors.accounts.PASSWORD_NOT_OK });
@@ -183,9 +183,7 @@ async function changePassword(req, res) {
     account.passwordHash = hash;
     await account.save();
     return res.send();
-  }
-  catch (e) {
-    console.error(e);
+  } catch (e) {
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }
@@ -214,7 +212,7 @@ async function changeEmail(req, res) {
       res.status(404);
       return res.send({ message: errors.accounts.NOT_LOGGED_IN });
     }
-    
+
     const doesMatch = await bcrypt.compare(password, account.passwordHash);
     if (!doesMatch) {
       res.status(401);
@@ -224,9 +222,7 @@ async function changeEmail(req, res) {
     account.email = email;
     await account.save();
     return res.send();
-  }
-  catch (e) {
-    console.error(e);
+  } catch (e) {
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }

@@ -17,7 +17,7 @@ function client() {
   return new checkoutNodeJssdk.core.PayPalHttpClient(environment());
 }
 
-//Taken from https://developer.paypal.com/docs/checkout/integrate/#6-verify-the-transaction
+// Taken from https://developer.paypal.com/docs/checkout/integrate/#6-verify-the-transaction
 async function prettyPrint(jsonData, pre = '') {
   let pretty = '';
   function capitalize(string) {

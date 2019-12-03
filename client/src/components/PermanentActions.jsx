@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
-  Row, Col, ButtonToolbar, Modal, Button, Alert,
+  Row, Col, ButtonToolbar, Button, Alert,
 } from 'react-bootstrap';
 import Delete from '@material-ui/icons/Delete';
 
-import LargeButton from './LargeButton';
 import TwoPhaseModal from './TwoPhaseModal';
 
 import { deleteAccount, resetApplication } from '../actions/account';
@@ -14,7 +13,6 @@ import { deleteAccount, resetApplication } from '../actions/account';
 function PermanentActions({
   deleteAccount, isWaiting, isError, error, isAccountDeleted, resetApplication,
 }) {
-
   const secondPageBody = (
     <p>Your account and all associated data were successfully deleted.</p>
   );
@@ -30,8 +28,8 @@ function PermanentActions({
       </ul>
       <p><b>This cannot be undone.</b></p>
       <p>Are you sure you want to continue?</p>
-      {isError ?
-        <Alert variant="danger">{error}</Alert>
+      {isError
+        ? <Alert variant="danger">{error}</Alert>
         : ''
       }
     </React.Fragment>
