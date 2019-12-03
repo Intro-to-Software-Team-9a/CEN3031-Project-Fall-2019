@@ -86,43 +86,51 @@ class EditableQuestionnaire extends React.Component {
 
                 questionElements.push(
                   <div key={`editableQuestion-${i}`}>
-                    <Row className="my-2 pt-3 border border-dark" style={{ maxWidth: '700px' }}>
-                      <EditableQuestion index={index} key={question ? question._id : ''} questionId={question._id} />
+                    <Row className="my-2">
+                      <Col xl={6} className="display-card shadow bg-white">
+                        <EditableQuestion index={index} key={question ? question._id : ''} questionId={question._id} />
+                      </Col>
                     </Row>
-                    <ButtonGroup className="my-2" style={{ maxWidth: '700px' }}>
-                      <Button
-                        variant="outline-dark"
-                        onClick={() => addNewQuestion(index + 1)}>
-                        <AddCircle /> Question
+                    <Row>
+                      <Col>
+                        <ButtonGroup className="my-3">
+                          <Button
+                            variant="outline-dark"
+                            onClick={() => addNewQuestion(index + 1)}>
+                            <AddCircle /> Question
                       </Button>
-                      <Button
-                        variant="outline-dark"
-                        onClick={() => addNewSection(index + 1)}>
-                        <AddCircle /> Section
+                          <Button
+                            variant="outline-dark"
+                            onClick={() => addNewSection(index + 1)}>
+                            <AddCircle /> Section
                       </Button>
-                      {(index === questions.length - 1) ? ''
-                        : <Button
-                          variant="outline-dark"
-                          onClick={() => swapQuestionDown(index)}>
-                          <SwapVertical /> Swap
+                          {(index === questions.length - 1) ? ''
+                            : <Button
+                              variant="outline-dark"
+                              onClick={() => swapQuestionDown(index)}>
+                              <SwapVertical /> Swap
                         </Button>
-                      }
-                    </ButtonGroup>
+                          }
+                        </ButtonGroup>
+                      </Col>
+                    </Row>
                   </div>,
                 );
               }
 
               const isInvalid = isStartIndexInvalid[section.startIndex];
-              const borderColor = isInvalid ? 'border-danger' : 'border-dark';
+              const borderColor = isInvalid ? 'border border-danger' : '';
               return (
                 <div key={section._id}>
-                  <Row className={`my-2 pt-3 border ${borderColor}`} style={{ maxWidth: '700px' }}>
-                    <EditableSection
-                      isInvalid={isInvalid}
-                      sectionId={section._id}
-                      index={sectionIndex} />
+                  <Row className="my-2">
+                    <Col xl={6} className={`display-card shadow bg-white ${borderColor}`}>
+                      <EditableSection
+                        isInvalid={isInvalid}
+                        sectionId={section._id}
+                        index={sectionIndex} />
+                    </Col>
                   </Row>
-                  <ButtonGroup className="my-2" style={{ maxWidth: '700px' }}>
+                  <ButtonGroup className="my-3">
                     <Button
                       variant="outline-dark"
                       onClick={() => addNewQuestion(startIndex)}>
@@ -138,8 +146,8 @@ class EditableQuestionnaire extends React.Component {
                 </div>
               );
             })}
-            <Row style={{ maxWidth: '700px' }}>
-              <Col>
+            <Row>
+              <Col xl={6}>
                 <ButtonToolbar className="float-right">
                   <Button
                     onClick={goBack}

@@ -7,16 +7,10 @@ import { Routes } from '../utils/constants';
 
 class Login extends React.Component {
   onLogin() {
-    const { history } = this.props;
-    const { profile } = this.props;
+    const { history, profile } = this.props;
 
-    if (!this.props.profile) {
+    if (!profile) {
       history.push(Routes.HOME);
-      return;
-    }
-
-    if (profile.role.isAdmin) {
-      history.push('/admin');
       return;
     }
 

@@ -12,8 +12,6 @@ function SelectPlan({ onPlanSelect, onFinish, onBack }) {
     onFinish();
   };
 
-  console.log(onBack);
-
   return (
     <div className="min-vh-100 bg-light">
       <div className="spacing"></div>
@@ -96,10 +94,7 @@ function SelectPlan({ onPlanSelect, onFinish, onBack }) {
   );
 }
 
-const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps);
-  return {};
-};
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   onPlanSelect: (plan) => dispatch(selectPlan(plan)),

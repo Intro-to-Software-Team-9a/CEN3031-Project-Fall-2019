@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Container, Row, Col,
+  Container,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
@@ -20,7 +20,7 @@ const AUTHENTICATED_QUESTIONNAIRE_PAGE = 'authenticated-questionnaire-page';
 const SELECT_PLAN_PAGE = 'select-plan-page';
 const CART_PAGE = 'cart-page';
 const REVIEW_PAGE = 'review-page';
-const QUESTIONNAIRE_PRETEXT = 'pre-questionnaire'
+const QUESTIONNAIRE_PRETEXT = 'pre-questionnaire';
 const CREATE_PRETEXT = 'create-pretext';
 const AUTH_PRETEXT = 'auth-pretext';
 const PURCHASE_PRETEXT = 'purchase-pretext';
@@ -78,7 +78,8 @@ class Onboarding extends React.Component {
           title="Questionnaire"
           onBack={this.decrementPage}
           onFinish={this.incrementPage}>
-          <p>First you'll need to answer these questions to determine your eligibility for an estate plan.</p>
+          <p>First you'll need to answer these questions
+            to determine your eligibility for an estate plan.</p>
         </TextView>;
         break;
       case AUTH_PRETEXT:
@@ -102,7 +103,8 @@ class Onboarding extends React.Component {
           title="Finish your Estate Plan"
           onBack={this.decrementPage}
           onFinish={this.incrementPage}>
-          <p>Now, select the documents you want to add to your estate plan, and then check out.</p>
+          <p>Now, select the documents you want to add
+            to your estate plan, and then check out.</p>
         </TextView>;
         break;
       case QUESTIONNAIRE_PAGE:

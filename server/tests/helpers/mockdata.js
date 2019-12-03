@@ -31,7 +31,7 @@ module.exports = {
     passwordHash: '$2b$10$tOKa531X/IaHZncPznfUYu3es/D9MeK.JqbFZ3UJ0TS/5OEX6mUXa', // "password"
   }),
   profile2: new Profile({
-    name: 'Example User',
+    name: 'Admin',
     role: {
       isUser: false,
       isAdmin: true,

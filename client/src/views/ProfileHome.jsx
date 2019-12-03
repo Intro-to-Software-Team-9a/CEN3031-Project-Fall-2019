@@ -29,39 +29,41 @@ function ProfileHome({ profile }) {
                   Here are the tasks you can accomplish.</h5>
               </div>
               <div className="p-4">
-                <IconLink
-                  link={Routes.VIEW_DOCUMENTS}
-                  title="View Your Documents"
-                  icon={<FolderShared style={{ fontSize: 40 }} />}
-                />
+                {
+                  !profile.role.isAdmin
+                  && <IconLink
+                    link={Routes.VIEW_DOCUMENTS}
+                    title="View Your Documents"
+                    icon={<FolderShared style={{ fontSize: 40 }} />}
+                  />
+                }
                 <IconLink
                   link={Routes.VIEW_RESPONSES}
                   title="View/Edit Responses"
                   icon={<QuestionAnswer style={{ fontSize: 40 }} />}
                 />
-                <IconLink
-                  link={Routes.USER_SETTINGS}
-                  title="Manage your Account"
-                  icon={<Settings style={{ fontSize: 40 }} />}
-                />
                 {
                   profile.role.isAdmin
-                  && <div>
-                    <IconLink
-                      link={Routes.EDIT_QUESTIONNAIRE}
-                      title="Edit the Questionnaire"
-                      icon={<Edit style={{ fontSize: 40 }} />}
+                    ? <React.Fragment>
+                      <IconLink
+                        link={Routes.EDIT_QUESTIONNAIRE}
+                        title="Edit the Questionnaire"
+                        icon={<Edit style={{ fontSize: 40 }} />}
+                      />
+                      <IconLink
+                        link={Routes.MANAGE_TEMPLATES}
+                        title="Manage Templates"
+                        icon={<DescriptionOutlinedIcon style={{ fontSize: 40 }} />}
+                      />
+                    </React.Fragment>
+                    : <IconLink
+                      link={Routes.USER_SETTINGS}
+                      title="Manage your Account"
+                      icon={<Settings style={{ fontSize: 40 }} />}
                     />
-                    <IconLink
-                      link={Routes.MANAGE_TEMPLATES}
-                      title="Manage Templates"
-                      icon={<DescriptionOutlinedIcon style={{ fontSize: 40 }} />}
-                    />
-                  </div>
                 }
               </div>
             </div>
-            <div className="spacing"></div>
             <div className="spacing"></div>
             <div className="spacing"></div>
           </Col>

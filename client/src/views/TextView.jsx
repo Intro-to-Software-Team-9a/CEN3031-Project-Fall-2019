@@ -1,9 +1,11 @@
 import React from 'react';
 import {
-  Container, Row, Col, Button
+  Container, Row, Col, Button,
 } from 'react-bootstrap';
 
-export default function TextView({ children, onFinish, onBack, title }) {
+export default function TextView({
+  children, onFinish, onBack, title,
+}) {
   return (
     <div className="min-vh-100 bg-two-people">
       <div className="spacing"></div>

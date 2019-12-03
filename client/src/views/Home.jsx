@@ -1,5 +1,7 @@
 import React from 'react';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import {
+  Container, Row, Col, Button,
+} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './Home.css';
 import HandImage from '../assets/hand.jpg';
@@ -28,7 +30,7 @@ function Home() {
         </Col>
         <Col xl={6} className="p-0 pt-4 mt-4 d-xl-block d-none">
           <div className="d-none d-xl-block spacing"></div>
-          <img className="w-100" src={HandImage}></img>
+          <img alt="hand" className="w-100" src={HandImage}></img>
         </Col>
       </Row>
     </Container>

@@ -69,17 +69,17 @@ class UploadTemplateModal extends React.Component {
           <Form onSubmit={this.onFileUpload.bind(this)}>
             <Form.Group>
               <Form.Label htmlFor="templateNameInput">Template Name</Form.Label>
-              <Form.Control size="md" type="text" id="templateNameInput" name="templateName" defaultValue={initialTitle}/>
+              <Form.Control size="md" type="text" id="templateNameInput" name="templateName" defaultValue={initialTitle} />
             </Form.Group>
             <Form.Group className="custom-file">
               <Form.Label className="custom-file-label" htmlFor="templateFileInput">{selectedFile}</Form.Label>
-              <Input type="file" className="custom-file-input" id="templateFileInput" name="templateFile" onChange={this.onFileSelect.bind(this)}/>
+              <Input type="file" className="custom-file-input" id="templateFileInput" name="templateFile" onChange={this.onFileSelect.bind(this)} />
             </Form.Group>
             <Form.Group>
               <Form.Label htmlFor="templatePriceInput">Template Price</Form.Label>
-              <Form.Control size="md" type="text" id="templatePriceInput" name="templatePrice" defaultValue={initialPrice}/>
+              <Form.Control size="md" type="text" id="templatePriceInput" name="templatePrice" defaultValue={initialPrice} />
             </Form.Group>
-            <Button type="submit" className="uploadButton">Save</Button>
+            <Button variant="secondary" type="submit" className="uploadButton">Save</Button>
           </Form>
         </Modal.Body>
       </Modal>
