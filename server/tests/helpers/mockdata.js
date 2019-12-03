@@ -6,6 +6,7 @@ const Account = require('../../models/Account.model');
 const Profile = require('../../models/Profile.model');
 const Document = require('../../models/Document.model');
 const Template = require('../../models/Template.model');
+const TemplateType = require('../../models/TemplateType.model');
 const Questionnaire = require('../../models/Questionnaire.model');
 const QuestionnaireResponse = require('../../models/QuestionnaireResponse.model');
 
@@ -23,23 +24,37 @@ module.exports = {
       isAdmin: false,
     },
     plan: Plans.NO_PLAN,
-    ownedTemplates: [],
+    ownedTemplateTypes: [],
+  }),
+  account2: new Account({
+    email: 'test2@gmail.com',
+    passwordHash: '$2b$10$tOKa531X/IaHZncPznfUYu3es/D9MeK.JqbFZ3UJ0TS/5OEX6mUXa', // "password"
+  }),
+  profile2: new Profile({
+    name: 'Example User',
+    role: {
+      isUser: false,
+      isAdmin: true,
+    },
+    plan: Plans.NO_PLAN,
+    ownedTemplateTypes: [],
   }),
   document1: new Document({
-    text: 'Hello, my name is Example User',
+    data: Buffer.from('Hello, my name is Example User'),
   }),
   document2: new Document({
-    text: 'This is another version of template1',
+    data: Buffer.from('This is another version of template1'),
   }),
-  template1: new Template({
+  templateType1: new TemplateType({
     title: 'Introduction',
-    template: 'Hello, my name is {{ name }}',
+    fileName: 'intro.docx',
     priceInCents: 1000,
   }),
+  template1: new Template({
+    data: Buffer.from('YWZkc2tmanNh'),
+  }),
   template2: new Template({
-    title: 'Living Will',
-    template: livingWillTemplate,
-    priceInCents: 2000,
+    data: Buffer.from('sdfasdf'),
   }),
   questionnaire1: new Questionnaire({
     sections: [

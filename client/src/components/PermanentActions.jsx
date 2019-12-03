@@ -7,6 +7,7 @@ import Delete from '@material-ui/icons/Delete';
 
 import LargeButton from './LargeButton';
 import TwoPhaseModal from './TwoPhaseModal';
+
 import { deleteAccount, resetApplication } from '../actions/account';
 
 

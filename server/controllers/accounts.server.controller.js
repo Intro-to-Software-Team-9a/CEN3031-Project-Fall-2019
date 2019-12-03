@@ -21,6 +21,7 @@ const { saltRounds } = publicConfig.password;
 async function addToSession(account, profile, req) {
   req.session.accountId = account._id;
   req.session.profileId = profile._id;
+  req.session.isAdmin = profile.role.isAdmin;
 }
 
 /**
@@ -149,7 +150,6 @@ async function logout(req, res) {
     return res.send();
   });
 }
-
 /**
  * @param currentpassword {String}
  * @param password {String}
@@ -231,6 +231,7 @@ async function changeEmail(req, res) {
     return res.send({ message: errors.other.UNKNOWN });
   }
 }
+
 
 async function deleteAccount(req, res) {
   let session;

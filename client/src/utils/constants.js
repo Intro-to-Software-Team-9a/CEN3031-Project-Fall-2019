@@ -11,4 +11,6 @@ export const Routes = {
   CHANGE_EMAIL: '/change-email',
   VIEW_RESPONSE: (id) => `/view-response/${id}`,
   USER_SETTINGS: '/user-settings',
+  MANAGE_TEMPLATES: '/manage-templates',
+
 };

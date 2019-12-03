@@ -159,7 +159,7 @@ describe('Validation Utils', () => {
     it('should return true for valid section', () => {
       const actual = validation.isSectionValid(section, errorStream);
       assert.equal(actual, true, JSON.stringify(errorStream));
-    })
+    });
 
     it('should return false for section without startIndex', () => {
       delete section.startIndex;

@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const Questionniare = require('../models/Questionnaire.model');
 const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
 const errors = require('../utils/errors');

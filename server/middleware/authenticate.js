@@ -12,7 +12,18 @@ function authenticate() {
   };
 }
 
+function authenticateAdmin() {
+  return (req, res, next) => {
+    if (!req.session.accountId || !req.session.profileId || !req.session.isAdmin) {
+      return res.status(401).send();
+    }
+
+    return next();
+  };
+}
+
 
 module.exports = {
   authenticate,
+  authenticateAdmin,
 };

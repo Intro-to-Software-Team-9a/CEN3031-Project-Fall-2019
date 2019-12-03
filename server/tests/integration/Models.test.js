@@ -7,6 +7,7 @@ const Account = require('../../models/Account.model');
 const Profile = require('../../models/Profile.model');
 const Document = require('../../models/Document.model');
 const Template = require('../../models/Template.model');
+const TemplateType = require('../../models/TemplateType.model');
 const mockdata = require('../helpers/mockdata');
 const config = require('../helpers/config');
 
@@ -52,25 +53,28 @@ describe('Model Integration Tests', () => {
     });
   });
 
-  describe('Foriegn Keys for Models', () => {
+  describe('Foreign Keys for Models', () => {
     it('allows documents to be saved in any order', async () => {
       const account1 = new Account(mockdata.account1);
       const document1 = new Document(mockdata.document1);
       const profile1 = new Profile(mockdata.profile1);
+      const templateType1 = new TemplateType(mockdata.templateType1);
       const template1 = new Template(mockdata.template1);
 
       await assert.rejects(profile1.save(), 'should throw exception due to missing account');
 
       // add foreign keys
+      template1.templateTypeId = templateType1;
       profile1.accountId = account1;
       document1.profileId = profile1;
       document1.templateId = template1;
 
       // save should work
+      await templateType1.save();
       await profile1.save();
       await account1.save();
-      await document1.save();
       await template1.save();
+      await document1.save();
 
       // populate should work
       await Account.findById(account1._id).exec();

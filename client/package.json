@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.7",
     "@material-ui/core": "^4.6.0",
     "@material-ui/icons": "^4.5.1",
     "axios": "^0.19.0",
@@ -10,12 +13,14 @@
     "markdown-pdf": "^10.0.0",
     "moment": "^2.24.0",
     "react": "^16.10.1",
+    "react-async-script-loader": "^0.3.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.10.1",
+    "react-icons": "^3.8.0",
+    "react-paypal-button-v2": "^2.6.0",
     "react-redux": "^7.1.1",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.1.2",
     "redux": "^4.0.4",
     "redux-logger": "^3.0.6",
     "redux-perf-middleware": "^1.2.2",
@@ -43,7 +48,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --fix src/**/*.js* src/*.js*"
+    "lint": "eslint --fix src/**/*.js* src/*.js*",
+    "preinstall": "npm i -g rimraf"
   },
   "browserslist": {
     "production": [

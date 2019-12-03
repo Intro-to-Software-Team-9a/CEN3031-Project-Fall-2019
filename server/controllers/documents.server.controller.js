@@ -1,10 +1,10 @@
 const Profile = require('../models/Profile.model');
 const errors = require('../utils/errors');
-const mongooseUtils = require('../utils/mongoose');
 const Template = require('../models/Template.model');
+const TemplateType = require('../models/TemplateType.model');
 const Document = require('../models/Document.model');
 const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
-const TemplateRenderer = require('../render/templateRenderer');
+const Templating = require('../utils/templating');
 
 async function get(req, res) {
   const profile = await Profile.findOne({ accountId: req.session.accountId }).exec();
@@ -13,8 +13,27 @@ async function get(req, res) {
     return res.status(404).send({ message: errors.profile.NOT_FOUND });
   }
 
-  const documents = await Document.find({ profileId: profile._id }).populate(['templateId']);
+  const rawDocuments = await Document.find({ profileId: profile._id })
+    .populate('templateId')
+    .sort({ createdAt: 'desc' });
+
+
+  // join on templateId and then grab only templateTypeId
+  const documents = rawDocuments.map((rawDocument) => {
+    const document = rawDocument.toObject();
+
+    document.templateTypeId = document.templateId.templateTypeId;
+    delete document.templateId;
+
+    return document;
+  });
+
   return res.send({ documents });
+}
+
+async function getDocument(req, res) {
+  const document = await Document.findById(req.params.documentId);
+  return res.send({ document });
 }
 
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -28,27 +47,30 @@ function formatDay(day) {
   return `${day}rd`;
 }
 
-
-/**
- * Generates a Document from a Template using the most recent QuestionnaireResponse for the user.
- */
+/* Generates a Document from a Template using the most recent QuestionnaireResponse for the user. */
 async function generate(req, res) {
-  if (!req.params.templateId) {
+  if (!req.params.templateTypeId) {
     res.status(400);
-    return res.send({ message: errors.other.INVALID_INPUT });
+    return res.send({ message: errors.other.MISSING_PARAMETER });
   }
 
   try {
-    const { templateId } = req.params;
-    const template = await Template.findById(templateId).exec();
+    const template = await Template.findOne({ templateTypeId: req.params.templateTypeId });
+    const templateType = await TemplateType.findOne({ _id: req.params.templateTypeId });
+
+    if (!template || !templateType) {
+      res.status(404);
+      return res.send({ message: errors.other.NOT_FOUND });
+    }
+
     const questionnaireResponse = await QuestionnaireResponse
       .findOne({ profileId: req.session.profileId })
       .sort({ createdAt: -1 })
       .exec();
 
-    if (!template || !questionnaireResponse) {
-      res.status(404);
-      return res.send({ message: errors.other.INVALID_INPUT });
+    if (!questionnaireResponse) {
+      res.status(500);
+      return res.send({ message: errors.other.UNKNOWN });
     }
 
     const data = JSON.parse(questionnaireResponse.serializedResult);
@@ -59,26 +81,13 @@ async function generate(req, res) {
       currentYear: new Date().getFullYear(),
     });
 
-    const renderedDocument = TemplateRenderer.render(
-      template.template,
-      data,
+    const document = await Templating.generateDocumentFromData(
+      template, templateType, data, req.session.profileId,
     );
-
-    const document = new Document({
-      title: template.title,
-      text: renderedDocument,
-      profileId: req.session.profileId,
-      templateId: template,
-    });
-
     await document.save();
-    return res.send({ document });
-  } catch (error) {
-    if (mongooseUtils.getErrorType(error) === mongooseUtils.ErrorTypes.DUPLICATE_KEY) {
-      res.status(400);
-      return res.send({ message: errors.accounts.ACCOUNT_ALREADY_EXISTS });
-    }
 
+    return res.send({ document });
+  } catch (e) {
     res.status(500);
     return res.send({ message: errors.other.UNKNOWN });
   }
@@ -87,4 +96,5 @@ async function generate(req, res) {
 module.exports = {
   generate,
   get,
+  getDocument,
 };

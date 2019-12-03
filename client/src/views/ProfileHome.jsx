@@ -7,7 +7,9 @@ import { connect } from 'react-redux';
 import FolderShared from '@material-ui/icons/FolderShared';
 import Edit from '@material-ui/icons/Edit';
 import QuestionAnswer from '@material-ui/icons/QuestionAnswer';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import Settings from '@material-ui/icons/SettingsSharp';
+
 import IconLink from './IconLink';
 import { Routes } from '../utils/constants';
 
@@ -50,6 +52,25 @@ function ProfileHome({ profile }) {
             title="Manage your Account"
             icon={<Settings style={{ fontSize: 40 }} />}
           />
+            link={Routes.USER_SETTINGS}
+            title="Manage your Account"
+            icon={<Settings style={{ fontSize: 40 }} />}
+          />
+          {
+            profile.role.isAdmin &&
+            <div>
+            <IconLink
+              link={Routes.EDIT_QUESTIONNAIRE}
+              title="Edit the Questionnaire"
+              icon={<Edit style={{ fontSize: 40 }} />}
+            />
+            <IconLink
+              link={Routes.MANAGE_TEMPLATES}
+              title="Manage Templates"
+              icon={<DescriptionOutlinedIcon style={{ fontSize:40 }} />}
+            />
+            </div>
+          }
         </Col>
       </Row>
     </Container >

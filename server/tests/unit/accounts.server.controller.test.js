@@ -13,6 +13,7 @@ const { stubExec } = require('../helpers/utils');
 const mockData = require('../helpers/mockdata');
 const mongoose = require('mongoose');
 const validator = require('validator');
+
 const accounts = require('../../controllers/accounts.server.controller');
 
 function mockRequest() {
@@ -296,6 +297,8 @@ describe('Accounts Controller', () => {
       assert.ok(session.abortTransaction.called)
     });
   });
+
+
   describe('changeEmail', () => {
     let req;
     let res;
@@ -430,5 +433,4 @@ describe('Accounts Controller', () => {
       assert.ok(res.status.calledWith(401));
     });
   });
-
 });

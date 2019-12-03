@@ -34,7 +34,6 @@ export const DELETE_ACCOUNT_SUCCESS = 'DELETE_ACCOUNT_SUCCESS';
 export const DELETE_ACCOUNT_FAIL = 'DELETE_ACCOUNT_FAIL';
 export const RESET_APPLICATION = 'RESET_APPLICATION';
 
-
 export function changeLoginField(fieldName, newValue) {
   return {
     type: CHANGE_LOGIN_FIELD,
@@ -169,6 +168,7 @@ export function doCreateAccount({ onSuccess }) {
   };
 }
 
+
 export function doChangePassword({ onSuccess }) {
   return async (dispatch, getState) => {
     const { accounts } = getState();
@@ -209,6 +209,7 @@ export function doChangePassword({ onSuccess }) {
     }
   };
 }
+
 
 export function deleteAccount() {
   return async (dispatch) => {

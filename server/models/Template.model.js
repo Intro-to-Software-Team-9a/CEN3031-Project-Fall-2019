@@ -7,13 +7,11 @@ const { Schema } = mongoose;
  */
 
 const TemplateSchema = new Schema({
-  // title of the document
-  title: { type: String, required: true },
+  // ref of the template type
+  templateTypeId: { type: Schema.Types.ObjectId, ref: 'TemplateType', required: true },
 
-  // string for use in template rendering
-  template: { type: String, required: true },
-
-  priceInCents: Number,
+  // template binary data
+  data: { type: Buffer, required: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Template', TemplateSchema);

@@ -1,14 +1,14 @@
 import React from 'react';
 import {
-  Container, Row, Col, Button,
+  Container, Row, Col,
 } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import TemplateList from '../components/TemplateList';
 import { doPurchase } from '../actions/purchase';
 import { formatCurrency } from '../utils/format';
+import PaypalButton1 from '../components/PaypalButton';
 
-
-function ReviewPurchase({ templates, doPurchase, onBack }) {
+function ReviewPurchase({ templates, onBack, onFinish }) {
   const totalPurchase = templates.reduce((accum, template) => accum + template.priceInCents, 0);
   return (
     <Container fluid className="pt-4">
@@ -45,16 +45,14 @@ function ReviewPurchase({ templates, doPurchase, onBack }) {
               Total
               <span className="float-right font-weight-bold">{formatCurrency(totalPurchase)}</span>
             </p>
+            <PaypalButton1
+              totalPurchase={totalPurchase}
+              onFinish = {onFinish}
+            />
           </div>
         </Col>
       </Row>
       <br />
-      <Row>
-        <Col md={1}></Col>
-        <Col>
-          <Button onClick={doPurchase} variant="outline-dark">Finish Purchase</Button>
-        </Col>
-      </Row>
     </Container>
   );
 }
@@ -65,9 +63,9 @@ const mapStateToProps = (state) => ({
 });
 
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  doPurchase: () => {
-    dispatch(doPurchase({ onSuccess: ownProps.onFinish }));
+const mapDispatchToProps = (dispatch) => ({
+  doPurchase: async (paymentId) => {
+    await dispatch(doPurchase(paymentId))
   },
 });
 

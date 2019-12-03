@@ -5,6 +5,11 @@ import {
 import { connect } from 'react-redux';
 import moment from 'moment';
 
+import Edit from '@material-ui/icons/Edit';
+import Email from '@material-ui/icons/Email';
+
+import LargeButton from './LargeButton';
+
 
 function UserInformation({ userInfo }) {
   if (!userInfo) {
@@ -37,6 +42,21 @@ function UserInformation({ userInfo }) {
               </ListGroup.Item>
             ))}
           </ListGroup>
+        </Col>
+      </Row>
+      <Row className="mt-4">
+        <Col>
+          <h5>Actions</h5>
+          <ButtonToolbar>
+            <LargeButton
+              icon={<Edit />}
+              text="Change Password"
+            />
+            <LargeButton
+              icon={<Email />}
+              text="Change Email"
+            />
+          </ButtonToolbar>
         </Col>
       </Row>
     </React.Fragment>
