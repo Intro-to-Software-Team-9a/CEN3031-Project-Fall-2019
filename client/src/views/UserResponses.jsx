@@ -26,43 +26,50 @@ class UserResponses extends React.Component {
       </LinkContainer>
     );
     return (
-      <Container className="pt-4" fluid>
-        <Row className="pt-4">
-          <Col md={1}>
-            <h1
-              onClick={() => this.props.history.push(Routes.PROFILE_HOME)}
-              className="cursor-pointer hover-white float-right"
-            >&larr;</h1>
-          </Col>
-          <Col>
-            <h1>Your Responses</h1>
-          </Col>
-        </Row>
-        <Row className="pt-4">
-          <Col md={1}></Col>
-          <Col>
-            <h5>Actions</h5>
-            <ButtonToolbar>
-              <LinkContainer to={Routes.NEW_RESPONSE}>
-                <Button variant="outline-dark">
-                  <Edit /> Update Response
+      <div className="min-vh-100 bg-light">
+        <div className="spacing"></div>
+        <Container className="pt-4">
+          <Row className="pt-4">
+            <Col sm={1}>
+              <h1
+                onClick={() => this.props.history.push(Routes.PROFILE_HOME)}
+                className="cursor-pointer hover-white float-right"
+              >&larr;</h1>
+            </Col>
+            <Col sm={11}>
+              <h1>Your Responses</h1>
+            </Col>
+          </Row>
+          <Row className="pt-4">
+            <Col className="d-none d-xl-block" xl={1}></Col>
+            <Col xl={6}>
+              <div className="display-card bg-white shadow">
+                <h5>Actions</h5>
+                <ButtonToolbar>
+                  <LinkContainer to={Routes.NEW_RESPONSE}>
+                    <Button variant="outline-dark">
+                      <Edit /> Update Response
                 </Button>
-              </LinkContainer>
-            </ButtonToolbar>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={1}></Col>
-          <Col className="pt-4" md={4}>
-            <h5>Response History</h5>
-            <ListGroup>
-              {this.props.responses.map((response) => (
-                makeResponse(response)
-              ))}
-            </ListGroup>
-          </Col>
-        </Row>
-      </Container>
+                  </LinkContainer>
+                </ButtonToolbar>
+              </div>
+            </Col>
+          </Row>
+          <Row className="pt-4">
+            <Col className="d-none d-xl-block" xl={1}></Col>
+            <Col xl={6}>
+              <div className="display-card bg-white shadow">
+                <h5>Response History</h5>
+                <ListGroup>
+                  {this.props.responses.map((response) => (
+                    makeResponse(response)
+                  ))}
+                </ListGroup>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
     );
   }
 }

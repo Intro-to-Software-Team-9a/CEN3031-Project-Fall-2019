@@ -46,7 +46,7 @@ class ViewDocuments extends React.Component {
                 onClick={() => this.props.history.push(Routes.PROFILE_HOME)}
                 className="cursor-pointer hover-white float-right">&larr;</h1>
             </Col>
-            <Col sm={11} xl={4}>
+            <Col sm={11}>
               <h1>Your Documents</h1>
             </Col>
           </Row>

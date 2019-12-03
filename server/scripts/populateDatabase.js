@@ -10,6 +10,7 @@ const Template = require('../models/Template.model');
 const TemplateType = require('../models/TemplateType.model');
 
 const Questionniare = require('../models/Questionnaire.model');
+const QuestionnaireResponse = require('../models/QuestionnaireResponse.model');
 
 async function dropDb() {
   await Account.remove({}).exec();
@@ -45,6 +46,11 @@ async function run() {
   template1.templateTypeId = templateType1;
   template2.templateTypeId = templateType1;
 
+  const questionnaire1 = new Questionniare(mockdata.questionnaire1);
+  const questionnaireResponse1 = new QuestionnaireResponse(mockdata.questionnaireResponse1);
+  questionnaireResponse1.questionnaireId = questionnaire1;
+  questionnaireResponse1.profileId = profile1;
+
   // save should work
   await profile1.save();
   await account1.save();
@@ -61,8 +67,8 @@ async function run() {
   await account2.save();
   await profile2.save();
 
-  const questionnaire1 = new Questionniare(mockdata.questionnaire1);
   await questionnaire1.save();
+  await questionnaireResponse1.save();
 }
 
 run().then(() => {
