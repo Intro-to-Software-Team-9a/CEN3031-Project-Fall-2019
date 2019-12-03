@@ -99,7 +99,7 @@ async function purchase(req, res) {
     }).exec();
 
     let total = 0;
-    purchasedTemplates.forEach((x) => { total += x.priceInCents / 100; });
+    purchasedTemplates.forEach((x) => { total += x.priceInCents; });
 
     // PAYPAL
     const order = await paypalLib.getPaypalOrderById(req.body.orderID);
@@ -108,10 +108,12 @@ async function purchase(req, res) {
       return res.send(404);
     }
 
+    const priceInCents = 100 * parseFloat(order.result.purchase_units[0].amount.value) 
+
     // 5. Validate the transaction details are as expected
-    if (parseFloat(order.result.purchase_units[0].amount.value) !== total) {
+    if (priceInCents !== total) {
       res.status(400);
-      return res.send(400);
+      return res.send({ message: { p1: priceInCents, p2: total } });
     }
     // 7. Return a successful response to the client
     res.status(200);
