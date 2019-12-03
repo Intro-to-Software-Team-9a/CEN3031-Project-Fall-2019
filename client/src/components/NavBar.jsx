@@ -15,7 +15,8 @@ function NavBar({ isLoggedIn, name, doLogout }) {
           EstatePlanR
         </Navbar.Brand>
       </LinkContainer>
-      <Navbar.Collapse>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto"></Nav>
         <Nav className="mr-sm-2">
           {isLoggedIn
@@ -45,10 +46,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   doLogout: async () => {
     await dispatch(doLogout());
-    dispatch(resetApplication());
+    await dispatch(resetApplication());
+    ownProps.onLogout();
   },
 });
 
