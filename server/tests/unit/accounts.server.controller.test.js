@@ -12,12 +12,13 @@ const mongooseUtils = require('../../utils/mongoose');
 const { stubExec } = require('../helpers/utils');
 const mockData = require('../helpers/mockdata');
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const accounts = require('../../controllers/accounts.server.controller');
 
 function mockRequest() {
   return {
-    body: { email: 'test@gmail.com', password: 'i-am-a-complex-password', name: 'Test User' },
+    body: { email: 'test@gmail.com', password: 'i-am-a-complex-password', name: 'Test User', currentpassword: 'i-am-a-different-complex-password' },
     session: {},
   };
 }
@@ -64,6 +65,7 @@ describe('Accounts Controller', () => {
       Account.findOne = stubExec(sinon.stub().resolves(null));
 
       await accounts.login(req, res);
+
       assert.ok(res.status.calledWith(404));
       assert.ok(!req.session.accountId);
     });
@@ -189,7 +191,7 @@ describe('Accounts Controller', () => {
       assert.ok(!req.session.accountId);
     });
 
-    it('should return 400 and fail if password is not long enougt', async () => {
+    it('should return 400 and fail if password is not long enough', async () => {
       req.body.password = 'short';
       await accounts.createAccount(req, res);
       assert.ok(res.status.calledWith(400));
@@ -296,4 +298,139 @@ describe('Accounts Controller', () => {
     });
   });
 
+
+  describe('changeEmail', () => {
+    let req;
+    let res;
+
+
+    beforeEach(() => {
+      // stub .save() to stop database access
+      Account.prototype.save = sinon.stub().resolves();
+
+      Account.findById = stubExec(
+        sinon.stub().resolves(new Account({ ...mockData.account1.toObject(), _id: '1' }))
+      );
+
+      // reset globals
+      req = mockRequest();
+      res = mockResponse();
+
+      // stub bcrypt
+      bcrypt.compare = sinon.stub().resolves(true);
+    });
+
+    it('should return 200 and success if all args provided and mongoose resolves', async () => {
+      await accounts.changeEmail(req, res);
+      assert.ok(res.status.notCalled);
+    });
+
+    it('should return 400 and fail if missing body', async () => {
+      req.body = undefined;
+      await accounts.changeEmail(req, res);
+      assert.ok(res.status.calledWith(400));
+    });
+
+    it('should return 400 and fail if missing email', async () => {
+      req.body.email = undefined;
+      await accounts.changeEmail(req, res);
+      assert.ok(res.status.calledWith(400));
+    });
+
+    it('should return 400 and fail if email is invalid', async () => {
+      req.body.email = 'not an email';
+      await accounts.changeEmail(req, res);
+      assert.ok(res.status.calledWith(400));
+    });
+
+    it('should return 400 and fail if missing password', async () => {
+      req.body.password = undefined;
+      await accounts.changeEmail(req, res);
+      assert.ok(res.status.calledWith(400));
+    });
+
+    it('should return 404 and fail if no matching account found', async () => {
+      Account.findById = stubExec(sinon.stub().resolves(null));
+
+      await accounts.changeEmail(req, res);
+
+      assert.ok(res.status.calledWith(404));
+    });
+
+    it('should return 401 and fail if no password is incorrect', async () => {
+      // incorrect password
+      bcrypt.compare = sinon.stub().returns(false);
+
+      await accounts.changeEmail(req, res);
+      assert.ok(res.status.calledWith(401));
+    });
+  });
+
+  describe('changePassword', () => {
+    let req;
+    let res;
+
+
+    beforeEach(() => {
+      // stub .save() to stop database access
+      Account.prototype.save = sinon.stub().resolves();
+
+      Account.findById = stubExec(
+        sinon.stub().resolves(new Account({ ...mockData.account1.toObject(), _id: '1' }))
+      );
+
+      // reset globals
+      req = mockRequest();
+      res = mockResponse();
+
+      // stub bcrypt
+      bcrypt.compare = sinon.stub().resolves(true);
+      bcrypt.hash = sinon.stub().resolves('myHash');
+    });
+
+    it('should return 200 and success if all args provided and mongoose resolves', async () => {
+      await accounts.changePassword(req, res);
+      assert.ok(res.status.notCalled);
+    });
+
+    it('should return 400 and fail if missing body', async () => {
+      req.body = undefined;
+      await accounts.changePassword(req, res);
+      assert.ok(res.status.calledWith(400));
+    });
+
+    it('should return 400 and fail if missing currentpassword', async () => {
+      req.body.currentpassword = undefined;
+      await accounts.changePassword(req, res);
+      assert.ok(res.status.calledWith(400));
+    });
+
+    it('should return 400 and fail if missing password', async () => {
+      req.body.password = undefined;
+      await accounts.changePassword(req, res);
+      assert.ok(res.status.calledWith(400));
+    });
+
+    it('should return 400 and fail if password is not long enough', async () => {
+      req.body.password = 'short';
+      await accounts.changePassword(req, res);
+      assert.ok(res.status.calledWith(400));
+    });
+
+    it('should return 404 and fail if no matching account found', async () => {
+      Account.findById = stubExec(sinon.stub().resolves(null));
+
+      await accounts.changePassword(req, res);
+
+      assert.ok(res.status.calledWith(404));
+    });
+
+    it('should return 401 and fail if no password is incorrect', async () => {
+      // incorrect password
+      bcrypt.compare = sinon.stub().returns(false);
+
+      await accounts.changePassword(req, res);
+      assert.ok(res.status.calledWith(401));
+    });
+  });
 });

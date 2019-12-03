@@ -43,13 +43,18 @@ function ProfileHome({ profile }) {
             icon={<QuestionAnswer style={{ fontSize: 40 }} />}
           />
           <IconLink
+            link={Routes.EDIT_QUESTIONNAIRE}
+            title="Edit the Questionnaire"
+            icon={<Edit style={{ fontSize: 40 }} />}
+          />
+          <IconLink
             link={Routes.USER_SETTINGS}
             title="Manage your Account"
             icon={<Settings style={{ fontSize: 40 }} />}
           />
           {
-            profile.role.isAdmin &&
-            <div>
+            profile.role.isAdmin
+            && <div>
             <IconLink
               link={Routes.EDIT_QUESTIONNAIRE}
               title="Edit the Questionnaire"
@@ -58,7 +63,7 @@ function ProfileHome({ profile }) {
             <IconLink
               link={Routes.MANAGE_TEMPLATES}
               title="Manage Templates"
-              icon={<DescriptionOutlinedIcon style={{ fontSize:40 }} />}
+              icon={<DescriptionOutlinedIcon style={{ fontSize: 40 }} />}
             />
             </div>
           }

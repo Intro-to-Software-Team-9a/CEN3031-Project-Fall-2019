@@ -7,7 +7,10 @@ export const Routes = {
   EDIT_QUESTIONNAIRE: '/edit-questionnaire',
   NEW_RESPONSE: '/edit-response',
   VIEW_RESPONSES: '/view-responses',
+  CHANGE_PASSWORD: '/change-password',
+  CHANGE_EMAIL: '/change-email',
   VIEW_RESPONSE: (id) => `/view-response/${id}`,
   USER_SETTINGS: '/user-settings',
   MANAGE_TEMPLATES: '/manage-templates',
+
 };

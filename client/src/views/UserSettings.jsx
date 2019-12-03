@@ -2,6 +2,7 @@
 import React from 'react';
 import { Row, Container, Col } from 'react-bootstrap';
 import UserInfo from '../components/UserInfo';
+import ChangeInfoActions from '../components/ChangeInfoActions';
 import PermanentActions from '../components/PermanentActions';
 import { Routes } from '../utils/constants';
 
@@ -37,6 +38,7 @@ class UserSettings extends React.Component {
           <Col md={1}></Col>
           <Col>
             <UserInfo />
+            <ChangeInfoActions />
             <PermanentActions onSuccessfulDelete={this.redirectToHome} />
           </Col>
         </Row>
