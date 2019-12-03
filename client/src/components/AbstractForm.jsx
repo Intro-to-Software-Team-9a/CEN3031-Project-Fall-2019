@@ -37,7 +37,7 @@ export default function AbstractForm({
             {state.error}
           </Alert>
           : ''}
-        {hideSubmitButton ? '' : <Button variant="outline-dark" type="submit">Submit</Button>}
+        {hideSubmitButton ? '' : <Button variant="secondary" type="submit">Submit</Button>}
       </Form>
     </div>
   );

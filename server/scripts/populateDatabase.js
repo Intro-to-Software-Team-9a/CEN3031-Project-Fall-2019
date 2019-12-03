@@ -31,6 +31,8 @@ async function run() {
   const document2 = new Document(mockdata.document2);
   const profile1 = new Profile(mockdata.profile1);
   const templateType1 = new TemplateType(mockdata.templateType1);
+  const templateType2 = new TemplateType(mockdata.templateType2);
+  const templateType3 = new TemplateType(mockdata.templateType3);
   const template1 = new Template(mockdata.template1);
   const template2 = new Template(mockdata.template2);
 
@@ -55,6 +57,8 @@ async function run() {
   await profile1.save();
   await account1.save();
   await templateType1.save();
+  await templateType2.save();
+  await templateType3.save();
   await template1.save();
   await template2.save();
   await document1.save();

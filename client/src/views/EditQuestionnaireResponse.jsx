@@ -45,6 +45,7 @@ class EditQuestionnaireResponse extends React.Component {
             </Col>
           </Row>
         </Container>
+        <div className="spacing"></div>
       </div>
     );
   }

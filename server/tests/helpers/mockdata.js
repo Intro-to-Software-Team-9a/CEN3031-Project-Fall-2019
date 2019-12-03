@@ -50,6 +50,16 @@ module.exports = {
     fileName: 'intro.docx',
     priceInCents: 1000,
   }),
+  templateType2: new TemplateType({
+    title: 'Living Will',
+    fileName: 'livingwill.docx',
+    priceInCents: 5000,
+  }),
+  templateType3: new TemplateType({
+    title: 'Will',
+    fileName: 'will.docx',
+    priceInCents: 4999,
+  }),
   template1: new Template({
     data: Buffer.from('YWZkc2tmanNh'),
   }),

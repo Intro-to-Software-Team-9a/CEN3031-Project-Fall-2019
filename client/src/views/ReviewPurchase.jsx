@@ -11,49 +11,61 @@ import PaypalButton1 from '../components/PaypalButton';
 function ReviewPurchase({ templates, onBack, onFinish }) {
   const totalPurchase = templates.reduce((accum, template) => accum + template.priceInCents, 0);
   return (
-    <Container fluid className="pt-4">
-      <Row>
-        <Col md={1}>
-          <h1 onClick={onBack} className="cursor-pointer hover-white float-right">&larr;</h1>
-        </Col>
-        <Col>
-          <h1>Review Your Purchase</h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={1}></Col>
-        <Col>
-          <h5>Your Cart</h5>
-          <TemplateList templates={templates} />
-        </Col>
-      </Row>
+    <div className="min-vh-100 bg-three-people">
+      <div className="spacing"></div>
+      <Container className="pt-4" fluid>
+        <Row className="pt-4">
+          <Col sm={1}></Col>
+          <Col sm={4}>
+            <div className="display-card bg-white shadow">
+              <h1>
+                <span onClick={onBack} className="cursor-pointer">&larr;</span>
+                &nbsp;
+                Review Your Purchase
+              </h1>
+            </div>
+          </Col>
+        </Row>
 
-      <br />
-      <Row>
-        <Col md={1}></Col>
-        <Col md={2}>
-          <h5>Purchase Info</h5>
-          <div>
-            {templates.map((template) => (
-              <p>
-                {template.title}
-                <span className="float-right">{formatCurrency(template.priceInCents)}</span>
-              </p>
-            ))}
+        <Row className="pt-4">
+          <Col className="d-none d-xl-block" xl={1}></Col>
+          <Col xl={4}>
+            <div className="display-card bg-white shadow">
+              <h5>Your Cart</h5>
+              <TemplateList templates={templates} />
+            </div>
+          </Col>
+        </Row>
 
-            <p className="font-weight-bold">
-              Total
+        <Row className="pt-4">
+          <Col className="d-none d-xl-block" xl={1}></Col>
+          <Col xl={2}>
+            <div className="display-card bg-white shadow">
+
+              <h5 className="font-weight-bold">Purchase Summary</h5>
+              <div>
+                {templates.map((template) => (
+                  <p>
+                    {template.title}
+                    <span className="float-right">{formatCurrency(template.priceInCents)}</span>
+                  </p>
+                ))}
+
+                <p className="font-weight-bold">
+                  Total
               <span className="float-right font-weight-bold">{formatCurrency(totalPurchase)}</span>
-            </p>
-            <PaypalButton1
-              totalPurchase={totalPurchase}
-              onFinish = {onFinish}
-            />
-          </div>
-        </Col>
-      </Row>
-      <br />
-    </Container>
+                </p>
+                <PaypalButton1
+                  totalPurchase={totalPurchase}
+                  onFinish={onFinish}
+                />
+              </div>
+            </div>
+          </Col>
+        </Row>
+        <br />
+      </Container>
+    </div>
   );
 }
 

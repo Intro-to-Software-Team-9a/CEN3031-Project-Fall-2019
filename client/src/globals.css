@@ -49,6 +49,13 @@ li {
   animation: fadein 0.2s;
 }
 
+
+.bg-family {
+  background: url('/family.jpg');
+  background-size: cover;
+  animation: fadein 0.2s;
+}
+
 .bg-light {
   animation: fadein 0.2s;
 }
