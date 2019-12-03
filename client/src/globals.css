@@ -1,6 +1,7 @@
 body,
 html {
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
+    font-family: 'PT Serif', serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -27,6 +28,18 @@ button, p, span, label, li {
     cursor: default !important;
 }
 
-html {
-    padding-bottom: 100px;
+.bg-two-people { 
+    background: url('/twopeople.jpg');
+    background-size: cover;
+}
+
+
+.bg-three-people { 
+    background: url('/threepeople.jpg');
+    background-size: cover;
+}
+
+.display-card {
+    border-radius: 20px;
+    padding: 20px;
 }

@@ -17,59 +17,57 @@ function ProfileHome({ profile }) {
   if (!profile) return '';
 
   return (
-    <Container className="pt-4">
-      <Row>
-        <Col md={5}>
-          <div className="spacing"></div>
-          <h1>Welcome, {profile.name}</h1>
-          <br />
-          <h5 className="font-weight-normal text-muted">
-            Here are the tasks you can accomplish.
-          </h5>
-          <div className="spacing"></div>
-        </Col>
-        <Col md={1} />
-        <Col md={6}>
-          <br />
-          <div className="spacing"></div>
-          <IconLink
-            link={Routes.VIEW_DOCUMENTS}
-            title="View Your Documents"
-            icon={<FolderShared style={{ fontSize: 40 }} />}
-          />
-          <IconLink
-            link={Routes.VIEW_RESPONSES}
-            title="View/Edit Responses"
-            icon={<QuestionAnswer style={{ fontSize: 40 }} />}
-          />
-          <IconLink
-            link={Routes.EDIT_QUESTIONNAIRE}
-            title="Edit the Questionnaire"
-            icon={<Edit style={{ fontSize: 40 }} />}
-          />
-          <IconLink
-            link={Routes.USER_SETTINGS}
-            title="Manage your Account"
-            icon={<Settings style={{ fontSize: 40 }} />}
-          />
-          {
-            profile.role.isAdmin
-            && <div>
-            <IconLink
-              link={Routes.EDIT_QUESTIONNAIRE}
-              title="Edit the Questionnaire"
-              icon={<Edit style={{ fontSize: 40 }} />}
-            />
-            <IconLink
-              link={Routes.MANAGE_TEMPLATES}
-              title="Manage Templates"
-              icon={<DescriptionOutlinedIcon style={{ fontSize: 40 }} />}
-            />
+    <div className="min-vh-100 bg-two-people">
+      <Container>
+        <Row className="align-items-center vh-100">
+          <Col xl={6}>
+            <div className="w-100 bg-white d-inline-block display-card shadow">
+              <div className="p-4">
+                <h1>Welcome, {profile.name}</h1>
+                <br />
+                <h5 className="font-weight-normal text-muted">
+                  Here are the tasks you can accomplish.</h5>
+              </div>
+              <div className="p-4">
+                <IconLink
+                  link={Routes.VIEW_DOCUMENTS}
+                  title="View Your Documents"
+                  icon={<FolderShared style={{ fontSize: 40 }} />}
+                />
+                <IconLink
+                  link={Routes.VIEW_RESPONSES}
+                  title="View/Edit Responses"
+                  icon={<QuestionAnswer style={{ fontSize: 40 }} />}
+                />
+                <IconLink
+                  link={Routes.USER_SETTINGS}
+                  title="Manage your Account"
+                  icon={<Settings style={{ fontSize: 40 }} />}
+                />
+                {
+                  profile.role.isAdmin
+                  && <div>
+                    <IconLink
+                      link={Routes.EDIT_QUESTIONNAIRE}
+                      title="Edit the Questionnaire"
+                      icon={<Edit style={{ fontSize: 40 }} />}
+                    />
+                    <IconLink
+                      link={Routes.MANAGE_TEMPLATES}
+                      title="Manage Templates"
+                      icon={<DescriptionOutlinedIcon style={{ fontSize: 40 }} />}
+                    />
+                  </div>
+                }
+              </div>
             </div>
-          }
-        </Col>
-      </Row>
-    </Container >
+            <div className="spacing"></div>
+            <div className="spacing"></div>
+            <div className="spacing"></div>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }
 

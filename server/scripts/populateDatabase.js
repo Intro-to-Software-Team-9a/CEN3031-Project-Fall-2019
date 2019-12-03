@@ -39,6 +39,8 @@ async function run() {
   document1.templateId = template1;
   document2.profileId = profile1;
   document2.templateId = template1;
+  profile1.ownedTemplateTypes = [templateType1];
+
 
   template1.templateTypeId = templateType1;
   template2.templateTypeId = templateType1;
@@ -46,11 +48,11 @@ async function run() {
   // save should work
   await profile1.save();
   await account1.save();
-  await document1.save();
-  await document2.save();
   await templateType1.save();
   await template1.save();
   await template2.save();
+  await document1.save();
+  await document2.save();
 
   const account2 = new Account(mockdata.account2);
   const profile2 = new Profile(mockdata.profile2);

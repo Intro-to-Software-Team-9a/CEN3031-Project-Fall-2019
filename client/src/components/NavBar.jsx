@@ -10,26 +10,24 @@ import { Routes } from '../utils/constants';
 
 function NavBar({ isLoggedIn, name, doLogout }) {
   return (
-    <Navbar expand="lg">
+    <Navbar className="bg-white shadow-sm fixed-top" expand="lg">
       <LinkContainer to={Routes.HOME}>
         <Navbar.Brand>
           EstatePlanR
         </Navbar.Brand>
       </LinkContainer>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
+      <Navbar.Collapse>
         <Nav className="mr-auto"></Nav>
         <Nav className="mr-sm-2">
           {isLoggedIn
             ? <React.Fragment>
               <LinkContainer to={Routes.PROFILE_HOME}><Nav.Link>{name}</Nav.Link></LinkContainer>
-              &nbsp;&nbsp;
-              <Button onClick={doLogout} variant="outline-dark">Logout</Button>
-              <Link to='/user-settings'><Button className="ml-2" variant="outline-dark">Settings</Button></Link>
+              <Nav.Link onClick={doLogout}>Logout</Nav.Link>
+              <LinkContainer to={Routes.USER_SETTINGS}><Nav.Link>Settings</Nav.Link></LinkContainer>
             </React.Fragment>
             : <React.Fragment>
-              <Link to={Routes.LOGIN}><Button variant="outline-dark">Log In</Button></Link>
-              <Link to={Routes.ONBOARDING}><Button className="mr-0" variant="outline-dark">Get Started</Button></Link>
+              <LinkContainer to={Routes.LOGIN}><Nav.Link>Log In</Nav.Link></LinkContainer>
+              <LinkContainer to={Routes.ONBOARDING}><Nav.Link>Get Started</Nav.Link></LinkContainer>
             </React.Fragment>
           }
         </Nav>

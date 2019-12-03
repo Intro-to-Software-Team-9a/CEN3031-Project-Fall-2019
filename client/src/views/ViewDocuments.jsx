@@ -37,37 +37,48 @@ class ViewDocuments extends React.Component {
 
   render() {
     return (
-      <Container className="pt-4" fluid>
-        <Row className="pt-4">
-          <Col md={1}>
-            <h1
-              onClick={() => this.props.history.push(Routes.PROFILE_HOME)}
-              className="cursor-pointer hover-white float-right">&larr;</h1>
-          </Col>
-          <Col className="border-right">
-            <h1>Your Documents</h1>
-            <br />
-            <div>
-              <Search filterText={this.filterText.bind(this)} />
-            </div>
-            <br />
-            <div>
-              <DocumentList
-                documentClicked={this.setDocument.bind(this)}
-                filterText={this.state.filterText} />
-            </div>
-          </Col>
-        {
-          this.props.activeTemplate
-            ? <Col md={7}>
-              <div className="px-4">
-                <CurrentDoc />
+      <div className="min-vh-100 bg-light">
+        <div className="spacing"></div>
+        <Container className="pt-4" fluid>
+          <Row className="pt-4">
+            <Col sm={1}>
+              <h1
+                onClick={() => this.props.history.push(Routes.PROFILE_HOME)}
+                className="cursor-pointer hover-white float-right">&larr;</h1>
+            </Col>
+            <Col sm={11} xl={4}>
+              <h1>Your Documents</h1>
+            </Col>
+          </Row>
+          <Row className="pt-4">
+            <Col className="d-none d-xl-block" xl={1}></Col>
+            <Col xl={4}>
+              <div className="display-card bg-white shadow">
+                <div>
+                  <Search filterText={this.filterText.bind(this)} />
+                </div>
+                <br />
+                <div>
+                  <DocumentList
+                    documentClicked={this.setDocument.bind(this)}
+                    filterText={this.state.filterText} />
+                </div>
               </div>
             </Col>
-            : ''
-        }
-        </Row>
-      </Container >
+            <Col className="d-xl-none" sm={1}></Col>
+            {
+              this.props.activeTemplate
+                ? <Col xl={6}>
+                  <div className="d-xl-none spacing-sm"></div>
+                  <div className="ml-xl-4 display-card bg-white shadow">
+                    <CurrentDoc />
+                  </div>
+                </Col>
+                : ''
+            }
+          </Row>
+        </Container>
+      </div>
     );
   }
 }
