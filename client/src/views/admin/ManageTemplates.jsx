@@ -1,16 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import {
+  Row, Col, Button, Container,
+} from 'react-bootstrap';
 import { getTemplates } from '../../actions/template';
-import { Row, Col, Button, Container } from 'react-bootstrap';
 import Template from '../../components/Template';
 import UploadTemplateModal from '../UploadTemplate';
 import NoAccess from '../NoAccess';
 import { Routes } from '../../utils/constants';
 
-const safelock = require('../../assets/safeLock.png');
-
 class ManageTemplates extends React.Component {
   templates;
+
   async componentDidMount() {
     await this.props.getTemplates();
   }
@@ -19,8 +20,8 @@ class ManageTemplates extends React.Component {
     super(props);
     this.state = {
       showModal: false,
-      selectedTemplate: null
-    }
+      selectedTemplate: null,
+    };
   }
 
   showModal(show) {
@@ -90,7 +91,7 @@ class ManageTemplates extends React.Component {
 
 const mapStateToProps = (state) => ({
   templates: state.templates.templates,
-  profile: state.profiles.profile
+  profile: state.profiles.profile,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -99,5 +100,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(ManageTemplates);
