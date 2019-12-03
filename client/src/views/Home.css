@@ -2,6 +2,10 @@ div.spacing {
   min-height: 100px;
 }
 
+div.spacing-sm {
+  min-height: 30px;
+}
+
 Button {
   /* margin-right: 10px; */
 }

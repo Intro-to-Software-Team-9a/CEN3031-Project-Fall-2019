@@ -26,27 +26,31 @@ class ViewResponse extends React.Component {
     const { response } = this.props;
 
     return (
-      <Container className="pt-4" fluid>
-        <Row className="pt-4">
-          <Col md={1}>
-            <h1
-              onClick={() => this.props.history.push(Routes.VIEW_RESPONSES)}
-              className="cursor-pointer hover-white float-right">&larr;</h1>
-          </Col>
-          <Col>
-            <h1>View Response&nbsp; <img src={safelock} alt="Checkmark" width="15" height="15"></img></h1>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={1}></Col>
-          <Col className="pt-4" md={5}>
-            <p>
-              <i>Submitted {moment(response.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</i>
-            </p>
-            <ReadOnlyQuestionnaire response={response.questionnaireResponse} />
-          </Col>
-        </Row>
-      </Container>
+      <div className="min-vh-100 bg-light">
+        <div className="spacing"></div>
+        <Container className="pt-4">
+          <Row className="pt-4">
+            <Col md={1}>
+              <h1
+                onClick={() => this.props.history.push(Routes.VIEW_RESPONSES)}
+                className="cursor-pointer hover-white float-right">&larr;</h1>
+            </Col>
+            <Col>
+              <h1>View Response&nbsp; <img src={safelock} alt="Checkmark" width="15" height="15"></img></h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-none d-xl-block" xl={1}></Col>
+            <Col className="pt-4">
+              <p>
+                <i>Submitted {moment(response.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</i>
+              </p>
+              <ReadOnlyQuestionnaire response={response.questionnaireResponse} />
+            </Col>
+          </Row>
+        </Container>
+        <div className="spacing"></div>
+      </div>
     );
   }
 }

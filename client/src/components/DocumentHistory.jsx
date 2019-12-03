@@ -34,7 +34,7 @@ class DocumentHistory extends React.Component {
       <Container>
         {activeDocuments.map((document) => (
           <Row key={`history-entry-${document._id}`} className="mb-4">
-            <Col xl={4}>
+            <Col sm={4}>
               <p className="mt-2">{moment(document.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</p>
             </Col>
             <Col>

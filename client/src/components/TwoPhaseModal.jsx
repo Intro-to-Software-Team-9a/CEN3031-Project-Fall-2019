@@ -38,6 +38,7 @@ function TwoPhaseModal({
   return (
     <React.Fragment>
       <LargeButton
+        variant="outline-secondary"
         onClick={openModal}
         icon={buttonIcon}
         text={buttonText}
@@ -54,9 +55,7 @@ function TwoPhaseModal({
         <Modal.Footer>
           {showFirstPage
             ? <React.Fragment>
-              <Button variant="outline-dark" onClick={closeModal}>
-                No, cancel
-                    </Button>
+              <Button variant="outline-dark" onClick={closeModal}>Cancel</Button>
               {firstPageActions}
             </React.Fragment>
             : <Button variant="outline-dark" onClick={onContinueClick}>Continue</Button>

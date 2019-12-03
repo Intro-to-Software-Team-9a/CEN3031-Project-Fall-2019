@@ -44,7 +44,7 @@ describe('Accounts Controller', () => {
       );
 
       Profile.findOne = stubExec(
-        sinon.stub().resolves(new Account({ ...mockData.profile1.toObject(), _id: '1' })),
+        sinon.stub().resolves(new Profile({ ...mockData.profile1.toObject(), _id: '1' })),
       );
 
       // reset globals

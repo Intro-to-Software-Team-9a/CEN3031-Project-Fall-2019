@@ -3,8 +3,8 @@ import SelectPlan from '../components/SelectPlan';
 
 import './SelectPlan.css';
 
-export default function SelectPlanView({ onFinish }) {
+export default function SelectPlanView({ onBack, onFinish }) {
   return (
-    <SelectPlan onFinish={onFinish}/>
+    <SelectPlan onBack={onBack} onFinish={onFinish}/>
   );
 }

@@ -31,7 +31,7 @@ module.exports = {
     passwordHash: '$2b$10$tOKa531X/IaHZncPznfUYu3es/D9MeK.JqbFZ3UJ0TS/5OEX6mUXa', // "password"
   }),
   profile2: new Profile({
-    name: 'Example User',
+    name: 'Admin',
     role: {
       isUser: false,
       isAdmin: true,
@@ -49,6 +49,16 @@ module.exports = {
     title: 'Introduction',
     fileName: 'intro.docx',
     priceInCents: 1000,
+  }),
+  templateType2: new TemplateType({
+    title: 'Living Will',
+    fileName: 'livingwill.docx',
+    priceInCents: 5000,
+  }),
+  templateType3: new TemplateType({
+    title: 'Will',
+    fileName: 'will.docx',
+    priceInCents: 4999,
   }),
   template1: new Template({
     data: Buffer.from('YWZkc2tmanNh'),

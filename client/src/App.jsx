@@ -40,8 +40,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <NavBar onLogout={() => this.props.history.push(Routes.HOME)} />
+      <React.Fragment>
+        <NavBar className="fixed-top" onLogout={() => this.props.history.push(Routes.HOME)} />
         <Switch>
           <Route exact path={Routes.HOME} component={Home} />
           <Route exact path={Routes.LOGIN} component={Login} />
@@ -60,7 +60,8 @@ class App extends React.Component {
           </Route>
           <Route component={NotFound} />
         </Switch>
-      </div>
+        {/* </div> */}
+      </React.Fragment>
     );
   }
 }

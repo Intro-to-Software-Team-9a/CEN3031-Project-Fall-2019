@@ -23,7 +23,7 @@ function UserInformation({ userInfo }) {
   return (
     <React.Fragment>
       <Row>
-        <Col xl={6}>
+        <Col>
           <h5>Profile Info</h5>
           <ListGroup>
             {fields.map(({ value, label }) => (
