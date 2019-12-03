@@ -67,7 +67,7 @@ async function update(req, res) {
     await template.save();
   }
 
-  if (req.body.price) {
+  if (req.body.price !== null || req.body.price !== undefined) {
     templateType.priceInCents = req.body.price;
   }
 
