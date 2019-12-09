@@ -2,7 +2,7 @@
 EstatePlanR is a web application that allows people to create estate plans in a simple, automated way.
 
 ## Link to the deployed page
-estateplanr-app.herokuapp.com
+[estateplanr-app.herokuapp.com](estateplanr-app.herokuapp.com)
 
 ## People/organizations you borrowed code from or APIs you used 
 #### Libraries and Frameworks Used
