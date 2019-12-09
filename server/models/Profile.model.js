@@ -36,7 +36,7 @@ const ProfileSchema = new Schema({
   isOnboarding: {
     type: Boolean,
     default: true,
-  }
+  },
 
 }, { timestamps: true });
 

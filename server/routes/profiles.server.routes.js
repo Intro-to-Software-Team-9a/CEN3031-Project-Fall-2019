@@ -6,7 +6,7 @@ const { authenticate } = require('../middleware/authenticate');
 const router = express.Router();
 
 router.route('/')
-  .get(authenticate(), profiles.get)
+  .get(authenticate(), profiles.get);
 
 router.route('/plan')
   .patch(authenticate(), profiles.changePlan);

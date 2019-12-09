@@ -40,7 +40,6 @@ export default class DisplayQuestionnaire extends React.Component {
    * if it would not overflow `this.props.sections.length`
    */
   changeSection(delta) {
-
     const newSection = this.state.sectionIndex + delta;
     if (newSection >= 0 && newSection < this.numSections) {
       this.setState({ sectionIndex: newSection });
@@ -71,7 +70,7 @@ export default class DisplayQuestionnaire extends React.Component {
         <Button className="mr-1" variant="outline-dark" onClick={this.previousSection}>
           Previous Section
         </Button>
-      )
+      );
     }
 
     if (!isLastSection) {

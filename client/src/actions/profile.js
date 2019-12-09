@@ -39,7 +39,6 @@ export function getProfile() {
 
       // fetch questionnaire response if necessary
       await dispatch(getResponse());
-
     } catch (error) {
       // parse HTTP message
       let { message } = error;
@@ -51,26 +50,6 @@ export function getProfile() {
   };
 }
 
-export function saveOnboardingState(newState) {
-  return async (dispatch, getState) => {
-
-    const { profiles } = getState();
-    const { onboardingState } = profiles.profile || {};
-
-    // no need to update if decrement
-    if (!!onboardingState && newState <= onboardingState) {
-      return;
-    }
-
-    await dispatch(saveProfile({ onboardingState: newState }));
-  }
-}
-
-export function finishOnboarding() {
-  return async (dispatch) => {
-    await dispatch(saveProfile({ isOnboarding: false }));
-  }
-}
 
 function saveProfile(profilePatch) {
   return async (dispatch) => {
@@ -90,5 +69,25 @@ function saveProfile(profilePatch) {
       }
       dispatch({ type: SAVE_PROFILE_FAIL, data: { message } });
     }
+  };
+}
+
+export function saveOnboardingState(newState) {
+  return async (dispatch, getState) => {
+    const { profiles } = getState();
+    const { onboardingState } = profiles.profile || {};
+
+    // no need to update if decrement
+    if (!!onboardingState && newState <= onboardingState) {
+      return;
+    }
+
+    await dispatch(saveProfile({ onboardingState: newState }));
+  };
+}
+
+export function finishOnboarding() {
+  return async (dispatch) => {
+    await dispatch(saveProfile({ isOnboarding: false }));
   };
 }

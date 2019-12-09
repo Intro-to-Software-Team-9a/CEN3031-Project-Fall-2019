@@ -19,7 +19,7 @@ const QuestionniareResponseSchema = new Schema({
   isTemp: {
     type: Boolean,
     default: false,
-  }
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('QuestionnaireResponse', QuestionniareResponseSchema);

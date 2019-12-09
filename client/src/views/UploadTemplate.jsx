@@ -1,5 +1,7 @@
 import React from 'react';
-import { InputGroup, Form, Button, Modal, Col } from 'react-bootstrap';
+import {
+  InputGroup, Form, Button, Modal, Col,
+} from 'react-bootstrap';
 import axios from 'axios';
 
 import './UploadTemplate.css';

@@ -24,8 +24,8 @@ function isValidShortAnswer(question, errorStream) {
 
   const possibleResponse = question.possibleResponses[0];
   if (![QuestionTypes.SHORT_ANSWER, QuestionTypes.LONG_ANSWER]
-      .includes(possibleResponse.responseType)
-    ) {
+    .includes(possibleResponse.responseType)
+  ) {
     errorStream.push({ data: { question }, error: 'Response has invalid type' });
     return false;
   }
