@@ -16,7 +16,7 @@ EstatePlanR is a web application that allows people to create estate plans in a 
 - [Express](https://expressjs.com/)
 - [Mongoose](https://mongoosejs.com/)
 
-## APIs Used
+#### APIs Used
 - [PayPal](https://developer.paypal.com/docs/api/overview/)
 
 
