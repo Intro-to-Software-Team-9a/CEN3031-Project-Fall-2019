@@ -17,6 +17,7 @@ import EditableShortAnswer from './EditableShortAnswer';
 const QuestionTypes = [
   { key: 'MULTIPLE_CHOICE', label: 'Multiple Choice' },
   { key: 'SHORT_ANSWER', label: 'Short Answer' },
+  { key: 'LONG_ANSWER', label: 'Long Answer' },
 ];
 
 function getQuestionTypeLabel(typeKey) {
@@ -40,7 +41,7 @@ class EditableQuestion extends React.Component {
     if (!question) return '';
 
     let answers = <div></div>;
-    if (question.questionType === 'SHORT_ANSWER') {
+    if (question.questionType === 'SHORT_ANSWER' || question.questionType === 'LONG_ANSWER') {
       answers = (
         <Form.Group>
           <Container>

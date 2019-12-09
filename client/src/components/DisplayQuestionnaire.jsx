@@ -33,6 +33,7 @@ export default function DisplayQuestionnaire({
                 currentResponse={response}
                 question={question} />;
             case 'SHORT_ANSWER':
+            case 'LONG_ANSWER':
               return <ShortAnswerQuestion
                 isDisabled={isDisabled}
                 key={question._id}
