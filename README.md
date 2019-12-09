@@ -21,20 +21,52 @@ EstatePlanR is a web application that allows people to create estate plans in a 
 
 
 ## Features Implemented
+#### Landing Page
+![landing][landing]
+
 #### Users can complete a questionnaire
+![questionnaire][questionnaire]
+![questionnaire2][questionnaire2]
+
 #### Users can create accounts
+![createaccount][createaccount]
+
 #### Users can purchase templates via PayPal
+![checkout1][checkout1]
+![checkout2][checkout2]
+![checkout3][checkout3]
+
 #### Users can manage their account via a dashboard
-#### Users can download their documents, update their documents, and view previous of documents
+![profile1][profile1]
+
+#### Users can download their documents, update their documents, and view previous version of documents
+![yourdocs][yourdocs]
+
 #### Users can add new questionnaire responses
+![editresponse][editresponse]
+
 #### Users can view previous questionnaire responses
+![responses1][responses1]
+![responses2][responses2]
+
 #### Users can change their password or email
+![changepassword][changepassword]
+
 #### Users can delete their account
+![deleteaccount][deleteaccount]
 
 #### Admins can edit the questionnaire
+![admineditquestionnaire][admineditquestionnaire]
+
 #### Admins can upload templates
+![adminaddtemplate][adminaddtemplate]
+
 #### Admins can test templates
+![admintesttemplate][admintesttemplate]
+
 #### Admins can create mock responses
+![admineditresponse][admineditresponse]
+
 
 ## Running the project
 #### Run Locally
@@ -117,3 +149,23 @@ It correctly bundles React in production mode and optimizes the build for the be
 If deploying to heroku this does not need to be run since it is handled by the heroku-postbuild script<br>
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+[adminaddtemplate]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/adminaddtemplate.png
+[admineditquestionnaire]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/admineditquestionnaire.png
+[admineditresponse]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/admineditresponse.png
+[admintesttemplate]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/admintesttemplate.png
+[changepassword]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/changepassword.png
+[checkout1]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/checkout1.png
+[checkout2]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/checkout2.png
+[checkout3]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/checkout3.png
+[createaccount]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/create-account.png
+[deleteaccount]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/deleteaccount.png
+[editresponse]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/editresponse.png
+[landing]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/landing.png
+[profile1]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/profile1.png
+[questionnaire]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/questionnaire.png
+[questionnaire2]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/questionnaire-t2.png
+[responses1]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/responses1.png
+[responses2]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/responses2.png
+[yourdocs]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/yourdocs.png
+[yourresponses]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/src/docs/images/yourresponses.png
