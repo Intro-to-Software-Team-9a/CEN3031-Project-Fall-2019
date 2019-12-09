@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { getProfile, forgetProfile } from './profile';
-import { getQuestionnaire } from './questionnaire';
+import { getQuestionnaire, submitTempForm } from './questionnaire';
 import { getTemplates } from './template';
 import { getUserInfo } from './userSettings';
 
@@ -148,6 +148,9 @@ export function doCreateAccount({ onSuccess }) {
 
       // delete form data (i.e., password)
       dispatch({ type: FORGET_CREATE_FORM });
+
+      // save current questionnaire state
+      await dispatch(submitTempForm());
 
       // refresh profile data
       await dispatch(getProfile());
