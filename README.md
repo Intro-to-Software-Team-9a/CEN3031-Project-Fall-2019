@@ -1,19 +1,73 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-This project contains an example project board meant to showcase how one can be used. The issues posted to it are not real issues.
+## EstatePlanR
+EstatePlanR is a web application that allows people to create estate plans in a simple, automated way.
 
-#### _**IMPORTANT NOTE**_ - 
-This project does not have a mongoDB connection setup. For:
-- local development: create a config file (make sure to name it config.js) in the config folder, which exports your db.uri connection. An example is provided, config/config.example.js. This file will be ignored by git so your db credentials will be kept safe when the app is deployed.
-- production: Since the config file is not pushed when you deploy your app, you must specifiy your db uri in heorku. Set the uri in heroku as specified in [this](https://devcenter.heroku.com/articles/config-vars) resource. Make sure you name the environement variable "DB_URI".
+## Link to the deployed page
+estateplanr-app.herokuapp.com
 
-## Getting Started
-This repository aims to assist you in beginning work on a MERN stack application with a solid file structure as a foundation. To get started make a copy of this template repo for your project teams.
+## People/organizations you borrowed code from or APIs you used 
+#### Libraries and Frameworks Used
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/)
+- [Bootstrap](https://getbootstrap.com/)
+- [React-Bootstrap](https://react-bootstrap.github.io/)
+- [React-Router-Bootstrap](https://github.com/react-bootstrap/react-router-bootstrap)
+- [React Router](https://reacttraining.com/react-router/)
+- [DocxTemplater](https://docxtemplater.com/)
+- [Express](https://expressjs.com/)
+- [Mongoose](https://mongoosejs.com/)
 
-Since this project will hold both the client application and the server application there will be node modules in two different places. First run `npm install` from the root. After this you will run `npm run-script install-all` from the root. From now on run this command anytime you want to install all modules again. This is a script we have defined in package.json .
+## APIs Used
+- [PayPal](https://developer.paypal.com/docs/api/overview/)
 
-This app can be deployed directly to heroku since there is a script defined in package.json which will automatically handle building and deploying the app. For more information on deploying to heroku reference the extra resources at the bottom of this file. 
 
-## File structure
+## Features Implemented
+#### Users can complete a questionnaire
+#### Users can create accounts
+#### Users can purchase templates via PayPal
+#### Users can manage their account via a dashboard
+#### Users can download their documents, update their documents, and view previous of documents
+#### Users can add new questionnaire responses
+#### Users can view previous questionnaire responses
+#### Users can change their password or email
+#### Users can delete their account
+
+#### Admins can edit the questionnaire
+#### Admins can upload templates
+#### Admins can test templates
+#### Admins can create mock responses
+
+## Running the project
+#### Run Locally
+##### 1. Configuration
+1. Create a new file `/server/config/config.js`.
+2. Copy the contents of `/server/config/config.example.js` into your new file.
+3. Replace the session secret with a new secret value.
+4. Replace the DB URI with your MongoDB URI.
+
+##### 2. `npm run dev`
+This starts the server and client simultaneously in development mode. A browser window should open automatically with the url `localhost:3000`. If not, open Chrome and navigate to that URL.
+
+#### Deploy to Heroku
+##### 0. Create Project
+Create an "app" on Heroku. As of 2019, this can be done by navigating to [dashboard.heroku.com/apps](https://dashboard.heroku.com/apps) and clicking "New".
+
+##### 1. Configuration
+Run the following commands from the project root.
+
+1. `heroku login`. This will authenticate you with Heroku.
+2. `heroku git:remote -a [your-app-name-on-heroku]`. This will configure the app to deploy to your newly-created Heroku app.
+
+Then add the following environment variables.
+
+1. `heroku config:set DB_URI=[your-mongodb-uri]`
+2. `heroku config:set SESSION_SECRET=[your-session-secret]`
+
+##### 2. Deployment
+1. `git push heroku master`. This will build and deploy EstatePlanR to Heroku.
+
+
+## Other Configuration Information
+### File structure
 #### `client` - Holds the client application
 - #### `public` - This holds all of our static files
 - #### `src`
@@ -35,27 +89,27 @@ This app can be deployed directly to heroku since there is a script defined in p
 #### `README` - This file!
 
 
-## Available Scripts
+### Available Scripts
 
 In the project directory, you can run:
 
-### `npm run-script dev`
+##### `npm run dev`
 
 Runs both the client app and the server app in development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
 
-### `npm run-script client`
+##### `npm run client`
 
 Runs just the client app in development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
 
 
-### `npm run-script server`
+##### `npm run server`
 
 Runs just the server in development mode.<br>
 
 
-### `npm run build`
+##### `npm run build`
 
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -63,17 +117,3 @@ It correctly bundles React in production mode and optimizes the build for the be
 If deploying to heroku this does not need to be run since it is handled by the heroku-postbuild script<br>
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn how to setup a local MongoDB instance for testing, check out how to [Connect to MongoDB](https://docs.mongodb.com/guides/server/drivers/).
-
-To learn how to deploy a full-stack web app to heroku, check out [this great guide](https://daveceddia.com/deploy-react-express-app-heroku/).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
