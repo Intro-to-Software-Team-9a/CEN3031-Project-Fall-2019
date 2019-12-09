@@ -73,9 +73,13 @@ export function doLogin({ onSuccess }) {
 
     try {
       await axios.post('/api/accounts/login', { email, password });
+
+      // successful login
       dispatch({ type: LOGIN_SUCCESS });
-      await dispatch(getProfile());
       dispatch({ type: FORGET_LOGIN_FORM });
+
+      // fetch profile data
+      await dispatch(getProfile());
 
       const { accounts, profiles } = getState();
       if (accounts.createState.isError || profiles.profileState.isError) {

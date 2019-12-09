@@ -21,7 +21,12 @@ export default class DisplayQuestionnaire extends React.Component {
     };
 
     this.changeSection = this.changeSection.bind(this);
-    this.nextSection = () => this.changeSection(1);
+    this.nextSection = async () => {
+      if (this.props.submitTempForm) {
+        await this.props.submitTempForm();
+      }
+      this.changeSection(1);
+    };
     this.previousSection = () => this.changeSection(-1);
   }
 

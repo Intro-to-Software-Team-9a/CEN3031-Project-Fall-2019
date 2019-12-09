@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { submitForm } from '../actions/questionnaire';
+import { submitForm, submitTempForm } from '../actions/questionnaire';
 import DisplayQuestionnaire from './DisplayQuestionnaire';
 
 
@@ -36,6 +36,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
   submitForm: () => dispatch(submitForm()),
+  submitTempForm: () => dispatch(submitTempForm()),
 });
 
 export default connect(

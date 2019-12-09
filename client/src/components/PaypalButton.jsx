@@ -13,7 +13,7 @@ function PaypalButton({ doPurchase, totalPurchase }) {
     shape: 'rect',
   };
   return (
-    <div>
+    <div style={{ maxWidth: '200px' }}>
       <PayPalButton
         paypalOptions={paypalOptions}
         buttonStyles={buttonStyles}

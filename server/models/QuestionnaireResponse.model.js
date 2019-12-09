@@ -14,6 +14,12 @@ const QuestionniareResponseSchema = new Schema({
 
   // serialized result of the response
   serializedResult: String,
+
+  // whether this response should be validated
+  isTemp: {
+    type: Boolean,
+    default: false,
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('QuestionnaireResponse', QuestionniareResponseSchema);

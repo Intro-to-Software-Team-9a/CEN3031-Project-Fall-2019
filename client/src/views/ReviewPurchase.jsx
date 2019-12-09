@@ -8,6 +8,8 @@ import { doPurchase } from '../actions/purchase';
 import { formatCurrency } from '../utils/format';
 import PaypalButton1 from '../components/PaypalButton';
 
+const safelock = require('../assets/safeLock.png');
+
 function ReviewPurchase({ templates, onBack, onFinish }) {
   const totalPurchase = templates.reduce((accum, template) => accum + template.priceInCents, 0);
   return (
@@ -22,6 +24,8 @@ function ReviewPurchase({ templates, onBack, onFinish }) {
                 <span onClick={onBack} className="cursor-pointer">&larr;</span>
                 &nbsp;
                 Review Your Purchase
+                &nbsp;
+                <img src={safelock} alt="Checkmark" width="15" height="15"></img>
               </h1>
             </div>
           </Col>
@@ -39,10 +43,11 @@ function ReviewPurchase({ templates, onBack, onFinish }) {
 
         <Row className="pt-4">
           <Col className="d-none d-xl-block" xl={1}></Col>
-          <Col xl={2}>
+          <Col xl={3}>
             <div className="display-card bg-white shadow">
 
               <h5 className="font-weight-bold">Purchase Summary</h5>
+              <p><i>We don't store your payment information.</i></p>
               <div>
                 {templates.map((template) => (
                   <p>
@@ -53,8 +58,10 @@ function ReviewPurchase({ templates, onBack, onFinish }) {
 
                 <p className="font-weight-bold">
                   Total
-              <span className="float-right font-weight-bold">{formatCurrency(totalPurchase)}</span>
+                  <span className="float-right font-weight-bold">{formatCurrency(totalPurchase)}</span>
                 </p>
+                <br />
+                <h5 className="font-weight-bold">Check Out</h5>
                 <PaypalButton1
                   totalPurchase={totalPurchase}
                   onFinish={onFinish}
