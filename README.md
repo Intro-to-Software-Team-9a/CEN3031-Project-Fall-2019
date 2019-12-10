@@ -7,7 +7,7 @@ EstatePlanR is a web application that allows people to create estate plans in a 
 ## People/organizations you borrowed code from or APIs you used 
 #### Libraries and Frameworks Used
 - [React](https://reactjs.org/)
-- [Redux](https://redux.js.org/) was used for state management
+- [Redux](https://redux.js.org/) was used for state management. In order to contribute to this application, you will need to understand how Redux works -- a good starting point is reading through the developer docs available [here](https://redux.js.org/introduction/getting-started). You need to know about async actions.
 - [Bootstrap](https://getbootstrap.com/)
 - [React-Bootstrap](https://react-bootstrap.github.io/)
 - [React-Router-Bootstrap](https://github.com/react-bootstrap/react-router-bootstrap) was used to integrate react-bootstrap with react-router
