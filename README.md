@@ -54,6 +54,14 @@ Then add the following environment variables.
 ##### 2. Deployment
 1. `git push heroku master`. This will build and deploy EstatePlanR to Heroku.
 
+#### Run Tests
+##### Unit/Integration Tests
+1. A MongoDB instance must be running on `localhost`. If MongoDB is installed, you can start it by running `service mongod start`. Alternatively, you can edit the [test config](https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/blob/master/server/tests/helpers/config.js) to point the integration tests to a cloud MongoDB instance.
+2. Run `npm run test` in the project root.
+
+##### Linting
+* To lint the server, run `npm run lint` in the project root.
+* To lint the client, run `npm run lint` in the client directory OR `npm run lint-client` in the server directory.
 
 
 ## Features Implemented
