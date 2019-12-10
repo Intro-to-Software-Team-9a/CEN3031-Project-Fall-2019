@@ -23,6 +23,10 @@ EstatePlanR is a web application that allows people to create estate plans in a 
 
 ## Running the project
 #### Run Locally
+##### 0. Installation
+1. Run `npm install`
+2. Run `cd client && npm install`
+
 ##### 1. Configuration
 1. Create a new file `/server/config/config.js`.
 2. Copy the contents of `/server/config/config.example.js` into your new file.
