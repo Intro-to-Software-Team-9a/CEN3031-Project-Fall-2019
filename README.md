@@ -23,24 +23,24 @@ EstatePlanR is a web application that allows people to create estate plans in a 
 
 ## Running the project
 #### Run Locally
-##### 0. Installation
+##### 1. Installation
 1. Run `npm install`
 2. Run `cd client && npm install`
 
-##### 1. Configuration
+##### 2. Configuration
 1. Create a new file `/server/config/config.js`.
 2. Copy the contents of `/server/config/config.example.js` into your new file.
 3. Replace the session secret with a new secret value.
 4. Replace the DB URI with your MongoDB URI.
 
-##### 2. `npm run dev`
+##### 3. `npm run dev`
 This starts the server and client simultaneously in development mode. A browser window should open automatically with the url `localhost:3000`. If not, open Chrome and navigate to that URL.
 
 #### Deploy to Heroku
-##### 0. Create Project
+##### 1. Create Project
 Create an "app" on Heroku. As of 2019, this can be done by navigating to [dashboard.heroku.com/apps](https://dashboard.heroku.com/apps) and clicking "New".
 
-##### 1. Configuration
+##### 2. Configuration
 Run the following commands from the project root.
 
 1. `heroku login`. This will authenticate you with Heroku.
@@ -51,7 +51,7 @@ Then add the following environment variables.
 1. `heroku config:set DB_URI=[your-mongodb-uri]`
 2. `heroku config:set SESSION_SECRET=[your-session-secret]`
 
-##### 2. Deployment
+##### 3. Deployment
 1. `git push heroku master`. This will build and deploy EstatePlanR to Heroku.
 
 #### Run Tests
@@ -61,7 +61,7 @@ Then add the following environment variables.
 
 ##### Linting
 * To lint the server, run `npm run lint` in the project root.
-* To lint the client, run `npm run lint` in the client directory OR `npm run lint-client` in the server directory.
+* To lint the client, run `npm run lint` in the client directory OR `npm run lint-client` in the root directory.
 
 
 ## Features Implemented
