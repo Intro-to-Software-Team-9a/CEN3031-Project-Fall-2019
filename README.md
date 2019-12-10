@@ -12,14 +12,14 @@ EstatePlanR is a web application that allows people to create estate plans in a 
 - [React-Bootstrap](https://react-bootstrap.github.io/)
 - [React-Router-Bootstrap](https://github.com/react-bootstrap/react-router-bootstrap) was used to integrate react-bootstrap with react-router
 - [React Router](https://reacttraining.com/react-router/)
-- [DocxTemplater](https://docxtemplater.com/) was used as the engine for the DOCX templates.
+- [DocxTemplater](https://docxtemplater.com/) was used as the engine for the DOCX templates. It was abstracted to a [utility library](https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/blob/master/server/utils/templating.js).
 - [Express](https://expressjs.com/)
 - [Mongoose](https://mongoosejs.com/)
 - [react-async-script-loader](https://www.npmjs.com/package/react-async-script-loader) was used to load global scripts needed for PayPal into the browser environment.
 - [react-paypal-button-v2](https://www.npmjs.com/package/react-paypal-button-v2) was used to encapsule the PayPal scripts (which are pure JS) with React. 
 
 #### APIs Used
-- [PayPal](https://developer.paypal.com/docs/api/overview/). The API was used
+- [PayPal](https://developer.paypal.com/docs/api/overview/). The API was used to do payments and validation, and the code snippets from the developer documentation were used in the [PayPal Button](https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/blob/master/client/src/components/PaypalButton.jsx) component in the client and [PayPal library](https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/blob/master/server/controllers/paypalClient.js) we wrote on the server.
 
 
 ## Features Implemented
