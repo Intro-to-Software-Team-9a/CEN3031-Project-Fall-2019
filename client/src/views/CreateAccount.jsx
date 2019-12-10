@@ -16,22 +16,27 @@ class CreateAccount extends React.Component {
   render() {
     const { onFinish, onBack } = this.props;
     return (
-      <Container className="pt-4" fluid>
-        <Row>
-          <Col md={1}>
-            <h1 onClick={onBack} className="cursor-pointer hover-white float-right">&larr;</h1>
-          </Col>
-          <Col>
-            <h1>Create Account</h1>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={1}></Col>
-          <Col md={3} className="col-4 pt-4">
-            <CreateAccontForm onFinish={onFinish} />
-          </Col>
-        </Row>
-      </Container>
+      <div className="min-vh-100 bg-light">
+        <div className="spacing"></div>
+        <Container className="pt-4" fluid>
+          <Row className="pt-4">
+            <Col sm={1}>
+              <h1 onClick={onBack} className="cursor-pointer hover-white float-right">&larr;</h1>
+            </Col>
+            <Col sm={11}>
+              <h1>Create Account</h1>
+            </Col>
+          </Row>
+          <Row className="pt-4">
+            <Col className="d-none d-xl-block" xl={1}></Col>
+            <Col xl={4}>
+              <div className="display-card bg-white shadow">
+                <CreateAccontForm onFinish={onFinish} />
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
     );
   }
 }

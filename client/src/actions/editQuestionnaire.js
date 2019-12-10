@@ -150,6 +150,13 @@ function defaultShortAnswer(state, question) {
   ];
 }
 
+function defaultLongAnswer(state, question) {
+  const shortAnswerResponses = defaultShortAnswer(state, question);
+  shortAnswerResponses[0].responseType = 'LONG_ANSWER';
+
+  return shortAnswerResponses;
+}
+
 function defaultMultipleChoiceResponse(state) {
   return {
     _id: uuid(),
@@ -258,6 +265,9 @@ export function changeQuestionType(index, newType) {
     }
     if (newType === 'SHORT_ANSWER') {
       event.data.newResponses = defaultShortAnswer(state, question);
+    }
+    if (newType === 'LONG_ANSWER') {
+      event.data.newResponses = defaultLongAnswer(state, question);
     }
     dispatch(event);
   };

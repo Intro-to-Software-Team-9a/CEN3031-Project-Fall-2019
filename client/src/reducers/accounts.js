@@ -16,6 +16,16 @@ import {
   DELETE_ACCOUNT_SUCCESS,
   DELETE_ACCOUNT_FAIL,
   RESET_APPLICATION,
+  CHANGE_CHANGE_EMAIL_FIELD,
+  CHANGE_CHANGE_PASSWORD_FIELD,
+  FORGET_CHANGE_EMAIL_FORM,
+  FORGET_CHANGE_PASSWORD_FORM,
+  CHANGE_PASSWORD_START,
+  CHANGE_PASSWORD_SUCCESS,
+  CHANGE_PASSWORD_FAIL,
+  CHANGE_EMAIL_START,
+  CHANGE_EMAIL_SUCCESS,
+  CHANGE_EMAIL_FAIL,
 } from '../actions/account';
 
 import { stateStart, stateSuccess, stateFailure } from '../utils/asyncStates';
@@ -31,7 +41,18 @@ const defaultState = {
     password: '',
     confirmpassword: '',
   },
+  changeEmailForm: {
+    email: '',
+    password: '',
+  },
+  changePasswordForm: {
+    currentpassword: '',
+    password: '',
+    confirmpassword: '',
+  },
   loginState: stateSuccess(),
+  changePasswordState: stateSuccess(),
+  changeEmailState: stateSuccess(),
   logoutState: stateSuccess(),
   createState: stateSuccess(),
   deleteAccountState: stateSuccess(),
@@ -56,6 +77,22 @@ export default function accountReducer(state = defaultState, action) {
           [action.data.fieldName]: action.data.newValue,
         },
       };
+    case CHANGE_CHANGE_EMAIL_FIELD:
+      return {
+        ...state,
+        changeEmailForm: {
+          ...state.changeEmailForm,
+          [action.data.fieldName]: action.data.newValue,
+        },
+      };
+    case CHANGE_CHANGE_PASSWORD_FIELD:
+      return {
+        ...state,
+        changePasswordForm: {
+          ...state.changePasswordForm,
+          [action.data.fieldName]: action.data.newValue,
+        },
+      };
     case CHANGE_CREATE_FIELD:
       return {
         ...state,
@@ -68,6 +105,10 @@ export default function accountReducer(state = defaultState, action) {
       return { ...state, createForm: { ...defaultState.createForm } };
     case FORGET_LOGIN_FORM:
       return { ...state, loginForm: { ...defaultState.loginForm } };
+    case FORGET_CHANGE_EMAIL_FORM:
+      return { ...state, changeEmailForm: { ...defaultState.changeEmailForm } };
+    case FORGET_CHANGE_PASSWORD_FORM:
+      return { ...state, changePasswordForm: { ...defaultState.changePasswordForm } };
     case LOGIN_START:
       return {
         ...state,
@@ -112,6 +153,36 @@ export default function accountReducer(state = defaultState, action) {
       return {
         ...state,
         createState: stateFailure(action),
+      };
+    case CHANGE_EMAIL_START:
+      return {
+        ...state,
+        changeEmailState: stateStart(),
+      };
+    case CHANGE_EMAIL_SUCCESS:
+      return {
+        ...state,
+        changeEmailState: stateSuccess(),
+      };
+    case CHANGE_EMAIL_FAIL:
+      return {
+        ...state,
+        changeEmailState: stateFailure(action),
+      };
+    case CHANGE_PASSWORD_START:
+      return {
+        ...state,
+        changePasswordState: stateStart(),
+      };
+    case CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        changePasswordState: stateSuccess(),
+      };
+    case CHANGE_PASSWORD_FAIL:
+      return {
+        ...state,
+        changePasswordState: stateFailure(action),
       };
     default:
       return state;

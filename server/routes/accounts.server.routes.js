@@ -14,6 +14,12 @@ router.route('/logout')
 router.route('/create')
   .post(accounts.createAccount);
 
+router.route('/password')
+  .post(accounts.changePassword);
+
+router.route('/email')
+  .post(accounts.changeEmail);
+
 router.route('/delete')
   .delete(authenticate(), accounts.deleteAccount);
 

@@ -150,6 +150,84 @@ async function logout(req, res) {
     return res.send();
   });
 }
+/**
+ * @param currentpassword {String}
+ * @param password {String}
+ */
+async function changePassword(req, res) {
+  if (!req.body || !req.body.currentpassword || !req.body.password) {
+    res.status(400);
+    return res.send({ message: errors.accounts.MISSING_PASSWORDS });
+  }
+
+  try {
+    const { currentpassword, password } = req.body;
+    const account = await Account.findById(req.session.accountId).exec();
+    if (!account) {
+      res.status(404);
+      return res.send({ message: errors.accounts.NOT_LOGGED_IN });
+    }
+
+    const doesMatch = await bcrypt.compare(currentpassword, account.passwordHash);
+    if (!doesMatch) {
+      res.status(401);
+      return res.send({ message: errors.accounts.WRONG_PASSWORD });
+    }
+
+    if (!isPasswordOk(password)) {
+      res.status(400);
+      return res.send({ message: errors.accounts.PASSWORD_NOT_OK });
+    }
+
+    const hash = await bcrypt.hash(password, saltRounds);
+    account.passwordHash = hash;
+    await account.save();
+    return res.send();
+  } catch (e) {
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
+  }
+}
+
+/**
+ * @param email {String}
+ * @param password {String}
+ */
+async function changeEmail(req, res) {
+  if (!req.body || !req.body.email || !req.body.password) {
+    res.status(400);
+    return res.send({ message: errors.accounts.MISSING_CREDENTIALS });
+  }
+
+  if (!validator.isEmail(req.body.email)) {
+    res.status(400);
+    return res.send({ message: errors.accounts.INVALID_EMAIL });
+  }
+
+  try {
+    const { email, password } = req.body;
+
+    const account = await Account.findById(req.session.accountId).exec();
+    if (!account) {
+      res.status(404);
+      return res.send({ message: errors.accounts.NOT_LOGGED_IN });
+    }
+
+    const doesMatch = await bcrypt.compare(password, account.passwordHash);
+    if (!doesMatch) {
+      res.status(401);
+      return res.send({ message: errors.accounts.WRONG_PASSWORD });
+    }
+
+    account.email = email;
+    await account.save();
+    return res.send();
+  } catch (e) {
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
+  }
+}
+
 
 async function deleteAccount(req, res) {
   let session;
@@ -183,5 +261,7 @@ module.exports = {
   login,
   logout,
   createAccount,
+  changePassword,
+  changeEmail,
   deleteAccount,
 };

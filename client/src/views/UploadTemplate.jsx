@@ -1,5 +1,7 @@
 import React from 'react';
-import { Form, Button, Modal } from 'react-bootstrap';
+import {
+  InputGroup, Form, Button, Modal, Col,
+} from 'react-bootstrap';
 import axios from 'axios';
 
 import './UploadTemplate.css';
@@ -13,36 +15,44 @@ class UploadTemplateModal extends React.Component {
     };
   }
 
-  onFileUpload(e) {
+  async onFileUpload(e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
 
-    let name = formData.get('templateName');
-    const price = formData.get('templatePrice');
+    const name = formData.get('templateName');
+    const dollars = formData.get('templatePriceDollars');
+    const cents = formData.get('templatePriceCents');
+
+    const price = Number(dollars) * 100 + Number(cents);
     const file = formData.get('templateFile');
 
     const currTemplate = this.props.template;
-    if (currTemplate) {
-      name = currTemplate.title;
-    }
 
-    if (file) {
+    if (!currTemplate) {
       file.arrayBuffer().then((arrayBuffer) => {
-        const buffer = Buffer.from(arrayBuffer);
-
         axios.post('/api/templates/add', {
           title: name,
           price,
           fileName: file.name,
-          data: buffer,
-        }).then(this.props.onTemplateUpload);
+          data: Buffer.from(arrayBuffer),
+        }).then(() => {
+          this.props.onTemplateUpload();
+          this.props.showModalFunc(false);
+        });
       });
     } else {
+      const buffer = file ? Buffer.from(await file.arrayBuffer()) : null;
+
       axios.patch('/api/templates/update', {
+        templateTypeId: currTemplate._id,
         title: name,
+        data: (buffer === null || buffer.length === 0) ? undefined : buffer,
         price,
-      }).then(this.props.onTemplateUpload);
+      }).then(() => {
+        this.props.onTemplateUpload();
+        this.props.showModalFunc(false);
+      });
     }
   }
 
@@ -56,9 +66,12 @@ class UploadTemplateModal extends React.Component {
     const currTemplate = this.props.template;
 
     const modalTitle = currTemplate == null ? 'Create New Form Template' : (`Edit Form: ${currTemplate.title}`);
+    const initialDollars = currTemplate == null ? 0 : Math.floor(currTemplate.priceInCents / 100);
+    const initialCents = currTemplate == null ? '00' : currTemplate.priceInCents % 100;
+    const initialTitle = currTemplate == null ? '' : currTemplate.title;
 
     return (
-      <Modal {...this.props} size="lg" centered>
+      <Modal {...this.props} size="md" centered className="border border-dark">
         <Modal.Header closeButton>
           <Modal.Title>
             {modalTitle}
@@ -66,21 +79,37 @@ class UploadTemplateModal extends React.Component {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={this.onFileUpload.bind(this)}>
-            { currTemplate == null
-              && <Form.Group>
-                <Form.Label htmlFor="templateNameInput">Template Name</Form.Label>
-                <Form.Control size="md" type="text" id="templateNameInput" name="templateName"/>
-              </Form.Group>
-            }
+            <Form.Group>
+              <Form.Label htmlFor="templateNameInput">Template Name</Form.Label>
+              <Form.Control size="md" type="text" id="templateNameInput" name="templateName" defaultValue={initialTitle} />
+            </Form.Group>
+            <p className="mb-1">File</p>
             <Form.Group className="custom-file">
               <Form.Label className="custom-file-label" htmlFor="templateFileInput">{selectedFile}</Form.Label>
-              <Input type="file" className="custom-file-input" id="templateFileInput" name="templateFile" onChange={this.onFileSelect.bind(this)}/>
+              <Input type="file" className="custom-file-input" id="templateFileInput" name="templateFile" onChange={this.onFileSelect.bind(this)} />
             </Form.Group>
             <Form.Group>
-              <Form.Label htmlFor="templatePriceInput">Template Price</Form.Label>
-              <Form.Control size="md" type="text" id="templatePriceInput" name="templatePrice"/>
+              <Form.Label htmlFor="templatePriceDollarsInput">Price</Form.Label>
+              <Form.Row>
+                <Col md={6}>
+                  <InputGroup>
+                    <InputGroup.Prepend>
+                      <InputGroup.Text id="inputGroupPrepend">$</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <Form.Control size="md" type="text" id="templatePriceDollarsInput" name="templatePriceDollars" defaultValue={initialDollars} />
+                 </InputGroup>
+                </Col>
+                <Col>
+                  <InputGroup>
+                    <InputGroup.Prepend>
+                      <InputGroup.Text id="inputGroupPrepend">&#162;</InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <Form.Control size="md" type="text" id="templatePriceCentsInput" name="templatePriceCents" defaultValue={initialCents} />
+                 </InputGroup>
+                </Col>
+              </Form.Row>
             </Form.Group>
-            <Button type="submit" className="uploadButton">Save</Button>
+            <Button variant="secondary" type="submit" className="uploadButton">Save</Button>
           </Form>
         </Modal.Body>
       </Modal>

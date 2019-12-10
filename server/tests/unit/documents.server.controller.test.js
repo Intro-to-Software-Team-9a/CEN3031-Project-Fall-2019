@@ -44,7 +44,12 @@ describe('Documents Controller', () => {
 
     beforeEach(() => {
       // stub models to stop database access
-      Template.findOne = sinon.stub().resolves({ ...mockData.template1.toObject(), templateTypeId });
+      Template.findOne = () => ({
+        sort: stubExec(sinon.stub().resolves({
+          ...mockData.template1.toObject(),
+          templateTypeId
+        })),
+      });
       TemplateType.findOne = sinon.stub().resolves({ ...mockData.templateType1.toObject(), _id: templateTypeId });
       Templating.generateDocumentFromData = sinon.stub().resolves(new Document(mockData.document1));
 
@@ -80,7 +85,9 @@ describe('Documents Controller', () => {
 
     it('should return 404 if templateTypeId does not exist', async () => {
       // throw error
-      Template.findOne = sinon.stub().resolves(null);
+      Template.findOne = () => ({
+        sort: stubExec(sinon.stub().resolves(null)),
+      });
 
       await documents.generate(req, res);
       assert.ok(res.status.calledWith(404));

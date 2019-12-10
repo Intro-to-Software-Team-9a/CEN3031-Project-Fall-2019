@@ -10,7 +10,7 @@ import { getDuplicateLabels } from '../utils/validation';
 
 
 /**
- * Represents a question in the EditableQuestionnaire.
+ * Represents a SHORT_ANSWER or LONG_ANSWER question in the EditableQuestionnaire.
  */
 class EditableShortAnswer extends React.Component {
   render() {

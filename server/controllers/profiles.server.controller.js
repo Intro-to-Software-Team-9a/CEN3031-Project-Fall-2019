@@ -49,8 +49,50 @@ async function changePlan(req, res) {
   }
 }
 
+/** Helper to PATCH profile */
+async function updateOnboardingCall(profileId, onboardingState, isOnboarding) {
+  const profile = await Profile.findById(profileId).exec();
+
+  if (!profile) {
+    throw new Error(errors.profile.NOT_FOUND);
+  }
+
+  if ((typeof onboardingState) !== 'undefined') {
+    profile.onboardingState = onboardingState;
+  }
+
+  if ((typeof isOnboarding) !== 'undefined') {
+    profile.isOnboarding = isOnboarding;
+  }
+
+  await profile.save();
+
+  return profile;
+}
+
+/** Change onboarding page of the user */
+async function updateOnboarding(req, res) {
+  const { profileId } = req.session;
+  const { onboardingState, isOnboarding } = req.body;
+
+  try {
+    const profile = updateOnboardingCall(profileId, onboardingState, isOnboarding);
+    return res.send({ profile });
+  } catch (error) {
+    if (error.message === errors.profile.NOT_FOUND) {
+      res.status(404);
+      return res.send({ message: errors.profile.NOT_FOUND });
+    }
+
+    res.status(500);
+    return res.send({ message: errors.other.UNKNOWN });
+  }
+}
+
 module.exports = {
   get,
   changePlan,
   changePlanCall,
+  updateOnboarding,
+  updateOnboardingCall,
 };

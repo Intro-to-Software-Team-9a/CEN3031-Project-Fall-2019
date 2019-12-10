@@ -25,10 +25,10 @@ export function removeTemplate(template) {
 export function doPurchase(order) {
   return async (dispatch, getState) => {
     let state = getState();
-  
-    const orderID = order.orderID;
-    //order = { orderID: order.orderID, payerID: order.payerID, total: total};
-    //await axios.post(`/api/paypal/paypalVerification/`, order)
+
+    const { orderID } = order;
+    // order = { orderID: order.orderID, payerID: order.payerID, total: total};
+    // await axios.post(`/api/paypal/paypalVerification/`, order)
 
     dispatch({ type: DO_PURCHASE_START });
 

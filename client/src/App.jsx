@@ -13,7 +13,6 @@ import NotFound from './views/NotFound';
 import ViewDocuments from './views/ViewDocuments';
 import ProfileHome from './views/ProfileHome';
 import UploadTemplate from './views/UploadTemplate';
-import AdminHome from './views/admin/AdminHome';
 import ManageTemplates from './views/admin/ManageTemplates';
 
 import NavBar from './components/NavBar';
@@ -29,6 +28,7 @@ import UserSettings from './views/UserSettings';
 
 import EditQuestionnaireResponse from './views/EditQuestionnaireResponse';
 import ViewResponse from './views/ViewResponse';
+import TestTemplates from './views/admin/TestTemplates';
 
 class App extends React.Component {
   async componentDidMount() {
@@ -41,8 +41,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <NavBar onLogout={() => this.props.history.push(Routes.HOME)} />
+      <React.Fragment>
+        <NavBar className="fixed-top" onLogout={() => this.props.history.push(Routes.HOME)} />
         <Switch>
           <Route exact path={Routes.HOME} component={Home} />
           <Route exact path={Routes.LOGIN} component={Login} />
@@ -55,14 +55,15 @@ class App extends React.Component {
           <Route exact path={Routes.VIEW_RESPONSE(':responseId')} component={ViewResponse} />
           <Route exact path={Routes.USER_SETTINGS} component={UserSettings} />
           <Route exact path="/upload-template" component={UploadTemplate} />
-          <Route exact path="/admin" component={AdminHome} />
-          <Route exact path="/admin/templates" component={ManageTemplates} />
+          <Route exact path={Routes.MANAGE_TEMPLATES} component={ManageTemplates} />
+          <Route exact path={Routes.TEST_TEMPLATES} component={TestTemplates} />
           <Route exact path="/">
             <Redirect to={Routes.HOME} />
           </Route>
           <Route component={NotFound} />
         </Switch>
-      </div>
+        {/* </div> */}
+      </React.Fragment>
     );
   }
 }

@@ -1,32 +1,98 @@
 body,
 html {
-    background-color: #fafafa;
+  /* background-color: #fafafa; */
+  font-family: 'PT Serif', serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    /* color: rgb(238, 218, 164); */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  /* color: rgb(238, 218, 164); */
 }
 
-button, p, span, label, li {
-    /* color: white; */
+button,
+p,
+span,
+label,
+li {
+  /* color: white; */
 }
 
 .hover-outline:hover {
-    outline: 1px solid black;
+  outline: 1px solid black;
 }
 
 .hover-white:hover {
-    color: black;
+  color: black;
 }
 
 .cursor-pointer {
-    cursor: pointer !important;
+  cursor: pointer !important;
 }
 
 .cursor-default {
-    cursor: default !important;
+  cursor: default !important;
 }
 
-html {
-    padding-bottom: 100px;
+.bg-two-people {
+  background: url('/twopeople.jpg');
+  background-size: cover;
+  animation: fadein 0.2s;
+}
+
+.bg-three-people {
+  background: url('/threepeople.jpg');
+  background-size: cover;
+  animation: fadein 0.2s;
+}
+
+
+.bg-family {
+  background: url('/family.jpg');
+  background-size: cover;
+  animation: fadein 0.2s;
+}
+
+.bg-light {
+  animation: fadein 0.2s;
+}
+
+.bg-light-grey { 
+  background: #ddd !important;
+}
+
+
+/* https://stackoverflow.com/questions/11679567/using-css-for-a-fade-in-effect-on-page-load */
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeinmove {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+.display-card {
+  border-radius: 20px;
+  padding: 20px;
+  /* animation: fadein 0.2s ease; */
+}
+
+.no-border {
+  border: none!important;
 }

@@ -6,17 +6,25 @@ import {
 
 import { selectPlan } from '../actions/selectplan';
 
-function SelectPlan({ onPlanSelect, onFinish }) {
-  function onClick(plan) {
+function SelectPlan({ onPlanSelect, onFinish, onBack }) {
+  const onClick = (plan) => {
     onPlanSelect(plan);
     onFinish();
-  }
+  };
 
   return (
-    <React.Fragment>
+    <div className="min-vh-100 bg-light">
+      <div className="spacing"></div>
       <Container className="pt-4">
-        <h1>Select Plan</h1>
-        <Row>
+        <Row className="pt-4">
+          <Col sm={1}>
+            <h1 onClick={onBack} className="cursor-pointer hover-white float-right">&larr;</h1>
+          </Col>
+          <Col sm={11}>
+            <h1>Select Plan</h1>
+          </Col>
+        </Row>
+        <Row className="pt-4">
           <Col className="col-4 pt-4">
             <div className="card">
               <h2 className="card-header">Simple</h2>
@@ -82,12 +90,11 @@ function SelectPlan({ onPlanSelect, onFinish }) {
           </Col>
         </Row>
       </Container>
-    </React.Fragment>
+    </div>
   );
 }
 
-const mapStateToProps = () => ({
-});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   onPlanSelect: (plan) => dispatch(selectPlan(plan)),

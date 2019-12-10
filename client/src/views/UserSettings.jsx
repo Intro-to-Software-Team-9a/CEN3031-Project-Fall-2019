@@ -2,6 +2,7 @@
 import React from 'react';
 import { Row, Container, Col } from 'react-bootstrap';
 import UserInfo from '../components/UserInfo';
+import ChangeInfoActions from '../components/ChangeInfoActions';
 import PermanentActions from '../components/PermanentActions';
 import { Routes } from '../utils/constants';
 
@@ -22,25 +23,29 @@ class UserSettings extends React.Component {
 
   render() {
     return (
-      <Container>
-        <Row>
-          <Col md={1}>
-            <h2 onClick={this.onBack} className="cursor-pointer hover-white float-right">&larr;</h2>
-          </Col>
-          <Col>
-            <h2>
-              Settings
-            </h2>
-          </Col>
-        </Row>
-        <Row className="pt-4">
-          <Col md={1}></Col>
-          <Col>
-            <UserInfo />
-            <PermanentActions onSuccessfulDelete={this.redirectToHome} />
-          </Col>
-        </Row>
-      </Container >
+      <div className="min-vh-100 bg-light">
+        <div className="spacing"></div>
+        <Container className="pt-4">
+          <Row className="pt-4">
+            <Col sm={1}>
+              <h1 onClick={this.onBack} className="cursor-pointer hover-white float-right">&larr;</h1>
+            </Col>
+            <Col sm={11}>
+              <h1>Manage Account</h1>
+            </Col>
+          </Row>
+          <Row className="pt-4">
+            <Col className="d-none d-xl-block" xl={1}></Col>
+            <Col xl={6}>
+              <div className="display-card bg-white shadow">
+                <UserInfo />
+                <ChangeInfoActions />
+                <PermanentActions onSuccessfulDelete={this.redirectToHome} />
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
     );
   }
 }

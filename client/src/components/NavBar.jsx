@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navbar, Nav, Button } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Link } from 'react-router-dom';
 import './NavBar.css';
 
 import { doLogout, resetApplication } from '../actions/account';
@@ -10,7 +9,7 @@ import { Routes } from '../utils/constants';
 
 function NavBar({ isLoggedIn, name, doLogout }) {
   return (
-    <Navbar expand="lg">
+    <Navbar className="bg-white shadow-sm fixed-top" expand="lg">
       <LinkContainer to={Routes.HOME}>
         <Navbar.Brand>
           EstatePlanR
@@ -23,13 +22,12 @@ function NavBar({ isLoggedIn, name, doLogout }) {
           {isLoggedIn
             ? <React.Fragment>
               <LinkContainer to={Routes.PROFILE_HOME}><Nav.Link>{name}</Nav.Link></LinkContainer>
-              &nbsp;&nbsp;
-              <Button onClick={doLogout} variant="outline-dark">Logout</Button>
-              <Link to='/user-settings'><Button className="ml-2" variant="outline-dark">Settings</Button></Link>
+              <Nav.Link onClick={doLogout}>Logout</Nav.Link>
+              <LinkContainer to={Routes.USER_SETTINGS}><Nav.Link>Settings</Nav.Link></LinkContainer>
             </React.Fragment>
             : <React.Fragment>
-              <Link to={Routes.LOGIN}><Button variant="outline-dark">Log In</Button></Link>
-              <Link to={Routes.ONBOARDING}><Button className="mr-0" variant="outline-dark">Get Started</Button></Link>
+              <LinkContainer to={Routes.LOGIN}><Nav.Link>Log In</Nav.Link></LinkContainer>
+              <LinkContainer to={Routes.ONBOARDING}><Nav.Link>Get Started</Nav.Link></LinkContainer>
             </React.Fragment>
           }
         </Nav>
@@ -48,10 +46,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, ownProps) => ({
   doLogout: async () => {
     await dispatch(doLogout());
-    dispatch(resetApplication());
+    await dispatch(resetApplication());
+    ownProps.onLogout();
   },
 });
 

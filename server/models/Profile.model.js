@@ -24,6 +24,20 @@ const ProfileSchema = new Schema({
   ownedTemplateTypes: [{ type: Schema.Types.ObjectId, ref: 'TemplateType' }],
 
   plan: String,
+
+
+  // page number in onboarding
+  onboardingState: {
+    type: Number,
+    default: 0,
+  },
+
+  // whether the profile has finished onboarding
+  isOnboarding: {
+    type: Boolean,
+    default: true,
+  },
+
 }, { timestamps: true });
 
 module.exports = mongoose.model('Profile', ProfileSchema);
