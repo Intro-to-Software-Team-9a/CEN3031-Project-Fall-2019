@@ -5,14 +5,16 @@
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
 
 function environment() {
+  let clientId;
+  let clientSecret;
   if (process.env.NODE_ENV === 'production') {
-    const clientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
-    const clientSecret = process.env.REACT_APP_PAYPAL_SECRET;
+    clientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
+    clientSecret = process.env.REACT_APP_PAYPAL_SECRET;
   } else {
     /* eslint-disable-next-line global-require, import/no-unresolved */
     const paypalVars = require('../config/config');
-    const clientId = paypalVars.paypal.clientID;
-    const clientSecret = paypalVars.paypal.secret;
+    clientId = paypalVars.paypal.clientID;
+    clientSecret = paypalVars.paypal.secret;
   }
 
   return new checkoutNodeJssdk.core.SandboxEnvironment(
