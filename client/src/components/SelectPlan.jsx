@@ -30,15 +30,18 @@ function SelectPlan({ onPlanSelect, onFinish, onBack }) {
               <h2 className="card-header">Simple</h2>
               <div className="card-body">
                 <ul className="list-group">
-                  <li className="list-group-item">Item 1</li>
-                  <li className="list-group-item">Item 2</li>
-                  <li className="list-group-item">Item 3</li>
-                  <li className="list-group-item">Item 4</li>
-                  <li className="list-group-item">Item 5</li>
+                  <p>
+                    &emsp;A simple plan is perfect for those persons who have
+                    estate planning documents in effect and need to update,
+                    amend or add supplemental documents to their plan.
+                    Make your end of life wishes known and document the
+                    specifics of the estate planning documents to help
+                    ensure your assets are safe, protected and managed.
+                  </p>
                 </ul>
               </div>
               <div className="card-footer d-flex justify-content-between">
-                <span className="planPrice">$50</span>
+                <span className="planPrice">$99</span>
                 <Button variant="outline-dark mr-0"
                   onClick={() => onClick('BASIC_PLAN')}>
                   Buy now
@@ -47,19 +50,19 @@ function SelectPlan({ onPlanSelect, onFinish, onBack }) {
             </div>
           </Col>
           <Col className="col-4 pt-4">
-            <div className="card">
+            <div className="card h-100">
               <h2 className="card-header">Advanced</h2>
               <div className="card-body">
                 <ul className="list-group">
-                  <li className="list-group-item">Item 1</li>
-                  <li className="list-group-item">Item 2</li>
-                  <li className="list-group-item">Item 3</li>
-                  <li className="list-group-item">Item 4</li>
-                  <li className="list-group-item">Item 5</li>
+                  <p>
+                    &emsp;Powers of Attorney, Advanced Directives and end of
+                    life wishes are necessary tools to ensure that
+                    your wishes are all included in an Advanced estate plan.
+                  </p>
                 </ul>
               </div>
               <div className="card-footer d-flex justify-content-between">
-                <span className="planPrice">$50</span>
+                <span className="planPrice">$299</span>
                 <Button variant="outline-dark mr-0"
                   onClick={() => onClick('ADVANCED_PLAN')}>
                   Buy now
@@ -68,19 +71,22 @@ function SelectPlan({ onPlanSelect, onFinish, onBack }) {
             </div>
           </Col>
           <Col className="col-4 pt-4">
-            <div className="card">
+            <div className="card h-100">
               <h2 className="card-header">Comprehensive</h2>
               <div className="card-body">
                 <ul className="list-group">
-                  <li className="list-group-item">Item 1</li>
-                  <li className="list-group-item">Item 2</li>
-                  <li className="list-group-item">Item 3</li>
-                  <li className="list-group-item">Item 4</li>
-                  <li className="list-group-item">Item 5</li>
+                  <p>
+                    &emsp;The use of wills, trusts, powers of attorney,
+                    and other strategies can help ensure your assets are safe,
+                    protected and managed. A comprehensive plan provides different legal
+                    tools and the opportunity to use attorneys to confirm
+                    that the plans selected will protect the assets you
+                    have acquired and achieve your planning goals.
+                  </p>
                 </ul>
               </div>
               <div className="card-footer d-flex justify-content-between">
-                <span className="planPrice">$50</span>
+                <span className="planPrice">$599</span>
                 <Button variant="outline-dark mr-0"
                   onClick={() => onClick('COMPREHENSIVE_PLAN')}>
                   Buy now
