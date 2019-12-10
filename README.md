@@ -21,6 +21,36 @@ EstatePlanR is a web application that allows people to create estate plans in a 
 #### APIs Used
 - [PayPal](https://developer.paypal.com/docs/api/overview/). The API was used to do payments and validation, and the code snippets from the developer documentation were used in the [PayPal Button](https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/blob/master/client/src/components/PaypalButton.jsx) component in the client and [PayPal library](https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/blob/master/server/controllers/paypalClient.js) we wrote on the server.
 
+## Running the project
+#### Run Locally
+##### 1. Configuration
+1. Create a new file `/server/config/config.js`.
+2. Copy the contents of `/server/config/config.example.js` into your new file.
+3. Replace the session secret with a new secret value.
+4. Replace the DB URI with your MongoDB URI.
+
+##### 2. `npm run dev`
+This starts the server and client simultaneously in development mode. A browser window should open automatically with the url `localhost:3000`. If not, open Chrome and navigate to that URL.
+
+#### Deploy to Heroku
+##### 0. Create Project
+Create an "app" on Heroku. As of 2019, this can be done by navigating to [dashboard.heroku.com/apps](https://dashboard.heroku.com/apps) and clicking "New".
+
+##### 1. Configuration
+Run the following commands from the project root.
+
+1. `heroku login`. This will authenticate you with Heroku.
+2. `heroku git:remote -a [your-app-name-on-heroku]`. This will configure the app to deploy to your newly-created Heroku app.
+
+Then add the following environment variables.
+
+1. `heroku config:set DB_URI=[your-mongodb-uri]`
+2. `heroku config:set SESSION_SECRET=[your-session-secret]`
+
+##### 2. Deployment
+1. `git push heroku master`. This will build and deploy EstatePlanR to Heroku.
+
+
 
 ## Features Implemented
 #### Landing Page
@@ -68,37 +98,6 @@ EstatePlanR is a web application that allows people to create estate plans in a 
 
 #### Admins can create mock responses
 ![admineditresponse][admineditresponse]
-
-
-## Running the project
-#### Run Locally
-##### 1. Configuration
-1. Create a new file `/server/config/config.js`.
-2. Copy the contents of `/server/config/config.example.js` into your new file.
-3. Replace the session secret with a new secret value.
-4. Replace the DB URI with your MongoDB URI.
-
-##### 2. `npm run dev`
-This starts the server and client simultaneously in development mode. A browser window should open automatically with the url `localhost:3000`. If not, open Chrome and navigate to that URL.
-
-#### Deploy to Heroku
-##### 0. Create Project
-Create an "app" on Heroku. As of 2019, this can be done by navigating to [dashboard.heroku.com/apps](https://dashboard.heroku.com/apps) and clicking "New".
-
-##### 1. Configuration
-Run the following commands from the project root.
-
-1. `heroku login`. This will authenticate you with Heroku.
-2. `heroku git:remote -a [your-app-name-on-heroku]`. This will configure the app to deploy to your newly-created Heroku app.
-
-Then add the following environment variables.
-
-1. `heroku config:set DB_URI=[your-mongodb-uri]`
-2. `heroku config:set SESSION_SECRET=[your-session-secret]`
-
-##### 2. Deployment
-1. `git push heroku master`. This will build and deploy EstatePlanR to Heroku.
-
 
 ## Other Configuration Information
 ### File structure
