@@ -14,7 +14,7 @@ import ViewDocuments from './views/ViewDocuments';
 import ProfileHome from './views/ProfileHome';
 import UploadTemplate from './views/UploadTemplate';
 import ManageTemplates from './views/admin/ManageTemplates';
-import Terms_Conditions from './views/Terms_Conditions';
+import TermsConditions from './views/Terms_Conditions';
 
 import NavBar from './components/NavBar';
 import EditQuestionnaire from './views/EditQuestionnaire';
@@ -47,7 +47,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path={Routes.HOME} component={Home} />
           <Route exact path={Routes.LOGIN} component={Login} />
-          <Route exact path={Routes.TERMS_CONDITIONS} component={Terms_Conditions} />
+          <Route exact path={Routes.TERMS_CONDITIONS} component={TermsConditions} />
           <Route exact path={Routes.VIEW_DOCUMENTS} component={ViewDocuments} />
           <Route exact path={Routes.ONBOARDING} component={Onboarding} />
           <Route exact path={Routes.PROFILE_HOME} component={ProfileHome} />

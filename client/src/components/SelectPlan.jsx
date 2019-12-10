@@ -31,8 +31,12 @@ function SelectPlan({ onPlanSelect, onFinish, onBack }) {
               <div className="card-body">
                 <ul className="list-group">
                   <p>
-                    &emsp;A simple plan is perfect for those persons who have estate planning documents in effect and need to update, amend or add supplemental documents to their plan.
-                    Make your end of life wishes known and document the specifics of the estate planning documents to help ensure your assets are safe, protected and managed.
+                    &emsp;A simple plan is perfect for those persons who have
+                    estate planning documents in effect and need to update,
+                    amend or add supplemental documents to their plan.
+                    Make your end of life wishes known and document the
+                    specifics of the estate planning documents to help
+                    ensure your assets are safe, protected and managed.
                   </p>
                 </ul>
               </div>
@@ -51,7 +55,9 @@ function SelectPlan({ onPlanSelect, onFinish, onBack }) {
               <div className="card-body">
                 <ul className="list-group">
                   <p>
-                    &emsp;Powers of Attorney, Advanced Directives and end of life wishes are necessary tools to ensure that your wishes are all included in an Advanced estate plan.
+                    &emsp;Powers of Attorney, Advanced Directives and end of
+                    life wishes are necessary tools to ensure that
+                    your wishes are all included in an Advanced estate plan.
                   </p>
                 </ul>
               </div>
@@ -70,8 +76,12 @@ function SelectPlan({ onPlanSelect, onFinish, onBack }) {
               <div className="card-body">
                 <ul className="list-group">
                   <p>
-                    &emsp;The use of wills, trusts, powers of attorney, and other strategies can help ensure your assets are safe, protected and managed. A comprehensive plan provides different legal
-                    tools and the opportunity to use attorneys to confirm that the plans selected will protect the assets you have acquired and achieve your planning goals.
+                    &emsp;The use of wills, trusts, powers of attorney,
+                    and other strategies can help ensure your assets are safe,
+                    protected and managed. A comprehensive plan provides different legal
+                    tools and the opportunity to use attorneys to confirm
+                    that the plans selected will protect the assets you
+                    have acquired and achieve your planning goals.
                   </p>
                 </ul>
               </div>

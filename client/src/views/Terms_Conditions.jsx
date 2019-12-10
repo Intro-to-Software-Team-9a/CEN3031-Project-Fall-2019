@@ -1,9 +1,9 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 
-class Terms_Conditions extends React.Component {
-
+class TermsConditions extends React.Component {
   render() {
     return (
       <div className="min-vh-100 bg-light">
@@ -375,10 +375,6 @@ class Terms_Conditions extends React.Component {
               </p>
 
 
-
-
-
-
             </Col>
           </Row>
         </Container>
@@ -393,4 +389,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(
   mapStateToProps,
-)(Terms_Conditions);
+)(TermsConditions);

@@ -79,7 +79,8 @@ class Onboarding extends React.Component {
           onBack={this.decrementPage}
           onFinish={this.incrementPage}>
           <p>
-            A comprehensive estate plan can seem complicated, but with our online worksheet, you'll be one step closer to getting yourself and
+            A comprehensive estate plan can seem complicated,
+            but with our online worksheet, you'll be one step closer to getting yourself and
             your family on the path to a securing your assets for generations to come.
             </p>
           <p>First you'll need to answer these questions
