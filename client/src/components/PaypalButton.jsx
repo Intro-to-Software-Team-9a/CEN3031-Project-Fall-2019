@@ -2,13 +2,21 @@ import React from 'react';
 import { PayPalButton } from 'react-paypal-button-v2';
 import { connect } from 'react-redux';
 import { doPurchase } from '../actions/purchase';
-import { paypalVars } from '../config/config';
 
 function PaypalButton({ doPurchase, totalPurchase }) {
+  let clientID;
+  if (process.env.NODE_ENV === 'production') {
+    clientID = process.env.REACT_APP_PAYPAL_CLIENT_ID;
+  } else {
+    /* eslint-disable-next-line global-require, import/no-unresolved */
+    const paypalVars = require('../config/config');
+    clientID = paypalVars.paypal.clientID;
+  }
   const paypalOptions = {
-    clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID || paypalVars.paypal.clientId,
+    clientId: clientID,
     intent: 'capture',
   };
+
   const buttonStyles = {
     layout: 'vertical',
     shape: 'rect',
