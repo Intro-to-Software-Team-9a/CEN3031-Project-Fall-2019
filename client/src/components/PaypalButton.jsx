@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 function PaypalButton({ doPurchase, totalPurchase }) {
   const paypalOptions = {
-    clientId: 'AY7O6M0NDbBh3f6eaRpynKmm5v7KUgf6pWaKXJIr3UY0i10x5uPB9a6CmjUWlWD-jpZ8HWXJFuJq03fL',
+    clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID || 'AY7O6M0NDbBh3f6eaRpynKmm5v7KUgf6pWaKXJIr3UY0i10x5uPB9a6CmjUWlWD-jpZ8HWXJFuJq03fL',
     intent: 'capture'
   }
   const buttonStyles = {
