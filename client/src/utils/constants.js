@@ -13,4 +13,5 @@ export const Routes = {
   USER_SETTINGS: '/user-settings',
   MANAGE_TEMPLATES: '/manage-templates',
   TEST_TEMPLATES: '/test-templates',
+  TERMS_CONDITIONS: '/terms-and-conditions',
 };
