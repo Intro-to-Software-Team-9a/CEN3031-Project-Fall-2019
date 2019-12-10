@@ -20,9 +20,9 @@ class TermsConditions extends React.Component {
             <Col xl={4}>
               <p>
                 Products and services described on this website are not legal advice.
-                Nothing containedin this material is intended to constitute legal, tax, securities, or investment advice, noran opinion regarding the appropriateness of any estate plan,
-                nor a solicitation of anytype. The general information contained on this website should not be acted uponwithout   obtaining   specific   legal,   tax,   and   estate
-                planning   advice   from   a   licensedprofessional.
+                Nothing contained in this material is intended to constitute legal, tax, securities, or investment advice, noran opinion regarding the appropriateness of any estate plan,
+                nor a solicitation of any type. The general information contained on this website should not be acted upon without   obtaining   specific   legal,   tax,   and   estate
+                planning   advice   from   a   licensed professional.
               </p>
               <p>
                 <b>
@@ -30,10 +30,10 @@ class TermsConditions extends React.Component {
                 </b>
               </p>
               <p>
-                The materials were developed by attorneys based upon various state laws, regulationsand statutes. The EstatePlanR application is an online tool that makes it easy to createestate planning documents.
-                The application does not provide legal advice and cannotserve as legal advice.  Please consult with an attorney for legal advice.The forms offered in EPR are provided without any warranty expressed or
-                implied of anykind (including warranties of merchantability, noninfringement of intellectual property, or fitness for any particular purpose.  In no event shall EPR or its agents, affiliates, parentcompany or
-                officers be liable for any damages whatsoever including without limitationdamages for loss of profits, business interference, loss of information arising out of theuse of or inability to use the materials.
+                The materials were developed by attorneys based upon various state laws, regulations and statutes. The EstatePlanR application is an online tool that makes it easy to create estate planning documents.
+                The application does not provide legal advice and cannot serve as legal advice.  Please consult with an attorney for legal advice. The forms offered in EPR are provided without any warranty expressed or
+                implied of any kind (including warranties of merchantability, noninfringement of intellectual property, or fitness for any particular purpose).  In no event shall EPR or its agents, affiliates, parentcompany or
+                officers be liable for any damages whatsoever including without limitation damages for loss of profits, business interference, loss of information arising out of theuse of or inability to use the materials.
                 Estate Planning is complex and carries seriousrisk, please consult an attorney for legal advice.  The EPR products are not a substitutefor the advice of an attorney.
               </p>
               <p>
