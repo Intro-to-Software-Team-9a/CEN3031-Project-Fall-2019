@@ -47,7 +47,7 @@ describe('Documents Controller', () => {
       Template.findOne = () => ({
         sort: stubExec(sinon.stub().resolves({
           ...mockData.template1.toObject(),
-          templateTypeId
+          templateTypeId,
         })),
       });
       TemplateType.findOne = sinon.stub().resolves({ ...mockData.templateType1.toObject(), _id: templateTypeId });

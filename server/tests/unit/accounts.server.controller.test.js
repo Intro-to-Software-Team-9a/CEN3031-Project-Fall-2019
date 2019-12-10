@@ -4,6 +4,8 @@ const sinon = require('sinon');
 const assert = require('assert');
 
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
+const validator = require('validator');
 const Account = require('../../models/Account.model');
 const Profile = require('../../models/Profile.model');
 const Document = require('../../models/Document.model');
@@ -11,14 +13,14 @@ const QuestionnaireResponse = require('../../models/QuestionnaireResponse.model'
 const mongooseUtils = require('../../utils/mongoose');
 const { stubExec } = require('../helpers/utils');
 const mockData = require('../helpers/mockdata');
-const mongoose = require('mongoose');
-const validator = require('validator');
 
 const accounts = require('../../controllers/accounts.server.controller');
 
 function mockRequest() {
   return {
-    body: { email: 'test@gmail.com', password: 'i-am-a-complex-password', name: 'Test User', currentpassword: 'i-am-a-different-complex-password' },
+    body: {
+      email: 'test@gmail.com', password: 'i-am-a-complex-password', name: 'Test User', currentpassword: 'i-am-a-different-complex-password',
+    },
     session: {},
   };
 }
@@ -280,7 +282,7 @@ describe('Accounts Controller', () => {
     });
 
     it('should return 500 if mongoose rejects', async () => {
-      QuestionnaireResponse.deleteMany  = sinon.stub().rejects(new Error('error'));
+      QuestionnaireResponse.deleteMany = sinon.stub().rejects(new Error('error'));
 
       await accounts.deleteAccount(req, res);
       assert.ok(res.status.calledWith(500));
@@ -288,13 +290,13 @@ describe('Accounts Controller', () => {
 
     it('should abort transaction if mongoose rejects', async () => {
       // arrange
-      QuestionnaireResponse.deleteMany  = sinon.stub().rejects(new Error('error'));
+      QuestionnaireResponse.deleteMany = sinon.stub().rejects(new Error('error'));
 
       // act
       await accounts.deleteAccount(req, res);
 
       // assert
-      assert.ok(session.abortTransaction.called)
+      assert.ok(session.abortTransaction.called);
     });
   });
 
@@ -309,7 +311,7 @@ describe('Accounts Controller', () => {
       Account.prototype.save = sinon.stub().resolves();
 
       Account.findById = stubExec(
-        sinon.stub().resolves(new Account({ ...mockData.account1.toObject(), _id: '1' }))
+        sinon.stub().resolves(new Account({ ...mockData.account1.toObject(), _id: '1' })),
       );
 
       // reset globals
@@ -376,7 +378,7 @@ describe('Accounts Controller', () => {
       Account.prototype.save = sinon.stub().resolves();
 
       Account.findById = stubExec(
-        sinon.stub().resolves(new Account({ ...mockData.account1.toObject(), _id: '1' }))
+        sinon.stub().resolves(new Account({ ...mockData.account1.toObject(), _id: '1' })),
       );
 
       // reset globals

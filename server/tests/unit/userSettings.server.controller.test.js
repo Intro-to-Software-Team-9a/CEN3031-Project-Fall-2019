@@ -84,12 +84,12 @@ describe('Profiles Controller', () => {
       // assert
       // get returned profile
       const call = res.send.getCalls()[0];
-      const profile = call.args[0].profile;
+      const { profile } = call.args[0];
 
       // assert accountId is not defined (contains password hash, etc.)
       assert.ok(!profile.accountId);
     });
-  
+
     it('should return 500 if profile has no accountId', async () => {
       // arrange
       Profile.findById = stubPopulate(async () => (
@@ -105,6 +105,5 @@ describe('Profiles Controller', () => {
       // assert
       assert.ok(res.status.calledWith(500));
     });
-
   });
 });
