@@ -2,9 +2,8 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable linebreak-style */
 
-import { paypalVars } from '../config/config';
-
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
+const paypalVars = require('../config/config');
 
 function environment() {
   const clientId = process.env.REACT_APP_PAYPAL_CLIENT_ID || paypalVars.paypal.clientID;
