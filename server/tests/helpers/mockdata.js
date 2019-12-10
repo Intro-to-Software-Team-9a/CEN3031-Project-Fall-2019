@@ -139,9 +139,9 @@ module.exports = {
       },
       {
         title: 'Do you have any additional instructions if you are incapacitated?',
-        questionType: QuestionTypes.SHORT_ANSWER,
+        questionType: QuestionTypes.LONG_ANSWER,
         possibleResponses: [
-          { responseType: QuestionTypes.SHORT_ANSWER, label: 'additionalInstructions' },
+          { responseType: QuestionTypes.LONG_ANSWER, label: 'additionalInstructions' },
         ],
       },
     ],

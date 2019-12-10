@@ -16,14 +16,18 @@ async function create(req, res) {
   }
 
   try {
-    const questionnaire = await Questionniare.findById(req.params.questionnaireId).exec();
-    const { isOk, missingResponseLabels } = validation.isVaildResponse(
-      req.body.questionnaireResponse, questionnaire,
-    );
+    const isTemp = req.body.isTemp || false;
 
-    if (!isOk) {
-      res.status(400);
-      return res.send({ message: errors.other.INVALID_INPUT, missingResponseLabels });
+    if (!isTemp) {
+      const questionnaire = await Questionniare.findById(req.params.questionnaireId).exec();
+      const { isOk, missingResponseLabels } = validation.isVaildResponse(
+        req.body.questionnaireResponse, questionnaire,
+      );
+
+      if (!isOk) {
+        res.status(400);
+        return res.send({ message: errors.other.INVALID_INPUT, missingResponseLabels });
+      }
     }
 
     // serialize and save
@@ -31,9 +35,22 @@ async function create(req, res) {
       questionnaireId: req.params.questionnaireId,
       serializedResult: JSON.stringify(req.body.questionnaireResponse),
       profileId: req.session.profileId,
+      isTemp,
     });
 
+    // delete all temp responses
+    try {
+      await QuestionnaireResponse.remove({
+        profileId: req.session.profileId,
+        isTemp: true,
+      }).exec();
+    } catch (error) {
+      // ignore
+    }
+
+    // save response
     await response.save();
+
     return res.send({ response });
   } catch (error) {
     res.status(500);
@@ -83,7 +100,7 @@ async function getById(req, res) {
 async function getAll(req, res) {
   try {
     const rawQuestionnaireResponses = await QuestionnaireResponse
-      .find({ profileId: req.session.profileId })
+      .find({ profileId: req.session.profileId, isTemp: false })
       .sort({ createdAt: -1 })
       .exec();
 

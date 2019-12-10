@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { getProfile, forgetProfile } from './profile';
-import { getQuestionnaire } from './questionnaire';
+import { getQuestionnaire, submitTempForm } from './questionnaire';
 import { getTemplates } from './template';
 import { getUserInfo } from './userSettings';
 
@@ -73,9 +73,13 @@ export function doLogin({ onSuccess }) {
 
     try {
       await axios.post('/api/accounts/login', { email, password });
+
+      // successful login
       dispatch({ type: LOGIN_SUCCESS });
-      await dispatch(getProfile());
       dispatch({ type: FORGET_LOGIN_FORM });
+
+      // fetch profile data
+      await dispatch(getProfile());
 
       const { accounts, profiles } = getState();
       if (accounts.createState.isError || profiles.profileState.isError) {
@@ -144,6 +148,9 @@ export function doCreateAccount({ onSuccess }) {
 
       // delete form data (i.e., password)
       dispatch({ type: FORGET_CREATE_FORM });
+
+      // save current questionnaire state
+      await dispatch(submitTempForm());
 
       // refresh profile data
       await dispatch(getProfile());

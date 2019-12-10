@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { changeForm } from '../actions/questionnaire';
 
 /**
- *
+ * Short answer or long answer question.
  * @param currentResponse current questionnaire response
  * @param question Question object in DB
  * @param onChange Callback for change event
@@ -14,7 +14,9 @@ import { changeForm } from '../actions/questionnaire';
 function ShortAnswerQuestion({
   question, onChange, currentResponse, isDisabled,
 }) {
-  const { possibleResponses, title } = question;
+  const { possibleResponses, title, questionType } = question;
+
+  const isTextArea = (questionType === 'LONG_ANSWER');
   return (
 
       <Form.Group>
@@ -24,6 +26,7 @@ function ShortAnswerQuestion({
           disabled={isDisabled}
           key={response._id}
           type="text"
+          as={isTextArea ? 'textarea' : 'input'}
           label={response.label}
           name={response._id}
           value={currentResponse[response.label] || ''}

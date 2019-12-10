@@ -11,4 +11,7 @@ router.route('/')
 router.route('/plan')
   .patch(authenticate(), profiles.changePlan);
 
+router.route('/onboarding')
+  .patch(authenticate(), profiles.updateOnboarding);
+
 module.exports = router;

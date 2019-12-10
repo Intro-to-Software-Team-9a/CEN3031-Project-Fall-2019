@@ -11,8 +11,9 @@ import AuthenticatedQuestionnaire from './AuthenticatedQuestionnaire';
 import ReviewPurchase from './ReviewPurchase';
 import TextView from './TextView';
 import SelectPlan from './SelectPlan';
-import { submitForm } from '../actions/questionnaire';
+import { submitForm, submitTempForm } from '../actions/questionnaire';
 import { Routes } from '../utils/constants';
+import { getProfile, saveOnboardingState, finishOnboarding } from '../actions/profile';
 
 const QUESTIONNAIRE_PAGE = 'questionnaire-page';
 const CREATE_ACCOUNT_PAGE = 'create-account-page';
@@ -50,6 +51,22 @@ class Onboarding extends React.Component {
     this.changePage = this.changePage.bind(this);
     this.incrementPage = () => this.changePage(this.state.page + 1);
     this.decrementPage = () => this.changePage(this.state.page - 1);
+
+    this.resetPage = this.resetPage.bind(this);
+
+    this.resetPage();
+  }
+
+  resetPage() {
+    const { profile } = this.props;
+    if (profile) {
+      this.changePage(profile.onboardingState);
+    }
+  }
+
+  async componentDidMount() {
+    await this.props.fetchProfile();
+    this.resetPage();
   }
 
   changePage(newPage) {
@@ -62,6 +79,8 @@ class Onboarding extends React.Component {
     if (newPage >= Pages.length || newPage < 0) {
       return;
     }
+
+    this.props.saveOnboardingState(newPage);
 
     this.setState({
       page: newPage,
@@ -113,13 +132,18 @@ class Onboarding extends React.Component {
           onFinish={this.incrementPage} />;
         break;
       case CREATE_ACCOUNT_PAGE:
-        currentpage = <CreateAccount onBack={this.decrementPage} onFinish={this.incrementPage} />;
+        currentpage = <CreateAccount
+          onBack={this.decrementPage}
+          onFinish={async () => {
+            await this.props.submitTempForm();
+            this.incrementPage();
+          }} />;
         break;
       case AUTHENTICATED_QUESTIONNAIRE_PAGE:
         currentpage = <AuthenticatedQuestionnaire
           onBack={this.decrementPage}
-          onFinish={() => {
-            this.props.submitForm();
+          onFinish={async () => {
+            await this.props.submitForm();
             this.incrementPage();
           }} />;
         break;
@@ -135,7 +159,8 @@ class Onboarding extends React.Component {
         currentpage = <Catalog onBack={this.decrementPage} onFinish={this.incrementPage} />;
         break;
       case REVIEW_PAGE:
-        currentpage = <ReviewPurchase onBack={this.decrementPage} onFinish={() => {
+        currentpage = <ReviewPurchase onBack={this.decrementPage} onFinish={async () => {
+          await this.props.finishOnboarding();
           this.props.history.push(Routes.PROFILE_HOME);
         }} />;
         break;
@@ -150,10 +175,16 @@ class Onboarding extends React.Component {
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  profile: state.profiles.profile,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   submitForm: () => dispatch(submitForm()),
+  submitTempForm: () => dispatch(submitTempForm()),
+  fetchProfile: () => dispatch(getProfile()),
+  saveOnboardingState: (newState) => dispatch(saveOnboardingState(newState)),
+  finishOnboarding: () => dispatch(finishOnboarding()),
 });
 
 export default connect(

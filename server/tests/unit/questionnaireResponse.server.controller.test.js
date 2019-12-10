@@ -46,6 +46,7 @@ describe('Questionnaire Responses Controller', () => {
       Questionnaire.findById = stubExec(sinon.stub().resolves(
         new Questionnaire(mockData.questionnaire1),
       ));
+      QuestionnaireResponse.remove = stubExec(sinon.stub().resolves());
       QuestionnaireResponse.prototype.save = sinon.stub().resolves();
       validation.isVaildResponse = sinon.stub().returns(({ isOk: true, missingResponseLabels: [] }));
 
@@ -60,6 +61,11 @@ describe('Questionnaire Responses Controller', () => {
     it('should return 200 if mongoose resolves', async () => {
       await questionnaireResponses.create(req, res);
       assert.ok(!res.status.called);
+    });
+
+    it('should delete temp responses on save', async () => {
+      await questionnaireResponses.create(req, res);
+      assert.ok(QuestionnaireResponse.remove.called);
     });
 
     it('should return 400 if response not provided in body', async () => {
@@ -168,7 +174,8 @@ describe('Questionnaire Responses Controller', () => {
 
     it('should pass profileId as a parameter to find', async () => {
       await questionnaireResponses.getAll(req, res);
-      assert.ok(QuestionnaireResponse.find.calledWith({ profileId: 'id-1' }));
+      const calls = QuestionnaireResponse.find.getCalls();
+      assert.equal(calls[0].args[0].profileId, 'id-1');
     });
   });
 

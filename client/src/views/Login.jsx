@@ -14,6 +14,11 @@ class Login extends React.Component {
       return;
     }
 
+    if (profile.isOnboarding) {
+      history.push(Routes.ONBOARDING);
+      return;
+    }
+
     history.push(Routes.PROFILE_HOME);
   }
 

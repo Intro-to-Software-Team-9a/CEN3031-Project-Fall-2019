@@ -54,6 +54,21 @@ Then add the following environment variables.
 ##### 3. Deployment
 1. `git push heroku master`. This will build and deploy EstatePlanR to Heroku.
 
+#### Deploy with Docker
+##### Build Docker Image
+- Navigate to the project root and run `docker build -t cen3031team9a/estateplanr .`. This will build the container into a Docker image.
+
+##### Run Docker Image Locally
+1. Execute
+```
+docker run -d \
+    --env DB_URI=[db-uri] \
+    --env SESSION_SECRET=[secret-string] \
+    -p 12345:5000 cen3031team9a/estateplanr
+```
+
+2. Execute `docker ps`. You should see the image listed.
+3. Navigate to `localhost:12345` in your browser. The app should be started.
 #### Run Tests
 ##### Unit/Integration Tests
 1. A MongoDB instance must be running on `localhost`. If MongoDB is installed, you can start it by running `service mongod start`. Alternatively, you can edit the [test config](https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/blob/master/server/tests/helpers/config.js) to point the integration tests to a cloud MongoDB instance.

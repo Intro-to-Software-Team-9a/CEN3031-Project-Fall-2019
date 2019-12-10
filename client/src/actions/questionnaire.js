@@ -44,6 +44,37 @@ export function submitForm() {
   };
 }
 
+
+/** Submit a temporary questionnaireresponse. */
+export function submitTempForm() {
+  return async (dispatch, getState) => {
+    const { questionnaire } = getState();
+    dispatch({ type: SUBMIT_FORM_START });
+
+    const questionnaireId = questionnaire.questionnaire._id;
+
+    try {
+      await axios.post(
+        `/api/questionnaireResponse/${questionnaireId}`,
+        {
+          questionnaireResponse: questionnaire.questionnaireResponse,
+          isTemp: true,
+        },
+      );
+
+      dispatch({ type: SUBMIT_FORM_SUCCESS });
+    } catch (error) {
+      // parse HTTP message
+      let { message } = error;
+      if (error.response && error.response.data && error.response.data.message) {
+        message = error.response.data.message;
+      }
+      dispatch({ type: SUBMIT_FORM_FAIL, data: { message } });
+    }
+  };
+}
+
+
 /** Get the most recent questionnaire from the database. */
 export function getQuestionnaire() {
   return async (dispatch) => {

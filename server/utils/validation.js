@@ -23,7 +23,9 @@ function isValidShortAnswer(question, errorStream) {
   }
 
   const possibleResponse = question.possibleResponses[0];
-  if (possibleResponse.responseType !== QuestionTypes.SHORT_ANSWER) {
+  if (![QuestionTypes.SHORT_ANSWER, QuestionTypes.LONG_ANSWER]
+    .includes(possibleResponse.responseType)
+  ) {
     errorStream.push({ data: { question }, error: 'Response has invalid type' });
     return false;
   }
@@ -158,6 +160,7 @@ function isValidQuestionnaire(questionnaire, errorStream) {
         }
         break;
       case QuestionTypes.SHORT_ANSWER:
+      case QuestionTypes.LONG_ANSWER:
         if (!isValidShortAnswer(question, errorStream)) {
           return false;
         }
