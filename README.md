@@ -1,19 +1,118 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-This project contains an example project board meant to showcase how one can be used. The issues posted to it are not real issues.
+## EstatePlanR
+EstatePlanR is a web application that allows people to create estate plans in a simple, automated way.
 
-#### _**IMPORTANT NOTE**_ - 
-This project does not have a mongoDB connection setup. For:
-- local development: create a config file (make sure to name it config.js) in the config folder, which exports your db.uri connection. An example is provided, config/config.example.js. This file will be ignored by git so your db credentials will be kept safe when the app is deployed.
-- production: Since the config file is not pushed when you deploy your app, you must specifiy your db uri in heorku. Set the uri in heroku as specified in [this](https://devcenter.heroku.com/articles/config-vars) resource. Make sure you name the environement variable "DB_URI".
+## Link to the deployed page
+[estateplanr-app.herokuapp.com](estateplanr-app.herokuapp.com)
 
-## Getting Started
-This repository aims to assist you in beginning work on a MERN stack application with a solid file structure as a foundation. To get started make a copy of this template repo for your project teams.
+## People/organizations you borrowed code from or APIs you used 
+#### Libraries and Frameworks Used
+- [React](https://reactjs.org/)
+- [Redux](https://redux.js.org/) was used for state management. In order to contribute to this application, you will need to understand how Redux works -- a good starting point is reading through the developer docs available [here](https://redux.js.org/introduction/getting-started). You need to know about async actions.
+- [Bootstrap](https://getbootstrap.com/)
+- [React-Bootstrap](https://react-bootstrap.github.io/)
+- [React-Router-Bootstrap](https://github.com/react-bootstrap/react-router-bootstrap) was used to integrate react-bootstrap with react-router
+- [React Router](https://reacttraining.com/react-router/)
+- [DocxTemplater](https://docxtemplater.com/) was used as the engine for the DOCX templates. It was abstracted to a [utility library](https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/blob/master/server/utils/templating.js). Code snippets were also used from the developer docs for the DOCXTemplater in this utility library.
+- [Express](https://expressjs.com/)
+- [Mongoose](https://mongoosejs.com/)
+- [react-async-script-loader](https://www.npmjs.com/package/react-async-script-loader) was used to load global scripts needed for PayPal into the browser environment.
+- [react-paypal-button-v2](https://www.npmjs.com/package/react-paypal-button-v2) was used to encapsule the PayPal scripts (which are pure JS) with React. 
 
-Since this project will hold both the client application and the server application there will be node modules in two different places. First run `npm install` from the root. After this you will run `npm run-script install-all` from the root. From now on run this command anytime you want to install all modules again. This is a script we have defined in package.json .
+#### APIs Used
+- [PayPal](https://developer.paypal.com/docs/api/overview/). The API was used to do payments and validation, and the code snippets from the developer documentation were used in the [PayPal Button](https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/blob/master/client/src/components/PaypalButton.jsx) component in the client and [PayPal library](https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/blob/master/server/controllers/paypalClient.js) we wrote on the server.
 
-This app can be deployed directly to heroku since there is a script defined in package.json which will automatically handle building and deploying the app. For more information on deploying to heroku reference the extra resources at the bottom of this file. 
+## Running the project
+#### Run Locally
+##### 1. Installation
+1. Run `npm install`
+2. Run `cd client && npm install`
 
-## File structure
+##### 2. Configuration
+1. Create a new file `/server/config/config.js`.
+2. Copy the contents of `/server/config/config.example.js` into your new file.
+3. Replace the session secret with a new secret value.
+4. Replace the DB URI with your MongoDB URI.
+
+##### 3. `npm run dev`
+This starts the server and client simultaneously in development mode. A browser window should open automatically with the url `localhost:3000`. If not, open Chrome and navigate to that URL.
+
+#### Deploy to Heroku
+##### 1. Create Project
+Create an "app" on Heroku. As of 2019, this can be done by navigating to [dashboard.heroku.com/apps](https://dashboard.heroku.com/apps) and clicking "New".
+
+##### 2. Configuration
+Run the following commands from the project root.
+
+1. `heroku login`. This will authenticate you with Heroku.
+2. `heroku git:remote -a [your-app-name-on-heroku]`. This will configure the app to deploy to your newly-created Heroku app.
+
+Then add the following environment variables.
+
+1. `heroku config:set DB_URI=[your-mongodb-uri]`
+2. `heroku config:set SESSION_SECRET=[your-session-secret]`
+
+##### 3. Deployment
+1. `git push heroku master`. This will build and deploy EstatePlanR to Heroku.
+
+#### Run Tests
+##### Unit/Integration Tests
+1. A MongoDB instance must be running on `localhost`. If MongoDB is installed, you can start it by running `service mongod start`. Alternatively, you can edit the [test config](https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/blob/master/server/tests/helpers/config.js) to point the integration tests to a cloud MongoDB instance.
+2. Run `npm run test` in the project root.
+
+##### Linting
+* To lint the server, run `npm run lint` in the project root.
+* To lint the client, run `npm run lint` in the client directory OR `npm run lint-client` in the root directory.
+
+
+## Features Implemented
+#### Landing Page
+![landing][landing]
+
+#### Users can complete a questionnaire
+![questionnaire][questionnaire]
+![questionnaire2][questionnaire2]
+
+#### Users can create accounts
+![createaccount][createaccount]
+
+#### Users can purchase templates via PayPal
+![checkout1][checkout1]
+![checkout2][checkout2]
+![checkout3][checkout3]
+
+#### Users can manage their account via a dashboard
+![profile1][profile1]
+
+#### Users can download their documents, update their documents, and view previous version of documents
+![yourdocs][yourdocs]
+
+#### Users can add new questionnaire responses
+![editresponse][editresponse]
+
+#### Users can view previous questionnaire responses
+![responses1][responses1]
+![responses2][responses2]
+
+#### Users can change their password or email
+![changepassword][changepassword]
+
+#### Users can delete their account
+![deleteaccount][deleteaccount]
+
+#### Admins can edit the questionnaire
+![admineditquestionnaire][admineditquestionnaire]
+
+#### Admins can upload templates
+![adminaddtemplate][adminaddtemplate]
+
+#### Admins can test templates
+![admintesttemplate][admintesttemplate]
+
+#### Admins can create mock responses
+![admineditresponse][admineditresponse]
+
+## Other Configuration Information
+### File structure
 #### `client` - Holds the client application
 - #### `public` - This holds all of our static files
 - #### `src`
@@ -35,27 +134,27 @@ This app can be deployed directly to heroku since there is a script defined in p
 #### `README` - This file!
 
 
-## Available Scripts
+### Available Scripts
 
 In the project directory, you can run:
 
-### `npm run-script dev`
+##### `npm run dev`
 
 Runs both the client app and the server app in development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
 
-### `npm run-script client`
+##### `npm run client`
 
 Runs just the client app in development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
 
 
-### `npm run-script server`
+##### `npm run server`
 
 Runs just the server in development mode.<br>
 
 
-### `npm run build`
+##### `npm run build`
 
 Builds the app for production to the `build` folder.<br>
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -64,16 +163,22 @@ If deploying to heroku this does not need to be run since it is handled by the h
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn how to setup a local MongoDB instance for testing, check out how to [Connect to MongoDB](https://docs.mongodb.com/guides/server/drivers/).
-
-To learn how to deploy a full-stack web app to heroku, check out [this great guide](https://daveceddia.com/deploy-react-express-app-heroku/).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[adminaddtemplate]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/adminaddtemplate.png
+[admineditquestionnaire]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/admineditquestionnaire.png
+[admineditresponse]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/admineditresponse.png
+[admintesttemplate]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/admintesttemplate.png
+[changepassword]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/changepassword.png
+[checkout1]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/checkout1.png
+[checkout2]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/checkout2.png
+[checkout3]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/checkout3.png
+[createaccount]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/create-account.png
+[deleteaccount]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/deleteaccount.png
+[editresponse]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/editresponse.png
+[landing]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/landing.png
+[profile1]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/profile1.png
+[questionnaire]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/questionnaire.png
+[questionnaire2]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/questionnaire-t2.png
+[responses1]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/responses1.png
+[responses2]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/responses2.png
+[yourdocs]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/yourdocs.png
+[yourresponses]: https://github.com/Intro-to-Software-Team-9a/CEN3031-Project-Fall-2019/raw/master/docs/images/yourresponses.png
