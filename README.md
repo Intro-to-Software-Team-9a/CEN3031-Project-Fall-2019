@@ -15,9 +15,11 @@ EstatePlanR is a web application that allows people to create estate plans in a 
 - [DocxTemplater](https://docxtemplater.com/) was used as the engine for the DOCX templates.
 - [Express](https://expressjs.com/)
 - [Mongoose](https://mongoosejs.com/)
+- [react-async-script-loader](https://www.npmjs.com/package/react-async-script-loader) was used to load global scripts needed for PayPal into the browser environment.
+- [react-paypal-button-v2](https://www.npmjs.com/package/react-paypal-button-v2) was used to encapsule the PayPal scripts (which are pure JS) with React. 
 
 #### APIs Used
-- [PayPal](https://developer.paypal.com/docs/api/overview/)
+- [PayPal](https://developer.paypal.com/docs/api/overview/). The API was used
 
 
 ## Features Implemented
