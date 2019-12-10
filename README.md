@@ -7,12 +7,12 @@ EstatePlanR is a web application that allows people to create estate plans in a 
 ## People/organizations you borrowed code from or APIs you used 
 #### Libraries and Frameworks Used
 - [React](https://reactjs.org/)
-- [Redux](https://redux.js.org/)
+- [Redux](https://redux.js.org/) was used for state management
 - [Bootstrap](https://getbootstrap.com/)
 - [React-Bootstrap](https://react-bootstrap.github.io/)
-- [React-Router-Bootstrap](https://github.com/react-bootstrap/react-router-bootstrap)
+- [React-Router-Bootstrap](https://github.com/react-bootstrap/react-router-bootstrap) was used to integrate react-bootstrap with react-router
 - [React Router](https://reacttraining.com/react-router/)
-- [DocxTemplater](https://docxtemplater.com/)
+- [DocxTemplater](https://docxtemplater.com/) was used as the engine for the DOCX templates.
 - [Express](https://expressjs.com/)
 - [Mongoose](https://mongoosejs.com/)
 
