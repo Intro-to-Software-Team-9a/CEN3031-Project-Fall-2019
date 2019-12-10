@@ -19,7 +19,7 @@ function NavBar({ isLoggedIn, name, doLogout }) {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto"></Nav>
         <Nav className="mr-sm-2">
-        <LinkContainer to={Routes.TERMS_CONDITIONS}><Nav.Link>Disclaimer</Nav.Link></LinkContainer>
+        <LinkContainer to={Routes.TERMS_CONDITIONS}><Nav.Link>Terms and Conditions</Nav.Link></LinkContainer>
           {isLoggedIn
             ? <React.Fragment>
               <LinkContainer to={Routes.PROFILE_HOME}><Nav.Link>{name}</Nav.Link></LinkContainer>
