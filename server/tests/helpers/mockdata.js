@@ -25,6 +25,7 @@ module.exports = {
     },
     plan: Plans.NO_PLAN,
     ownedTemplateTypes: [],
+    isOnboarding: true,
   }),
   account2: new Account({
     email: 'test2@gmail.com',
@@ -38,6 +39,7 @@ module.exports = {
     },
     plan: Plans.NO_PLAN,
     ownedTemplateTypes: [],
+    isOnboarding: false,
   }),
   document1: new Document({
     data: Buffer.from('Hello, my name is Example User'),
