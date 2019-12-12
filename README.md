@@ -32,6 +32,7 @@ EstatePlanR is a web application that allows people to create estate plans in a 
 2. Copy the contents of `/server/config/config.example.js` into your new file.
 3. Replace the session secret with a new secret value.
 4. Replace the DB URI with your MongoDB URI.
+5. Replace REACT APP PAYPAL CLIENT ID and REACT APP PAYPAL SECRET with your Client ID and Secret Key.
 
 ##### 3. `npm run dev`
 This starts the server and client simultaneously in development mode. A browser window should open automatically with the url `localhost:3000`. If not, open Chrome and navigate to that URL.
@@ -50,6 +51,8 @@ Then add the following environment variables.
 
 1. `heroku config:set DB_URI=[your-mongodb-uri]`
 2. `heroku config:set SESSION_SECRET=[your-session-secret]`
+3. `heroku config:set REACT_APP_PAYPAL_CLIENT_ID=[your-client-id]`
+4. `heroku config:set REACT_APP_PAYPAL_SECRET=[your-paypal-secret]`
 
 ##### 3. Deployment
 1. `git push heroku master`. This will build and deploy EstatePlanR to Heroku.
@@ -64,6 +67,8 @@ Then add the following environment variables.
 docker run -d \
     --env DB_URI=[db-uri] \
     --env SESSION_SECRET=[secret-string] \
+    --env REACT_APP_PAYPAL_CLIENT_ID=[your-client-id] \
+    --env REACT_APP_PAYPAL_SECRET=[your-paypal-secret] \
     -p 12345:5000 cen3031team9a/estateplanr
 ```
 

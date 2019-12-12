@@ -5,8 +5,17 @@
 const checkoutNodeJssdk = require('@paypal/checkout-server-sdk');
 
 function environment() {
-  const clientId = process.env.PAYPAL_CLIENT_ID || 'AY7O6M0NDbBh3f6eaRpynKmm5v7KUgf6pWaKXJIr3UY0i10x5uPB9a6CmjUWlWD-jpZ8HWXJFuJq03fL';
-  const clientSecret = process.env.PAYPAL_CLIENT_SECRET || 'EARZHbTGFb5tyUMQG_Y5O6ScxbOeD13uxUqmOHYuylnekbR1Y8SQzH_un2XyIoU9TyxwR5k_BrEswuPF';
+  let clientId;
+  let clientSecret;
+  if (process.env.NODE_ENV === 'production') {
+    clientId = process.env.REACT_APP_PAYPAL_CLIENT_ID;
+    clientSecret = process.env.REACT_APP_PAYPAL_SECRET;
+  } else {
+    /* eslint-disable-next-line global-require, import/no-unresolved */
+    const paypalVars = require('../config/config');
+    clientId = paypalVars.paypal.clientID;
+    clientSecret = paypalVars.paypal.secret;
+  }
 
   return new checkoutNodeJssdk.core.SandboxEnvironment(
     clientId, clientSecret,
