@@ -6,6 +6,10 @@ module.exports = {
   db: {
     uri: '',
   },
+  paypal: {
+    clientID: '',
+    secret: '',
+  },
   session: {
     secret: '',
   },
